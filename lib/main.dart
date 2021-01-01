@@ -1,13 +1,4 @@
-/// Flutter code sample for BottomNavigationBar
-
-// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
-// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
-// widgets and the [currentIndex] is set to index 0. The selected item is
-// amber. The `_onItemTapped` function changes the selected item's index
-// and displays a corresponding message in the center of the [Scaffold].
-//
-// ![A scaffold with a bottom navigation bar containing three bottom navigation
-// bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
+import 'package:WorkoutLoggerApp/ContentPages/page.dart';
 
 import 'package:flutter/material.dart';
 
@@ -51,15 +42,12 @@ class AppStatefulWidget extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   int _selectedPageIndex = 0;
-  static const TextStyle optionStyle =
+  static TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   //page content
   //this will be used as a page for the main content of the app
-  static const List<Widget> _pageContentOptions = <Widget>[
-    Text(
-      'Schedules page',
-      style: optionStyle,
-    ),
+  static List<Widget> _pageContentOptions = <Widget>[
+    ApplicationPage(pageTitle: "Test"),
     Text(
       'Routines page',
       style: optionStyle,
@@ -85,10 +73,9 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
         title: Text('Workout logger'),
       ),
       //the body parameter keeps track of the pages
-      body: Center(
-        child: _pageContentOptions[_selectedPageIndex],
-      ),
-      //the bottom navigation bar
+      body: _pageContentOptions[_selectedPageIndex],
+
+      //the bottom navigation bar//containing it with card to allow for more decoration
       bottomNavigationBar: Card(
         child: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
@@ -111,12 +98,11 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
           //keeps track of the page index contents
           //by assigning a value according to the index
           onTap: _onTabPressed,
-          
         ),
-        elevation:1000000000000000000000,
-        color:Colors.black87,
-       
+        elevation: 1000000000000000000000,
+        color: Colors.black87,
       ),
+  
     );
   }
 }
