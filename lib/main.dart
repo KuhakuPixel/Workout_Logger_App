@@ -48,14 +48,8 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   //this will be used as a page for the main content of the app
   static List<Widget> _pageContentOptions = <Widget>[
     ApplicationPage(pageTitle: "Test"),
-    Text(
-      'Routines page',
-      style: optionStyle,
-    ),
-    Text(
-      'Workout page',
-      style: optionStyle,
-    ),
+    ApplicationPage(pageTitle: "Test"),
+    ApplicationPage(pageTitle: "Test"),
   ];
 
   ///Called with an index as its argument according to which tab is pressed
@@ -102,7 +96,6 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
         elevation: 1000000000000000000000,
         color: Colors.black87,
       ),
-  
     );
   }
 }

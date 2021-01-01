@@ -9,23 +9,56 @@ class ApplicationPage extends StatelessWidget {
   void ShowModalBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: false,
       //takes in a function with taking in context as an argument and return a widget for the modar sheet
       builder: (BuildContext context) {
         return Container(
-          height: 300,
+          height: 600,
+          width: double.infinity,
           color: Colors.grey[900],
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text('Modal BottomSheet'),
-                ElevatedButton(
-                  child: const Text('Close BottomSheet'),
-                  onPressed: () => Navigator.pop(context),
-                )
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            //mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              //close and confirm button
+              Container(
+                child: Row(
+                  children: [
+                    //close button
+                    RawMaterialButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.amber[800],
+                      child: Icon(
+                        Icons.close,
+                        size: 30.0,
+                      ),
+                      //padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                     //confirm button button
+                    RawMaterialButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        print("Submit input");
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.amber[800],
+                      child: Icon(
+                        Icons.add,
+                        size: 30.0,
+                      ),
+                     // padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                  ],
+                  mainAxisAlignment:MainAxisAlignment.center,
+                ),
+                alignment: Alignment.bottomCenter,
+              )
+            ],
           ),
         );
       },
