@@ -42,8 +42,7 @@ class AppStatefulWidget extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   int _selectedPageIndex = 0;
-  static TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+ 
   //page content
   //this will be used as a page for the main content of the app
   static List<Widget> _pageContentOptions = <Widget>[
@@ -64,7 +63,7 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workout Logger by alin pepe anjing123'),
+        title: Text(''),
       ),
       //the body will control the main page content
       body: _pageContentOptions[_selectedPageIndex],

@@ -15,7 +15,7 @@ class ApplicationPage extends StatelessWidget {
       //takes in a function with taking in context as an argument and return a widget for the modar sheet
       builder: (BuildContext context) {
         return Container(
-          height: 600,
+          height: 610,
           width: double.infinity,
           color: Colors.grey[900],
           child: Column(
@@ -72,13 +72,20 @@ class ApplicationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //allow some flexibility by wrapping all the widget in a containr
     return Scaffold(
-      body: Column(
-        //main content for the page//where the items will be implemented
-        children: <Widget>[
-          //Text(this.pageTitle),
-          ExerciseItemWidget(exerciseName: "Push up"),
-          ExerciseItemWidget(exerciseName: "Pull up"),
-        ],
+      //main content for the page//where the items will be implemented
+      body: Container(
+        //add some spacing 
+        padding: EdgeInsets.only(
+          top: 5,
+        ),
+        child: Column(
+          children: <Widget>[
+            //Text(this.pageTitle),
+            ExerciseItemWidget(exerciseName: "Push up"),
+            SizedBox(height: 20),
+            ExerciseItemWidget(exerciseName: "Pull up"),
+          ],
+        ),
       ),
       // a floatingactionbuttonn that is built in as a parameter of schaffhold
       floatingActionButton: FloatingActionButton(
