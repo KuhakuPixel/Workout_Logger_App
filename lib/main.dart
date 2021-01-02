@@ -47,9 +47,9 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   //page content
   //this will be used as a page for the main content of the app
   static List<Widget> _pageContentOptions = <Widget>[
-    ApplicationPage(pageTitle: "Test"),
-    ApplicationPage(pageTitle: "Test"),
-    ApplicationPage(pageTitle: "Test"),
+    ApplicationPage(pageTitle: "page"),
+    ApplicationPage(pageTitle: "2"),
+    ApplicationPage(pageTitle: "3"),
   ];
 
   ///Called with an index as its argument according to which tab is pressed
@@ -64,14 +64,15 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workout logger'),
+        title: Text('Workout Logger by alin pepe anjing123'),
       ),
-      //the body parameter keeps track of the pages
+      //the body will control the main page content
       body: _pageContentOptions[_selectedPageIndex],
 
       //the bottom navigation bar//containing it with card to allow for more decoration
       bottomNavigationBar: Card(
         child: BottomNavigationBar(
+          //tab bar's icons and buttons
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

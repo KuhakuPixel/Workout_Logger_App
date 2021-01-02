@@ -1,3 +1,4 @@
+import 'package:WorkoutLoggerApp/CardItemWidgets/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationPage extends StatelessWidget {
@@ -6,10 +7,11 @@ class ApplicationPage extends StatelessWidget {
   //constructor
   ApplicationPage({this.pageTitle});
 
+  ///show  a modal bottom sheet when a certainn button is pressed
   void ShowModalBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: false,
+      isScrollControlled: true,
       //takes in a function with taking in context as an argument and return a widget for the modar sheet
       builder: (BuildContext context) {
         return Container(
@@ -18,7 +20,7 @@ class ApplicationPage extends StatelessWidget {
           color: Colors.grey[900],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            //mainAxisSize: MainAxisSize.min,
+            //the input sheed content
             children: <Widget>[
               //close and confirm button
               Container(
@@ -38,7 +40,7 @@ class ApplicationPage extends StatelessWidget {
                       //padding: EdgeInsets.all(15.0),
                       shape: CircleBorder(),
                     ),
-                     //confirm button button
+                    //confirm button button
                     RawMaterialButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -50,11 +52,11 @@ class ApplicationPage extends StatelessWidget {
                         Icons.add,
                         size: 30.0,
                       ),
-                     // padding: EdgeInsets.all(15.0),
+                      // padding: EdgeInsets.all(15.0),
                       shape: CircleBorder(),
                     ),
                   ],
-                  mainAxisAlignment:MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 alignment: Alignment.bottomCenter,
               )
@@ -65,13 +67,18 @@ class ApplicationPage extends StatelessWidget {
     );
   }
 
+  //a virtual function that will be implemented to be used for  each page
   @override
   Widget build(BuildContext context) {
     //allow some flexibility by wrapping all the widget in a containr
     return Scaffold(
-      body: Row(
-        //main content for the page
-        children: <Widget>[],
+      body: Column(
+        //main content for the page//where the items will be implemented
+        children: <Widget>[
+          //Text(this.pageTitle),
+          ExerciseItemWidget(exerciseName: "Push up"),
+          ExerciseItemWidget(exerciseName: "Pull up"),
+        ],
       ),
       // a floatingactionbuttonn that is built in as a parameter of schaffhold
       floatingActionButton: FloatingActionButton(
