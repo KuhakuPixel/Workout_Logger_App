@@ -1,4 +1,6 @@
-import 'package:WorkoutLoggerApp/ContentPages/page.dart';
+
+import 'package:WorkoutLoggerApp/ContentPages/SubPage.dart/ExercisePage.dart';
+
 
 import 'package:flutter/material.dart';
 
@@ -42,13 +44,11 @@ class AppStatefulWidget extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   int _selectedPageIndex = 0;
- 
+
   //page content
   //this will be used as a page for the main content of the app
   static List<Widget> _pageContentOptions = <Widget>[
-    ApplicationPage(pageTitle: "page"),
-    ApplicationPage(pageTitle: "2"),
-    ApplicationPage(pageTitle: "3"),
+    ExercisePage(),
   ];
 
   ///Called with an index as its argument according to which tab is pressed

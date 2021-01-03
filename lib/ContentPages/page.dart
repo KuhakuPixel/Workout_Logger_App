@@ -1,11 +1,36 @@
-import 'package:WorkoutLoggerApp/CardItemWidgets/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
+
 
 class ApplicationPage extends StatelessWidget {
   final String pageTitle;
 
+  ///this property will have some spacing specified by the constructor
+  List<Widget> contentsList;
   //constructor
-  ApplicationPage({this.pageTitle});
+  ApplicationPage({
+    @required this.pageTitle,
+   @required double spaceBetweenItem,
+   @required List<Widget> itemList,
+  }) {
+    this.contentsList = BuildContentsListWidget(spaceBetweenItem, itemList);
+  }
+
+//returns in a list of widget with spacing between childs feature
+  List<Widget> BuildContentsListWidget(
+      double spaceBetweenItem, List<Widget> itemList) {
+    List<Widget> newContentsList = [];
+
+    for (int i = 0; i < itemList.length; i++) {
+      newContentsList.add(itemList[i]);
+      //dont add box spacing
+      if (i < itemList.length - 1) {
+        newContentsList.add(SizedBox(
+          height: spaceBetweenItem,
+        ));
+      }
+    }
+    return newContentsList;
+  }
 
   ///show  a modal bottom sheet when a certainn button is pressed
   void ShowModalBottomSheet(BuildContext context) {
@@ -74,17 +99,16 @@ class ApplicationPage extends StatelessWidget {
     return Scaffold(
       //main content for the page//where the items will be implemented
       body: Container(
-        //add some spacing 
+        //add some spacing
         padding: EdgeInsets.only(
           top: 5,
         ),
-        child: Column(
-          children: <Widget>[
-            //Text(this.pageTitle),
-            ExerciseItemWidget(exerciseName: "Push up"),
-            SizedBox(height: 20),
-            ExerciseItemWidget(exerciseName: "Pull up"),
-          ],
+        //wrapped the list with a scrollable widget
+        child: SingleChildScrollView(
+          child: Column(
+            children: contentsList,
+          ),
+          //padding: EdgeInsets.only(bottom: 15),
         ),
       ),
       // a floatingactionbuttonn that is built in as a parameter of schaffhold

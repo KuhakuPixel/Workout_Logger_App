@@ -1,0 +1,2 @@
+using inheretince technique for the three pages
+-work on the modal input sheet to add some item to the list
