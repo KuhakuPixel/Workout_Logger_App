@@ -1,46 +1,8 @@
+import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
-enum ExerciseType {
-  weighted,
-  bodyweight,
-  timed,
-}
 
-///"Upper Chest",       
-///"Lower Chest",
-///"Traps",
-///"Forearms",
-///"Bicep",
-///"Lats",
-///"Upper ABS",
-///"Lower ABS",
-///"Oblique",
-///"Quads",
-///"Upper Back",
-///"Lower Back",
-///"Delts",
-///"Tricep",
-///"Hamstring",
-///"Calves",
-List<String> muscleList = [
-  "Upper Chest",
-  "Lower Chest",
-  "Traps",
-  "Forearms",
-  "Bicep",
-  "Lats",
-  "Upper ABS",
-  "Lower ABS",
-  "Oblique",
-  "Quads",
-  "Upper Back",
-  "Lower Back",
-  "Delts",
-  "Tricep",
-  "Hamstring",
-  "Calves",
-];
 
 /// widget for containing an exercise item
 class ExerciseItemWidget extends StatelessWidget {
@@ -65,12 +27,7 @@ class ExerciseItemWidget extends StatelessWidget {
     @required this.targetMuscle,
   }) {}
 
-  ///return a enum value in a string format
-  String ConvertEnumToString({
-    ExerciseType exerciseType,
-  }) {
-    return exerciseType.toString().split(".")[1];
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +59,7 @@ class ExerciseItemWidget extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                "-Exercise Type   : " + exerciseType.toString().split(".")[1],
+                "-Exercise Type   : " + ExerciseConverterClass.ConvertEnumToString(enumValue:this.exerciseType),
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 13,

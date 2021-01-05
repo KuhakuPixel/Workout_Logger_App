@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 
 class ApplicationPage extends StatelessWidget {
   final String pageTitle;
 
   ///this property will have some spacing specified by the constructor
   List<Widget> contentsList;
+  List<Widget> modalPageWidgets;
   //constructor
   ApplicationPage({
     @required this.pageTitle,
-   @required double spaceBetweenItem,
-   @required List<Widget> itemList,
+    @required double spaceBetweenItem,
+    @required List<Widget> itemList,
+    @required this.modalPageWidgets,
   }) {
     this.contentsList = BuildContentsListWidget(spaceBetweenItem, itemList);
   }
 
-//returns in a list of widget with spacing between childs feature
+  ///returns in a list of widget with spacing between childs
   List<Widget> BuildContentsListWidget(
       double spaceBetweenItem, List<Widget> itemList) {
     List<Widget> newContentsList = [];
 
     for (int i = 0; i < itemList.length; i++) {
       newContentsList.add(itemList[i]);
-      //dont add box spacing
-      if (i < itemList.length - 1) {
-        newContentsList.add(SizedBox(
+
+      //add boxing space accordingly
+
+      newContentsList.add(
+        SizedBox(
           height: spaceBetweenItem,
-        ));
-      }
+        ),
+      );
     }
     return newContentsList;
   }
 
-  ///show  a modal bottom sheet when a certainn button is pressed
+  ///show  a modal bottom sheet when the add button is pressed
   void ShowModalBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
@@ -43,49 +47,12 @@ class ApplicationPage extends StatelessWidget {
           height: 610,
           width: double.infinity,
           color: Colors.grey[900],
+          //contents of the input spreadsheet
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            //the input sheed content
-            children: <Widget>[
-              //close and confirm button
-              Container(
-                child: Row(
-                  children: [
-                    //close button
-                    RawMaterialButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      elevation: 2.0,
-                      fillColor: Colors.amber[800],
-                      child: Icon(
-                        Icons.close,
-                        size: 30.0,
-                      ),
-                      //padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    ),
-                    //confirm button button
-                    RawMaterialButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        print("Submit input");
-                      },
-                      elevation: 2.0,
-                      fillColor: Colors.amber[800],
-                      child: Icon(
-                        Icons.add,
-                        size: 30.0,
-                      ),
-                      // padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ),
-                alignment: Alignment.bottomCenter,
-              )
-            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            //the input sheet content
+            children: this.modalPageWidgets,
           ),
         );
       },
@@ -114,6 +81,7 @@ class ApplicationPage extends StatelessWidget {
       // a floatingactionbuttonn that is built in as a parameter of schaffhold
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
+        //open the modal bottom sheet when the buttonn is pressed
         onPressed: () {
           ShowModalBottomSheet(context);
         },

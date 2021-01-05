@@ -1,6 +1,4 @@
-
-import 'package:WorkoutLoggerApp/ContentPages/SubPage.dart/ExercisePage.dart';
-
+import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 
 import 'package:flutter/material.dart';
 
@@ -49,6 +47,8 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   //this will be used as a page for the main content of the app
   static List<Widget> _pageContentOptions = <Widget>[
     ExercisePage(),
+    ExercisePage(),
+    ExercisePage(),
   ];
 
   ///Called with an index as its argument according to which tab is pressed
@@ -58,7 +58,7 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
       _selectedPageIndex = index;
     });
   }
-
+//main virtual function
   @override
   Widget build(BuildContext context) {
     return Scaffold(
