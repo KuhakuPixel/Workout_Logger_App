@@ -51,7 +51,7 @@ class ApplicationPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            //the input sheet content
+            //the widgets input  content
             children: this.modalPageWidgets,
           ),
         );

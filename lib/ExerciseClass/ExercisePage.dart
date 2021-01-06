@@ -1,3 +1,4 @@
+import 'package:WorkoutLoggerApp/CustomWidget/DetailsAndDropDown.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,10 @@ class DropDownValueWrapper {
   DropDownValueWrapper(this.stringValue);
 }
 
+///implementing ApplicationPage WIdget
 class _ExercisePageState extends State<ExercisePage> {
+  ///this is the value for all of the widgets in the modal bottom page
+  double modalWidgetsLeftPaddingValue = 6;
   DropDownValueWrapper exerciseTypeDropDownValueWrapper =
       new DropDownValueWrapper(
     ExerciseConverterClass.ConvertEnumToString(
@@ -92,6 +96,7 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   Widget build(BuildContext context) {
+    //exercise page will use most of the feature from application page
     return ApplicationPage(
       pageTitle: "Exercise Page",
       spaceBetweenItem: 10,
@@ -118,14 +123,30 @@ class _ExercisePageState extends State<ExercisePage> {
           width: 250,
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(
-            left: 6,
+            left: modalWidgetsLeftPaddingValue,
           ),
         ),
         SizedBox(
           height: 10,
         ),
-        //close and confirm button
-
+        Container(
+          child: DropDownWithDetails(
+            dropDownStringValue: exerciseTypeDropDownValueWrapper.stringValue,
+            detailStringValue: "Exercise Type",
+            spaceBetween: 150,
+            //map the exerciseTypeList into DropdownMenuItem<String> type
+            dropDownItemList: ExerciseConverterClass.exerciseTypeList
+                .map<DropdownMenuItem<String>>((String value) {
+              //specify the widget that is returned
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+          padding: EdgeInsets.only(left: modalWidgetsLeftPaddingValue),
+        ),
+        /*
         DropdownButton<String>(
           value: exerciseTypeDropDownValueWrapper.stringValue,
           icon: Icon(Icons.arrow_downward),
@@ -138,7 +159,7 @@ class _ExercisePageState extends State<ExercisePage> {
           ),
           onChanged: (String newValue) {
             ChangeDropDownValue(exerciseTypeDropDownValueWrapper, newValue);
-            print(exerciseTypeDropDownValueWrapper.stringValue);
+           // print(exerciseTypeDropDownValueWrapper.stringValue);
           },
           items: ExerciseConverterClass.exerciseTypeList
               .map<DropdownMenuItem<String>>((String value) {
@@ -148,7 +169,7 @@ class _ExercisePageState extends State<ExercisePage> {
             );
           }).toList(),
         ),
-
+        */
         SizedBox(
           height: 10,
         ),
