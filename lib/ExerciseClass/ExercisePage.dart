@@ -129,23 +129,41 @@ class _ExercisePageState extends State<ExercisePage> {
         SizedBox(
           height: 10,
         ),
-        Container(
-          child: DropDownWithDetails(
-            dropDownStringValue: exerciseTypeDropDownValueWrapper.stringValue,
-            detailStringValue: "Exercise Type",
-            spaceBetween: 150,
-            //map the exerciseTypeList into DropdownMenuItem<String> type
-            dropDownItemList: ExerciseConverterClass.exerciseTypeList
-                .map<DropdownMenuItem<String>>((String value) {
-              //specify the widget that is returned
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-          padding: EdgeInsets.only(left: modalWidgetsLeftPaddingValue),
+        //dropwdown with details (exercise type)
+        StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            //builded widget dropwdown with details (exercise type)
+            return Container(
+              child: DropDownWithDetails(
+                dropDownStringValue:
+                    exerciseTypeDropDownValueWrapper.stringValue,
+                detailStringValue: "Exercise Type",
+                spaceBetween: 150,
+                //map the exerciseTypeList into DropdownMenuItem<String> type
+                dropDownItemList: ExerciseConverterClass.exerciseTypeList
+                    .map<DropdownMenuItem<String>>((String value) {
+                  //specify the widget that is returned
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+
+                onDropDownValueChanged: (String dropDownChangedValue) {
+                  //print("Value " + dropDownChangedValue);
+                  setState(() {
+                    exerciseTypeDropDownValueWrapper.stringValue =
+                        dropDownChangedValue;
+                  });
+                },
+              ),
+              padding: EdgeInsets.only(
+                left: modalWidgetsLeftPaddingValue,
+              ),
+            );
+          },
         ),
+
         /*
         DropdownButton<String>(
           value: exerciseTypeDropDownValueWrapper.stringValue,

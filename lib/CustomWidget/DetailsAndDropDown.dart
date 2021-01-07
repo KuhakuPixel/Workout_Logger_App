@@ -6,11 +6,13 @@ class DropDownWithDetails extends StatelessWidget {
   final String detailStringValue;
   final List<Widget> dropDownItemList;
   final double spaceBetween;
+  final void Function(String) onDropDownValueChanged;
   DropDownWithDetails({
-    this.dropDownStringValue,
-    this.dropDownItemList,
-    this.detailStringValue,
-    this.spaceBetween,
+    @required this.dropDownStringValue,
+    @required this.dropDownItemList,
+    @required this.detailStringValue,
+    @required this.spaceBetween,
+    @required this.onDropDownValueChanged,
   }) {}
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,8 @@ class DropDownWithDetails extends StatelessWidget {
         children: <Widget>[
           //text widget
           Text(this.detailStringValue),
-          SizedBox(
-            width: this.spaceBetween
-          ),
+          SizedBox(width: this.spaceBetween),
+          //the drop down
           DropdownButton<String>(
             value: this.dropDownStringValue,
             icon: Icon(Icons.arrow_downward),
@@ -32,7 +33,11 @@ class DropDownWithDetails extends StatelessWidget {
               height: 2,
               color: Colors.deepPurpleAccent,
             ),
-            onChanged: (String newValue) {},
+
+            ///bug :how can we set the state  because it is build via  showModalBottomSheet
+            onChanged: (String newValue) {
+              onDropDownValueChanged(newValue);
+            },
             items: this.dropDownItemList,
           ),
         ],

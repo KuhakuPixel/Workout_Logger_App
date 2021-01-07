@@ -43,18 +43,23 @@ class ApplicationPage extends StatelessWidget {
       isScrollControlled: true,
       //takes in a function with taking in context as an argument and return a widget for the modar sheet
       builder: (BuildContext context) {
-        return Container(
-          height: 610,
-          width: double.infinity,
-          color: Colors.grey[900],
-          //contents of the input spreadsheet
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            //the widgets input  content
-            children: this.modalPageWidgets,
-          ),
-        );
+        //wrapping the modal bottom sheet widget in a statefulbuilder to fix state not updating after notifying the framework
+        return StatefulBuilder(
+            //builder will take in a function with argument (context and setstate(void function that takwes in another void function))
+            builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            height: 610,
+            width: double.infinity,
+            color: Colors.grey[900],
+            //contents of the input spreadsheet
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //the widgets input  content
+              children: this.modalPageWidgets,
+            ),
+          );
+        });
       },
     );
   }
