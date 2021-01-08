@@ -32,7 +32,6 @@ class _ExercisePageState extends State<ExercisePage> {
       exerciseType: ExerciseType.bodyweight,
       targetMuscle: muscleList[13],
     ),
-   
   ];
 
   void AddExerciseToList(
@@ -46,6 +45,20 @@ class _ExercisePageState extends State<ExercisePage> {
     setState(() {
       exerciseList.add(newExerciseItem);
     });
+  }
+
+  void ShowSnackBar(BuildContext context, String message) {
+    SnackBar snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(color: Colors.amber[800]),
+      ),
+      backgroundColor: Colors.grey[900],
+    );
+
+    // Find the Scaffold in the widget tree and use
+    // it to show a SnackBar.
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -182,6 +195,7 @@ class _ExercisePageState extends State<ExercisePage> {
                   bool exerciseNameIsValid =
                       !(["", null, false, 0].contains(this.newExerciseName));
                   if (exerciseNameIsValid) {
+                    //make sure to notify the framework to rebuild the widget with a new state
                     setState(() {
                       AddExerciseToList(
                         this.newExerciseName,
@@ -190,9 +204,17 @@ class _ExercisePageState extends State<ExercisePage> {
                         this.newTargetMuscle,
                       );
                     });
+                    ShowSnackBar(context, "Exercise Added");
+                    //reset name
+                    this.newExerciseName = null;
+                    //go back to the last route
+                    Navigator.pop(context);
                   }
-                  print("Submit input");
-                  Navigator.pop(context);
+                  else{
+                    ShowSnackBar(context,"Please fill the exercise name Bitch-NicholasPixel");
+                     //go back to the last route
+                    Navigator.pop(context);
+                  }
                 },
                 elevation: 2.0,
                 fillColor: Colors.amber[800],

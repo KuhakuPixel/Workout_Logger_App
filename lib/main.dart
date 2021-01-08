@@ -63,7 +63,7 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text('On Development by NicholasPixel'),
       ),
       //the body will control the main page content
       body: _pageContentOptions[_selectedPageIndex],
