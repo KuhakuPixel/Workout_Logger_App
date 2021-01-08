@@ -45,7 +45,7 @@ class ExerciseConverterClass {
   static List<String> exerciseTypeList = ConvertExerciseTypeToStrings();
 
   ///return a enum value in a string format
-  static String ConvertEnumToString({ExerciseType enumValue}) {
+  static String ConvertExerciseTypeEnumToString({ExerciseType enumValue}) {
     //because toString will return "Enum.Value"
     return enumValue.toString().split(".")[1];
   }
@@ -54,8 +54,24 @@ class ExerciseConverterClass {
   static List<String> ConvertExerciseTypeToStrings() {
     List<String> convertedEnum = [];
     for (var value in ExerciseType.values) {
-      convertedEnum.add(ConvertEnumToString(enumValue: value));
+      convertedEnum.add(ConvertExerciseTypeEnumToString(enumValue: value));
     }
     return convertedEnum;
+  }
+
+  static ExerciseType ConvertStringToExerciseType(String stringValue) {
+    //loop until it found the matching stringValue and ExerciseType
+    int i = 0;
+    for (var exerciseTypeValue in ExerciseType.values) {
+      if (ConvertExerciseTypeEnumToString(enumValue: exerciseTypeValue) ==
+          stringValue) {
+        return exerciseTypeValue;
+      }
+      i++;
+    }
+
+    //found nothing
+    print("No matching enum is found");
+    return null;
   }
 }

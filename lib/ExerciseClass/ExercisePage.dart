@@ -10,30 +10,16 @@ class ExercisePage extends StatefulWidget {
   _ExercisePageState createState() => _ExercisePageState();
 }
 
-class DropDownValueWrapper {
-  String stringValue = "";
-  DropDownValueWrapper(this.stringValue);
-}
-
 ///implementing ApplicationPage WIdget
 class _ExercisePageState extends State<ExercisePage> {
   ///this is the value for all of the widgets in the modal bottom page
   double modalWidgetsLeftPaddingValue = 6;
-  DropDownValueWrapper exerciseTypeDropDownValueWrapper =
-      new DropDownValueWrapper(
-    ExerciseConverterClass.ConvertEnumToString(
-        enumValue: ExerciseType.bodyweight),
-  );
-  DropDownValueWrapper targetMuscleDropDownValueWrapper =
-      new DropDownValueWrapper(muscleList[0]);
 
-  ///Alternative to passing variable by reference
-  void ChangeDropDownValue(
-      DropDownValueWrapper dropDownValueWrapperReference, String newValue) {
-    setState(() {
-      dropDownValueWrapperReference.stringValue = newValue;
-    });
-  }
+  String newExerciseName;
+  String newExerciseType =
+      ExerciseConverterClass.ConvertExerciseTypeEnumToString(
+          enumValue: ExerciseType.bodyweight);
+  String newTargetMuscle = muscleList[0];
 
   List<ExerciseItemWidget> exerciseList = [
     new ExerciseItemWidget(
@@ -46,36 +32,7 @@ class _ExercisePageState extends State<ExercisePage> {
       exerciseType: ExerciseType.bodyweight,
       targetMuscle: muscleList[13],
     ),
-    new ExerciseItemWidget(
-      exerciseName: "Barbell curl",
-      exerciseType: ExerciseType.weighted,
-      targetMuscle: muscleList[3],
-    ),
-    new ExerciseItemWidget(
-      exerciseName: "Push up",
-      exerciseType: ExerciseType.bodyweight,
-      targetMuscle: muscleList[13],
-    ),
-    new ExerciseItemWidget(
-      exerciseName: "Barbell curl",
-      exerciseType: ExerciseType.weighted,
-      targetMuscle: muscleList[3],
-    ),
-    new ExerciseItemWidget(
-      exerciseName: "Push up",
-      exerciseType: ExerciseType.bodyweight,
-      targetMuscle: muscleList[13],
-    ),
-    new ExerciseItemWidget(
-      exerciseName: "Barbell curl",
-      exerciseType: ExerciseType.weighted,
-      targetMuscle: muscleList[3],
-    ),
-    new ExerciseItemWidget(
-      exerciseName: "Push up",
-      exerciseType: ExerciseType.bodyweight,
-      targetMuscle: muscleList[13],
-    ),
+   
   ];
 
   void AddExerciseToList(
@@ -116,6 +73,9 @@ class _ExercisePageState extends State<ExercisePage> {
               ),
             ),
             autocorrect: false,
+            onChanged: (stringValue) {
+              this.newExerciseName = stringValue;
+            },
           ),
           width: 250,
           alignment: Alignment.topLeft,
@@ -132,8 +92,7 @@ class _ExercisePageState extends State<ExercisePage> {
             //builded widget dropwdown with details (exercise type)
             return Container(
               child: DropDownWithDetails(
-                dropDownStringValue:
-                    exerciseTypeDropDownValueWrapper.stringValue,
+                dropDownStringValue: newExerciseType,
                 detailStringValue: "Exercise Type",
                 spaceBetween: 150,
                 //map the exerciseTypeList into DropdownMenuItem<String> type
@@ -149,8 +108,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 onDropDownValueChanged: (String dropDownChangedValue) {
                   //print("Value " + dropDownChangedValue);
                   setState(() {
-                    exerciseTypeDropDownValueWrapper.stringValue =
-                        dropDownChangedValue;
+                    newExerciseType = dropDownChangedValue;
                   });
                 },
               ),
@@ -168,8 +126,7 @@ class _ExercisePageState extends State<ExercisePage> {
           builder: (BuildContext context, StateSetter setState) {
             return Container(
               child: DropDownWithDetails(
-                dropDownStringValue:
-                    targetMuscleDropDownValueWrapper.stringValue,
+                dropDownStringValue: newTargetMuscle,
                 detailStringValue: "Target Muscle",
                 spaceBetween: 150,
                 //map the exerciseTypeList into DropdownMenuItem<String> type
@@ -185,8 +142,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 onDropDownValueChanged: (String dropDownChangedValue) {
                   //print("Value " + dropDownChangedValue);
                   setState(() {
-                    targetMuscleDropDownValueWrapper.stringValue =
-                        dropDownChangedValue;
+                    newTargetMuscle = dropDownChangedValue;
                   });
                 },
               ),
@@ -196,30 +152,7 @@ class _ExercisePageState extends State<ExercisePage> {
             );
           },
         ),
-        /*
-        DropdownButton<String>(
-          value: exerciseTypeDropDownValueWrapper.stringValue,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String newValue) {
-            ChangeDropDownValue(exerciseTypeDropDownValueWrapper, newValue);
-           // print(exerciseTypeDropDownValueWrapper.stringValue);
-          },
-          items: ExerciseConverterClass.exerciseTypeList
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-        */
+
         SizedBox(
           height: 10,
         ),
@@ -244,8 +177,22 @@ class _ExercisePageState extends State<ExercisePage> {
               //confirm button button
               RawMaterialButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  //checking the exercisenameInput
+                  //return true if the argument element is equal to one of the contained elements
+                  bool exerciseNameIsValid =
+                      !(["", null, false, 0].contains(this.newExerciseName));
+                  if (exerciseNameIsValid) {
+                    setState(() {
+                      AddExerciseToList(
+                        this.newExerciseName,
+                        ExerciseConverterClass.ConvertStringToExerciseType(
+                            this.newExerciseType),
+                        this.newTargetMuscle,
+                      );
+                    });
+                  }
                   print("Submit input");
+                  Navigator.pop(context);
                 },
                 elevation: 2.0,
                 fillColor: Colors.amber[800],

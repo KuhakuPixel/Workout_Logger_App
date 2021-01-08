@@ -59,7 +59,7 @@ class ExerciseItemWidget extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                "-Exercise Type   : " + ExerciseConverterClass.ConvertEnumToString(enumValue:this.exerciseType),
+                "-Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue:this.exerciseType),
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 13,

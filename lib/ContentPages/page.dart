@@ -6,7 +6,7 @@ class ApplicationPage extends StatelessWidget {
 
   ///this property will have some spacing specified by the constructor
   List<Widget> contentsList;
-   ///list of the widget that will be put in the modal bototm page
+   ///list of the widget that will be put in the modal bottom page used for adding new item
   List<Widget> modalPageWidgets;
   ///
   ApplicationPage({
