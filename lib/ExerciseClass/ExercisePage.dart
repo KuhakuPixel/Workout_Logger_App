@@ -25,10 +25,7 @@ class _ExercisePageState extends State<ExercisePage> {
         enumValue: ExerciseType.bodyweight),
   );
   DropDownValueWrapper targetMuscleDropDownValueWrapper =
-      new DropDownValueWrapper(
-    ExerciseConverterClass.ConvertEnumToString(
-        enumValue: ExerciseType.bodyweight),
-  );
+      new DropDownValueWrapper(muscleList[0]);
 
   ///Alternative to passing variable by reference
   void ChangeDropDownValue(
@@ -163,7 +160,42 @@ class _ExercisePageState extends State<ExercisePage> {
             );
           },
         ),
+        SizedBox(
+          height: 10,
+        ),
+        //dropdown with details for chosing the target muscle
+        StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              child: DropDownWithDetails(
+                dropDownStringValue:
+                    targetMuscleDropDownValueWrapper.stringValue,
+                detailStringValue: "Target Muscle",
+                spaceBetween: 150,
+                //map the exerciseTypeList into DropdownMenuItem<String> type
+                dropDownItemList:
+                    muscleList.map<DropdownMenuItem<String>>((String value) {
+                  //specify the widget that is returned
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
 
+                onDropDownValueChanged: (String dropDownChangedValue) {
+                  //print("Value " + dropDownChangedValue);
+                  setState(() {
+                    targetMuscleDropDownValueWrapper.stringValue =
+                        dropDownChangedValue;
+                  });
+                },
+              ),
+              padding: EdgeInsets.only(
+                left: modalWidgetsLeftPaddingValue,
+              ),
+            );
+          },
+        ),
         /*
         DropdownButton<String>(
           value: exerciseTypeDropDownValueWrapper.stringValue,

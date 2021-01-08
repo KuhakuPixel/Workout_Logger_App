@@ -42,9 +42,11 @@ List<String> muscleList = [
 ];
 
 class ExerciseConverterClass {
-  static List<String> exerciseTypeList=ConvertExerciseTypeToStrings();
+  static List<String> exerciseTypeList = ConvertExerciseTypeToStrings();
+
   ///return a enum value in a string format
   static String ConvertEnumToString({ExerciseType enumValue}) {
+    //because toString will return "Enum.Value"
     return enumValue.toString().split(".")[1];
   }
 

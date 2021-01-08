@@ -6,19 +6,23 @@ class ApplicationPage extends StatelessWidget {
 
   ///this property will have some spacing specified by the constructor
   List<Widget> contentsList;
+   ///list of the widget that will be put in the modal bototm page
   List<Widget> modalPageWidgets;
-  //constructor
+  ///
   ApplicationPage({
     @required this.pageTitle,
+    ///space between the item:Workout,schedule and ect
     @required double spaceBetweenItem,
+    ///the item of the main content of the page 
     @required List<Widget> itemList,
+   
     @required this.modalPageWidgets,
   }) {
-    this.contentsList = BuildContentsListWidget(spaceBetweenItem, itemList);
+    this.contentsList = BuildWidgetsWithSpace(spaceBetweenItem, itemList);
   }
 
   ///returns in a list of widget with spacing between childs
-  List<Widget> BuildContentsListWidget(
+  List<Widget> BuildWidgetsWithSpace(
       double spaceBetweenItem, List<Widget> itemList) {
     List<Widget> newContentsList = [];
 
