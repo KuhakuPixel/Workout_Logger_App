@@ -1,4 +1,6 @@
+import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/DetailsAndDropDown.dart';
+import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
@@ -58,34 +60,21 @@ class _ExercisePageState extends State<ExercisePage> {
       spaceBetweenItem: 10,
       itemList: AppManager.DisplayItemsAccordingToState(
           exerciseList, "Tap the bottom to add new Exercise"),
-      modalPageWidgets: <Widget>[
+      bottomModalPageInputWidgets: <Widget>[
         ///widget for the modal page input
         //Exercise name input
-        Container(
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: "Type Exercise Name Here....",
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.amber[800]),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.amber[800]),
-              ),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.amber[800]),
-              ),
-            ),
-            autocorrect: false,
-            onChanged: (stringValue) {
-              this.newExerciseName = stringValue;
-            },
-          ),
-          width: 250,
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(
-            left: modalWidgetsLeftPaddingValue,
-          ),
+        ///widget for the modal page input
+        //Exercise name input
+        AmberTextInput(
+          labelText: "Type Exercise Name Here....",
+          onChanged: (stringValue) {
+            //track the value of the dropdown
+            this.newExerciseName = stringValue;
+          },
+          leftPaddingValue:  modalWidgetsLeftPaddingValue,
+          textInputWidth: 250,
         ),
+       
         SizedBox(
           height: 10,
         ),
@@ -160,66 +149,38 @@ class _ExercisePageState extends State<ExercisePage> {
           height: 10,
         ),
         //close and confirm button
-        Container(
-          child: Row(
-            children: <Widget>[
-              //close button
-              RawMaterialButton(
-                onPressed: () {
-                  //go back to the last route
-                  Navigator.pop(context);
-                },
-                elevation: 2.0,
-                fillColor: Colors.amber[800],
-                child: Icon(
-                  Icons.close,
-                  size: 30.0,
-                ),
-                //padding: EdgeInsets.all(15.0),
-                shape: CircleBorder(),
-              ),
-              //confirm button button
-              RawMaterialButton(
-                onPressed: () {
-                  //checking the exercisenameInput
-                  //return true if the argument element is equal to one of the contained elements
-                  bool exerciseNameIsValid =
-                      !(["", null, false, 0].contains(this.newExerciseName));
-                  if (exerciseNameIsValid) {
-                    //make sure to notify the framework to rebuild the widget with a new state
-                    setState(() {
-                      AddExerciseToList(
-                        this.newExerciseName,
-                        ExerciseConverterClass.ConvertStringToExerciseType(
-                            this.newExerciseType),
-                        this.newTargetMuscle,
-                      );
-                    });
-                    AppManager.ShowSnackBar(context, "Exercise Added");
-                    //reset name
-                    this.newExerciseName = null;
-                    //go back to the last route
-                    Navigator.pop(context);
-                  } else {
-                    AppManager.ShowSnackBar(context,
-                        "Please fill the exercise name Bitch-NicholasPixel");
-                    //go back to the last route
-                    Navigator.pop(context);
-                  }
-                },
-                elevation: 2.0,
-                fillColor: Colors.amber[800],
-                child: Icon(
-                  Icons.add,
-                  size: 30.0,
-                ),
-                // padding: EdgeInsets.all(15.0),
-                shape: CircleBorder(),
-              ),
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-          alignment: Alignment.bottomCenter,
+
+        CloseModalBottomPageAndConfirmButtonWidget(
+          onPressedCloseButton: () {
+            Navigator.pop(context);
+          },
+          onPressedConfirmButton: () {
+            //checking the exercisenameInput
+            //return true if the argument element is equal to one of the contained elements
+            bool exerciseNameIsValid =
+                !(["", null, false, 0].contains(this.newExerciseName));
+            if (exerciseNameIsValid) {
+              //make sure to notify the framework to rebuild the widget with a new state
+              setState(() {
+                AddExerciseToList(
+                  this.newExerciseName,
+                  ExerciseConverterClass.ConvertStringToExerciseType(
+                      this.newExerciseType),
+                  this.newTargetMuscle,
+                );
+              });
+              AppManager.ShowSnackBar(context, "Exercise Added");
+              //reset name
+              this.newExerciseName = null;
+              //go back to the last route
+              Navigator.pop(context);
+            } else {
+              AppManager.ShowSnackBar(
+                  context, "Please fill the exercise name Bitch-NicholasPixel");
+              //go back to the last route
+              Navigator.pop(context);
+            }
+          },
         ),
       ],
     );

@@ -7,7 +7,7 @@ class ApplicationPage extends StatelessWidget {
   ///this property will have some spacing specified by the constructor
   List<Widget> contentsList;
    ///list of the widget that will be put in the modal bottom page used for adding new item
-  List<Widget> modalPageWidgets;
+  List<Widget> bottomModalPageInputWidgets;
   ///
   ApplicationPage({
     @required this.pageTitle,
@@ -16,7 +16,7 @@ class ApplicationPage extends StatelessWidget {
     ///the item of the main content of the page 
     @required List<Widget> itemList,
    
-    @required this.modalPageWidgets,
+    @required this.bottomModalPageInputWidgets,
   }) {
     this.contentsList = BuildWidgetsWithSpace(spaceBetweenItem, itemList);
   }
@@ -60,7 +60,7 @@ class ApplicationPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               //the widgets input  content
-              children: this.modalPageWidgets,
+              children: this.bottomModalPageInputWidgets,
             ),
           );
         });

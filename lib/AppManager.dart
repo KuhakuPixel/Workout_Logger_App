@@ -28,6 +28,7 @@ class AppManager {
             ),
           ),
           alignment: Alignment.center,
+         // height:double.infinity,
         ),
       ];
     } else {
