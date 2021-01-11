@@ -204,7 +204,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         this.newTargetMuscle,
                       );
                     });
-                    ShowSnackBar(context, "Exercise Added");
+                    ShowSnackBar(context, "Exercise Added now work your ass off to get that six pack");
                     //reset name
                     this.newExerciseName = null;
                     //go back to the last route
