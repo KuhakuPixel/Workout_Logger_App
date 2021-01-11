@@ -1,10 +1,11 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutPage.dart';
 
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-/// This is the main application widget.
+///Class that controls the main application
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
 
@@ -46,8 +47,8 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   //page content
   //this will be used as a page for the main content of the app
   static List<Widget> _pageContentOptions = <Widget>[
-    ExercisePage(),
-    ExercisePage(),
+    WorkoutPage(),
+    WorkoutPage(),
     ExercisePage(),
   ];
 

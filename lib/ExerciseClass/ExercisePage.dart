@@ -3,6 +3,7 @@ import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
 
+import '../AppManager.dart';
 import '../ContentPages/page.dart';
 
 class ExercisePage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _ExercisePageState extends State<ExercisePage> {
   String newTargetMuscle = muscleList[0];
 
   List<ExerciseItemWidget> exerciseList = [
+    /*
     new ExerciseItemWidget(
       exerciseName: "Barbell curl",
       exerciseType: ExerciseType.weighted,
@@ -32,6 +34,7 @@ class _ExercisePageState extends State<ExercisePage> {
       exerciseType: ExerciseType.bodyweight,
       targetMuscle: muscleList[13],
     ),
+    */
   ];
 
   void AddExerciseToList(
@@ -47,27 +50,14 @@ class _ExercisePageState extends State<ExercisePage> {
     });
   }
 
-  void ShowSnackBar(BuildContext context, String message) {
-    SnackBar snackBar = SnackBar(
-      content: Text(
-        message,
-        style: TextStyle(color: Colors.amber[800]),
-      ),
-      backgroundColor: Colors.grey[900],
-    );
-
-    // Find the Scaffold in the widget tree and use
-    // it to show a SnackBar.
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
-
   @override
   Widget build(BuildContext context) {
     //exercise page will use most of the feature from application page
     return ApplicationPage(
       pageTitle: "Exercise Page",
       spaceBetweenItem: 10,
-      itemList: exerciseList,
+      itemList: AppManager.DisplayItemsAccordingToState(
+          exerciseList, "Tap the bottom to add new Exercise"),
       modalPageWidgets: <Widget>[
         ///widget for the modal page input
         //Exercise name input
@@ -176,6 +166,7 @@ class _ExercisePageState extends State<ExercisePage> {
               //close button
               RawMaterialButton(
                 onPressed: () {
+                  //go back to the last route
                   Navigator.pop(context);
                 },
                 elevation: 2.0,
@@ -204,15 +195,15 @@ class _ExercisePageState extends State<ExercisePage> {
                         this.newTargetMuscle,
                       );
                     });
-                    ShowSnackBar(context, "Exercise Added now work your ass off to get that six pack");
+                    AppManager.ShowSnackBar(context, "Exercise Added");
                     //reset name
                     this.newExerciseName = null;
                     //go back to the last route
                     Navigator.pop(context);
-                  }
-                  else{
-                    ShowSnackBar(context,"Please fill the exercise name Bitch-NicholasPixel");
-                     //go back to the last route
+                  } else {
+                    AppManager.ShowSnackBar(context,
+                        "Please fill the exercise name Bitch-NicholasPixel");
+                    //go back to the last route
                     Navigator.pop(context);
                   }
                 },
