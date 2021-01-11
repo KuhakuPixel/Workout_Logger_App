@@ -28,6 +28,7 @@ class AmberTextInput extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           labelText: this.labelText,
+          //border properties
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.amber[800]),
           ),
@@ -42,6 +43,7 @@ class AmberTextInput extends StatelessWidget {
         onChanged: (stringValue) {
           onChanged(stringValue);
         },
+        
       ),
       width: this.textInputWidth,
       height: textInputHeight,

@@ -1,6 +1,7 @@
 import 'package:WorkoutLoggerApp/ContentPages/page.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
+import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -29,15 +30,75 @@ class _WorkoutPageState extends State<WorkoutPage> {
           textInputWidth: 250,
         ),
         SizedBox(
-          height: 20,
+          height: 10,
         ),
-        //search bar
-        AmberTextInput(
-          labelText: "Search shit",
-          onChanged: (stringValue) {},
-          leftPaddingValue: 6,
-          textInputWidth: 250,
-          textInputHeight:50,
+        //boxed container
+        Container(
+          child: Card(
+            //the content of the item widget
+            child: Column(
+              //item inside the card (aligned by the help of column widget)
+              children: <Widget>[
+                //search bar
+                /*
+                AmberTextInput(
+                  labelText: "Search Exercise..........",
+                  onChanged: (stringValue) {},
+                  leftPaddingValue: 8,
+                  textInputWidth: 250,
+                  textInputHeight:50,
+                ),
+                */
+                //Search field
+                Container(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.amber[800],
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.amber[800],
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.amber[800]),
+                      ),
+                      labelText: 'Search Exercise',
+                      isDense: true, // Added this
+                      contentPadding: EdgeInsets.all(8), // Added this
+                      //enabledBorder: OutlineInputBorder(),
+                    ),
+                  ),
+                  width: 350,
+                  padding: EdgeInsets.only(
+                    //left: 10,
+                    top: 20,
+                  ),
+                alignment:Alignment.center,
+                ),
+              ],
+
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+            ),
+
+            //border property
+            shape: BeveledRectangleBorder(
+              side: BorderSide(
+                color: Colors.amber[800],
+                width: 2,
+              ),
+            ),
+
+            color: ApplicationColorsPallete.ColorsPallete_["BlackGreyish"],
+
+            //elevation:10000000000000,
+          ),
+          width: double.infinity,
+          height: 480,
         ),
         SizedBox(
           height: 10,
@@ -49,7 +110,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
           },
           onPressedConfirmButton: () {},
         )
-        
       ],
     );
   }
