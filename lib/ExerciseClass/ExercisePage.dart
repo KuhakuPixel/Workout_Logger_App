@@ -24,6 +24,7 @@ class _ExercisePageState extends State<ExercisePage> {
           enumValue: ExerciseType.bodyweight);
   String newTargetMuscle = muscleList[0];
 
+  ///User added exercise will be stored here
   List<ExerciseItemWidget> exerciseList = [
     /*
     new ExerciseItemWidget(

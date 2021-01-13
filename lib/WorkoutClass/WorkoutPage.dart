@@ -1,6 +1,7 @@
 import 'package:WorkoutLoggerApp/ContentPages/page.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
       itemList: <Widget>[
         Text("Hello world"),
       ],
+      
+      /////////////////////  bottomModalPageInputWidgets
       bottomModalPageInputWidgets: <Widget>[
-        ///widget for the modal page input
+        ///widgets for the modal page input
         //Exercise name input and Add exercise button
         Row(
           children: [
@@ -35,7 +38,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
               child: RaisedButton(
                 onPressed: () {
                   //navigate to a new page to select an exercise
-                  //Navigator.push(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return new AddExerciseToWorkoutPage();
+                      },
+                    ),
+                  );
                 },
                 child: Text(
                   "Add Exerice",
