@@ -22,12 +22,40 @@ class _WorkoutPageState extends State<WorkoutPage> {
       ],
       bottomModalPageInputWidgets: <Widget>[
         ///widget for the modal page input
-        //Exercise name input
-        AmberTextInput(
-          labelText: "Type workout Name here",
-          onChanged: (stringValue) {},
-          leftPaddingValue: 6,
-          textInputWidth: 250,
+        //Exercise name input and Add exercise button
+        Row(
+          children: [
+            AmberTextInput(
+              labelText: "Type workout Name here",
+              onChanged: (stringValue) {},
+              leftPaddingValue: 6,
+              textInputWidth: 200,
+            ),
+            Container(
+              child: RaisedButton(
+                onPressed: () {
+                  //navigate to a new page to select an exercise
+                  //Navigator.push(context);
+                },
+                child: Text(
+                  "Add Exerice",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                color: Colors.amber[800],
+                splashColor: Colors.amber[200],
+                highlightColor: Colors.amber[200],
+              ),
+              padding: EdgeInsets.only(
+                right: 10,
+                top: 14,
+              ),
+            ),
+          ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),
         SizedBox(
           height: 10,
@@ -50,6 +78,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 ),
                 */
                 //Search field
+                /*
                 Container(
                   child: TextField(
                     decoration: InputDecoration(
@@ -77,12 +106,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     //left: 10,
                     top: 20,
                   ),
-                alignment:Alignment.center,
+                  alignment: Alignment.center,
                 ),
+                */
               ],
 
               crossAxisAlignment: CrossAxisAlignment.center,
-
             ),
 
             //border property
