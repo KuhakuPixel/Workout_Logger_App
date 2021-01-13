@@ -1,3 +1,4 @@
+import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                     //the content of the item widget
                     child: Column(
                       //item inside the card (aligned by the help of column widget)
-                      
+                     
                       children: <Widget>[],
 
                       crossAxisAlignment: CrossAxisAlignment.center,

@@ -9,6 +9,22 @@ import '../AppManager.dart';
 import '../ContentPages/page.dart';
 
 class ExercisePage extends StatefulWidget {
+  static int someDummyVariable;
+  ///User added exercise will be stored here
+ static List<ExerciseItemWidget> exerciseList = [
+    /*
+    new ExerciseItemWidget(
+      exerciseName: "Barbell curl",
+      exerciseType: ExerciseType.weighted,
+      targetMuscle: muscleList[3],
+    ),
+    new ExerciseItemWidget(
+      exerciseName: "Push up",
+      exerciseType: ExerciseType.bodyweight,
+      targetMuscle: muscleList[13],
+    ),
+    */
+  ];
   @override
   _ExercisePageState createState() => _ExercisePageState();
 }
@@ -24,21 +40,7 @@ class _ExercisePageState extends State<ExercisePage> {
           enumValue: ExerciseType.bodyweight);
   String newTargetMuscle = muscleList[0];
 
-  ///User added exercise will be stored here
-  List<ExerciseItemWidget> exerciseList = [
-    /*
-    new ExerciseItemWidget(
-      exerciseName: "Barbell curl",
-      exerciseType: ExerciseType.weighted,
-      targetMuscle: muscleList[3],
-    ),
-    new ExerciseItemWidget(
-      exerciseName: "Push up",
-      exerciseType: ExerciseType.bodyweight,
-      targetMuscle: muscleList[13],
-    ),
-    */
-  ];
+  
 
   void AddExerciseToList(
       String exerciseName, ExerciseType exerciseType, String targetMuscle) {
@@ -49,18 +51,19 @@ class _ExercisePageState extends State<ExercisePage> {
     );
     //rebuild all the widget after this code is run
     setState(() {
-      exerciseList.add(newExerciseItem);
+      ExercisePage.exerciseList.add(newExerciseItem);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    //widget.someDummyVariable;
     //exercise page will use most of the feature from application page
     return ApplicationPage(
       pageTitle: "Exercise Page",
       spaceBetweenItem: 10,
       itemList: AppManager.DisplayItemsAccordingToState(
-          exerciseList, "Tap the bottom to add new Exercise"),
+          ExercisePage.exerciseList, "Tap the bottom to add new Exercise"),
       bottomModalPageInputWidgets: <Widget>[
         ///widget for the modal page input
         //Exercise name input
