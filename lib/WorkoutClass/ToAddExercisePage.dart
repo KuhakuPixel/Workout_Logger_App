@@ -47,6 +47,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                       contentPadding: EdgeInsets.all(8), // Added this
                       //enabledBorder: OutlineInputBorder(),
                     ),
+                    //called when the input are changed with an argument of the typed value
                     onChanged: (value) {
                       setState(() {
                         //update the variable that is going to be used to filter the search
