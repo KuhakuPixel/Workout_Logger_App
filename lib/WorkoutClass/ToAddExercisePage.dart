@@ -9,8 +9,11 @@ class AddExerciseToWorkoutPage extends StatefulWidget {
 }
 
 class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
+  //to do:Create a function to takes in the list of widget and remap it into another custom widget
   @override
   Widget build(BuildContext context) {
+    //return the list that is going to be used by the argument
+    //from a function that map the ExerciseList to another custom widget that is built for this page
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Exercise To Your Workout"),
@@ -60,18 +63,20 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                       color: Colors.amber[800],
                     ),
                   ),
-                padding:EdgeInsets.only(left:5),
+                  padding: EdgeInsets.only(left: 5),
                 ),
                 //boxed container
                 Container(
                   child: Card(
                     //the content of the item widget
-                    child: Column(
-                      //item inside the card (aligned by the help of column widget)
-                     
-                      children: <Widget>[],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        //item inside the card (aligned by the help of column widget)
 
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                        children: ExercisePage.exerciseList,//note: the framework automatically rebuild the widget that has this property to update the state
+
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      ),
                     ),
 
                     //border property
@@ -84,9 +89,11 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
 
                     color:
                         ApplicationColorsPallete.ColorsPallete_["BlackGreyish"],
+
                   ),
                   width: double.infinity,
-                  height: 480,
+                  height: 500,
+                  //padding:EdgeInsets.only(left:10,right:10),
                 ),
               ],
               mainAxisAlignment: MainAxisAlignment.start,

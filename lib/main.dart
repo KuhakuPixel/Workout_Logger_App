@@ -46,7 +46,7 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
 
   //page content
   //this will be used as a page for the main content of the app
-  static List<Widget> _pageContentOptions = <Widget>[
+  static List<Widget> appPages = <Widget>[
     WorkoutPage(),
     WorkoutPage(),
     ExercisePage(),
@@ -67,7 +67,7 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
         title: Text('On Development by NicholasPixel'),
       ),
       //the body will control the main page content
-      body: _pageContentOptions[_selectedPageIndex],
+      body: appPages[_selectedPageIndex],
 
       //the bottom navigation bar//containing it with card to allow for more decoration
       bottomNavigationBar: Card(
