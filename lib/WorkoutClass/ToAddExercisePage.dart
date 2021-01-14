@@ -1,4 +1,5 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
+import 'package:WorkoutLoggerApp/StateManager.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class AddExerciseToWorkoutPage extends StatefulWidget {
 }
 
 class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
+  String searchedExerciseName = "";
   //to do:Create a function to takes in the list of widget and remap it into another custom widget
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,12 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                       contentPadding: EdgeInsets.all(8), // Added this
                       //enabledBorder: OutlineInputBorder(),
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        //update the variable that is going to be used to filter the search
+                        this.searchedExerciseName = value;
+                      });
+                    },
                   ),
                   width: 350,
                   padding: EdgeInsets.only(
@@ -65,15 +73,18 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                   ),
                   padding: EdgeInsets.only(left: 5),
                 ),
-                //boxed container
+                //boxed container containing all of the created exercise
                 Container(
                   child: Card(
                     //the content of the item widget
                     child: SingleChildScrollView(
                       child: Column(
                         //item inside the card (aligned by the help of column widget)
-
-                        children: ExercisePage.exerciseList,//note: the framework automatically rebuild the widget that has this property to update the state
+                        //display the children according to the search 
+                        children: StateManager.SearchExercises(
+                          itemCollections: ExercisePage.exerciseList,
+                          searchResult: this.searchedExerciseName,
+                        ),
 
                         crossAxisAlignment: CrossAxisAlignment.center,
                       ),
@@ -89,7 +100,6 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
 
                     color:
                         ApplicationColorsPallete.ColorsPallete_["BlackGreyish"],
-
                   ),
                   width: double.infinity,
                   height: 500,
