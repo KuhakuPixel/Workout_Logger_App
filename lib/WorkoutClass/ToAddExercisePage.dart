@@ -1,3 +1,5 @@
+import 'package:WorkoutLoggerApp/CustomWidget/WidgetResizer.dart';
+import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
@@ -74,22 +76,32 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                   ),
                   padding: EdgeInsets.only(left: 5),
                 ),
-                
+
                 //boxed container containing all of the created exercise
                 Container(
                   child: Card(
-                    //the content of the item widget
+                    //the content of the available exercise (wrapped onto column to make it scrollable)
                     child: SingleChildScrollView(
                       child: Column(
                         //item inside the card (aligned by the help of column widget)
-                        //display the children according to the search 
+                        //display the children according to the search
                         children: StateManager.SearchExercises(
                           itemCollections: ExercisePage.exerciseList,
                           searchResult: this.searchedExerciseName,
-                        ),
+                        ).map<ResizedWidget>(
+                          (exerciseItemWidget) {
+                            return ResizedWidget(
+                              widget: exerciseItemWidget,
+                              height: 100,
+                              width: 300,
+                            );
+                          },
+                        ).toList(),
 
                         crossAxisAlignment: CrossAxisAlignment.center,
                       ),
+                      //availale exercises padding
+                      padding: EdgeInsets.only(top: 10),
                     ),
 
                     //border property
@@ -107,7 +119,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                   height: 500,
                   //padding:EdgeInsets.only(left:10,right:10),
                 ),
-                
+
                 /*
                 Container(
                   child: Card(
