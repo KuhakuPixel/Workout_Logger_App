@@ -74,6 +74,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                   ),
                   padding: EdgeInsets.only(left: 5),
                 ),
+                
                 //boxed container containing all of the created exercise
                 Container(
                   child: Card(
@@ -106,6 +107,24 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                   height: 500,
                   //padding:EdgeInsets.only(left:10,right:10),
                 ),
+                
+                /*
+                Container(
+                  child: Card(
+                    //border property
+                    shape: BeveledRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.amber[800],
+                        width: 2,
+                      ),
+                    ),
+
+                    color: Colors.amber[800],
+                  ),
+                width:double.maxFinite,
+                height:20,
+                ),
+                */
               ],
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start),
