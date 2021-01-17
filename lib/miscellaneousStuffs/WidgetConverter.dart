@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class WidgetConverterLibrary {
   ///returns in a list of widget with spacing between childs
   static List<Widget> BuildWidgetsWithSpace(
-      double spaceBetweenItem, List<Widget> itemList) {
+      {double spaceBetweenItem, List<Widget> itemList}) {
     List<Widget> newContentsList = <Widget>[];
 
     for (int i = 0; i < itemList.length; i++) {
