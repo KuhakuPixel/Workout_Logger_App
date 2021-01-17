@@ -1,43 +1,31 @@
+import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ApplicationPage extends StatelessWidget {
   final String pageTitle;
 
-  ///this property will have some spacing specified by the constructor
+  ///the main contents of the page
   List<Widget> contentsList;
-   ///list of the widget that will be put in the modal bottom page used for adding new item
+
+  ///list of the widget that will be put in the modal bottom page used for adding new item
   List<Widget> bottomModalPageInputWidgets;
+
   ///
   ApplicationPage({
     @required this.pageTitle,
+
     ///space between the item:Workout,schedule and ect
     @required double spaceBetweenItem,
-    ///the item of the main content of the page 
+
+    ///the item of the main content of the page
     @required List<Widget> itemList,
-   
     @required this.bottomModalPageInputWidgets,
   }) {
-    this.contentsList = BuildWidgetsWithSpace(spaceBetweenItem, itemList);
-  }
-
-  ///returns in a list of widget with spacing between childs
-  List<Widget> BuildWidgetsWithSpace(
-      double spaceBetweenItem, List<Widget> itemList) {
-    List<Widget> newContentsList = [];
-
-    for (int i = 0; i < itemList.length; i++) {
-      newContentsList.add(itemList[i]);
-
-      //add boxing space accordingly
-
-      newContentsList.add(
-        SizedBox(
-          height: spaceBetweenItem,
-        ),
-      );
-    }
-    return newContentsList;
+    this.contentsList = WidgetConverterLibrary.BuildWidgetsWithSpace(
+      itemList: itemList,
+      spaceBetweenItem: spaceBetweenItem,
+    );
   }
 
   ///show  a modal bottom sheet when the add button is pressed

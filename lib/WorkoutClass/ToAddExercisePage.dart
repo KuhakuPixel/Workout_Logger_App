@@ -2,7 +2,9 @@ import 'package:WorkoutLoggerApp/CustomWidget/WidgetResizer.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/AvailableExerciseCard.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
+import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
 
 class AddExerciseToWorkoutPage extends StatefulWidget {
@@ -11,8 +13,12 @@ class AddExerciseToWorkoutPage extends StatefulWidget {
       _AddExerciseToWorkoutPageState();
 }
 
+//state
 class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
   String searchedExerciseName = "";
+  double spacingBetweenAvailableExerciseToAdd = 8;
+
+  
   //to do:Create a function to takes in the list of widget and remap it into another custom widget
   @override
   Widget build(BuildContext context) {
@@ -25,6 +31,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
       body: Container(
         //wrapped the column with a scrollable widget to fix size overflow bug
         child: SingleChildScrollView(
+          //widgets for this page(containing search field,boxed container and ect)
           child: Column(
               children: <Widget>[
                 //seach field
@@ -83,25 +90,33 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                     //the content of the available exercise (wrapped onto column to make it scrollable)
                     child: SingleChildScrollView(
                       child: Column(
-                        //item inside the card (aligned by the help of column widget)
                         //display the children according to the search
-                        children: StateManager.SearchExercises(
-                          itemCollections: ExercisePage.exerciseList,
-                          searchResult: this.searchedExerciseName,
-                        ).map<ResizedWidget>(
-                          (exerciseItemWidget) {
-                            return ResizedWidget(
-                              widget: exerciseItemWidget,
-                              height: 100,
-                              width: 300,
-                            );
-                          },
-                        ).toList(),
+                        children: WidgetConverterLibrary.BuildWidgetsWithSpace(
+                          //spacing 
+                          spaceBetweenItem:
+                              this.spacingBetweenAvailableExerciseToAdd,
+                              //the item that will be "Spaced"
+                          itemList: StateManager.SearchExercises(
+                            itemCollections: ExercisePage.exerciseList,
+                            searchResult: this.searchedExerciseName,
+                          ).map<AvailableExerciseAndButton>(
+                            (_exerciseItemWidget) {
+                              //this map function will map every item in the iterable to another widget
+                              //remaped widget
+                              return AvailableExerciseAndButton(
+                                exerciseItemWidget: _exerciseItemWidget,
+                                height: 100,
+                                width: 300,
+                                exerciseCardLeftPaddingValue: 12,
+                              );
+                            },
+                          ).toList(),
+                        ),//children
 
                         crossAxisAlignment: CrossAxisAlignment.center,
                       ),
                       //availale exercises padding
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
                     ),
 
                     //border property

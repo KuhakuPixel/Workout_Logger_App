@@ -40,6 +40,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   //navigate to a new page to select an exercise
                   Navigator.push(
                     context,
+                    //the page that will be directed to
+                    
+                    //need to provide an annonymus function that will return an instance of widget
                     MaterialPageRoute(
                       builder: (context) {
                         return new AddExerciseToWorkoutPage();

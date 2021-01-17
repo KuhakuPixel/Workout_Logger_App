@@ -12,7 +12,7 @@ class ExercisePage extends StatefulWidget {
   static int someDummyVariable;
   ///User added exercise will be stored here
  static List<ExerciseItemWidget> exerciseList = [
-    /*
+    
     new ExerciseItemWidget(
       exerciseName: "Barbell curl",
       exerciseType: ExerciseType.weighted,
@@ -23,7 +23,36 @@ class ExercisePage extends StatefulWidget {
       exerciseType: ExerciseType.bodyweight,
       targetMuscle: muscleList[13],
     ),
-    */
+     new ExerciseItemWidget(
+      exerciseName: "Pull up",
+      exerciseType: ExerciseType.weighted,
+      targetMuscle: muscleList[5],
+    ),
+    new ExerciseItemWidget(
+      exerciseName: "Chin up",
+      exerciseType: ExerciseType.bodyweight,
+      targetMuscle: muscleList[5],
+    ),
+     new ExerciseItemWidget(
+      exerciseName: "Barbell Row",
+      exerciseType: ExerciseType.weighted,
+      targetMuscle: muscleList[5],
+    ),
+    new ExerciseItemWidget(
+      exerciseName: "Bench press",
+      exerciseType: ExerciseType.weighted,
+      targetMuscle: muscleList[0],
+    ),
+     new ExerciseItemWidget(
+      exerciseName: "lat pull down",
+      exerciseType: ExerciseType.weighted,
+      targetMuscle: muscleList[5],
+    ),
+    new ExerciseItemWidget(
+      exerciseName: "One Arm Push Up",
+      exerciseType: ExerciseType.bodyweight,
+      targetMuscle: muscleList[13],
+    ),
   ];
   @override
   _ExercisePageState createState() => _ExercisePageState();
@@ -83,6 +112,8 @@ class _ExercisePageState extends State<ExercisePage> {
           height: 10,
         ),
         //dropwdown with details (exercise type)
+        //making sure to wrap with stateful builder because a modal bottom page wont be able to be rebuilt automatically and has to be
+        //explicitly defined
         StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             //builded widget dropwdown with details (exercise type)
