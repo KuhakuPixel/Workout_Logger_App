@@ -1,6 +1,7 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
 
+///a set of exercise item widget and a button  that are wrapped with row and wrapped again with expanded
 class AvailableExerciseAndButton extends StatelessWidget {
   final double height;
   final double width;
@@ -11,28 +12,22 @@ class AvailableExerciseAndButton extends StatelessWidget {
   final void Function(ExerciseItemWidget) onAddExerciseToPreviewFunction;
 
   AvailableExerciseAndButton({
-    this.height,
-    this.width,
-    this.exerciseItemWidget,
-    this.exerciseCardLeftPaddingValue = 12,
-    this.onAddExerciseToPreviewFunction,
+    @required this.height,
+    @required this.width,
+    @required this.exerciseItemWidget,
+    @required this.exerciseCardLeftPaddingValue = 12,
+    @required this.onAddExerciseToPreviewFunction,
   }) {}
   @override
   Widget build(BuildContext context) {
-    return Row(
+    //WRAPPING with expanded to fix overflow
+    Row(
       children: <Widget>[
         //exercise card
         Container(
           child: InkWell(
             child: exerciseItemWidget,
-            onTap: () {
-              print("Adding " +
-                  this.exerciseItemWidget.exerciseName +
-                  " To your workout");
-              onAddExerciseToPreviewFunction(this.exerciseItemWidget);
-              //go back to the latest route in the stack
-              Navigator.pop(context);
-            },
+            onTap: () {},
             splashColor: Colors.amber[200],
             //focusColor: ,
             ///overlayColor: ,
@@ -44,7 +39,14 @@ class AvailableExerciseAndButton extends StatelessWidget {
         ),
 
         RawMaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            print("Adding " +
+                this.exerciseItemWidget.exerciseName +
+                " To your workout");
+            onAddExerciseToPreviewFunction(this.exerciseItemWidget);
+            //go back to the latest route in the stack
+            Navigator.pop(context);
+          },
           elevation: 2.0,
           fillColor: Colors.amber[800],
           child: Icon(

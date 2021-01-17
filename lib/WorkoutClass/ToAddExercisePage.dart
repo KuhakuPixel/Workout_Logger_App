@@ -1,4 +1,3 @@
-import 'package:WorkoutLoggerApp/CustomWidget/WidgetResizer.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
@@ -7,12 +6,12 @@ import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.da
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
 
-///this class is used to add a new exercise to the workout (preview)
 class AddExerciseToWorkoutPage extends StatefulWidget {
-  ///this function will be called when the user selects an exercise to be added to the new workout
   final void Function(ExerciseItemWidget) onAddExerciseToPreviewFunction;
 
-  AddExerciseToWorkoutPage({this.onAddExerciseToPreviewFunction}) {}
+  AddExerciseToWorkoutPage({
+    @required this.onAddExerciseToPreviewFunction,
+  });
   @override
   _AddExerciseToWorkoutPageState createState() =>
       _AddExerciseToWorkoutPageState();
@@ -94,20 +93,16 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                     //the content of the available exercise (wrapped onto column to make it scrollable)
                     child: SingleChildScrollView(
                       child: Column(
-                        //first it will call the function  StateManager.SearchExercises and filter the exercise
-                        //according to this.searchedExerciseName, then it will be converted to AvailableExerciseAndButton
-                        //by using the in built map function
-                        //finally the argument will be passed  to WidgetConverterLibrary.BuildWidgetsWithSpace
-                        ///so the widget will be spaced according to [this.spacingBetweenAvailableExerciseToAdd]
+                        //display the children according to the search
                         children: WidgetConverterLibrary.BuildWidgetsWithSpace(
                           //spacing
                           spaceBetweenItem:
                               this.spacingBetweenAvailableExerciseToAdd,
                           //the item that will be "Spaced"
                           itemList: StateManager.SearchExercises(
-                                  itemCollections: ExercisePage.exerciseList,
-                                  searchResult: this.searchedExerciseName)
-                              .map<AvailableExerciseAndButton>(
+                            itemCollections: ExercisePage.exerciseList,
+                            searchResult: this.searchedExerciseName,
+                          ).map<AvailableExerciseAndButton>(
                             (_exerciseItemWidget) {
                               //this map function will map every item in the iterable to another widget
                               //remaped widget
@@ -117,10 +112,12 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                                 width: 300,
                                 exerciseCardLeftPaddingValue: 12,
                                 onAddExerciseToPreviewFunction:
-                                    (_exerciseItemWidget) {
+                                    (exerciseItemWidget_) {
+                                  //pass the function again that are received by the constructor
                                   widget.onAddExerciseToPreviewFunction(
-                                      _exerciseItemWidget);
+                                      exerciseItemWidget_);
                                 },
+                                //  onAddExerciseToPreviewFunction:,
                               );
                             },
                           ).toList(),
