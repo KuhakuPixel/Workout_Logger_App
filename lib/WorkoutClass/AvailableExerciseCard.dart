@@ -6,17 +6,11 @@ class AvailableExerciseAndButton extends StatelessWidget {
   final double width;
   final ExerciseItemWidget exerciseItemWidget;
   final double exerciseCardLeftPaddingValue;
-
-  ///this function will be called when the user selects an exercise to be added to the new workout (on button press)
-  final void Function(ExerciseItemWidget) onAddExerciseToPreviewFunction;
-
-  AvailableExerciseAndButton({
-    this.height,
-    this.width,
-    this.exerciseItemWidget,
-    this.exerciseCardLeftPaddingValue = 12,
-    this.onAddExerciseToPreviewFunction,
-  }) {}
+  AvailableExerciseAndButton(
+      {this.height,
+      this.width,
+      this.exerciseItemWidget,
+      this.exerciseCardLeftPaddingValue = 12}) {}
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,9 +23,6 @@ class AvailableExerciseAndButton extends StatelessWidget {
               print("Adding " +
                   this.exerciseItemWidget.exerciseName +
                   " To your workout");
-              onAddExerciseToPreviewFunction(this.exerciseItemWidget);
-              //go back to the latest route in the stack
-              Navigator.pop(context);
             },
             splashColor: Colors.amber[200],
             //focusColor: ,

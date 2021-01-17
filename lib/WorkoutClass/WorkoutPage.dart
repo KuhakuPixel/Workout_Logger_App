@@ -1,7 +1,6 @@
 import 'package:WorkoutLoggerApp/ContentPages/page.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
-import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +11,6 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  List<ExerciseItemWidget> exercisesToBeAdded = <ExerciseItemWidget>[];
-
-  void AddExerciseToPreview(ExerciseItemWidget exerciseItem) {
-    setState(() {
-      exercisesToBeAdded.add(exerciseItem);
-    });
-  }
-
   ///this is the value for all of the widgets in the modal bottom page
   double modalWidgetsLeftPaddingValue = 6;
   @override
@@ -30,21 +21,19 @@ class _WorkoutPageState extends State<WorkoutPage> {
       itemList: <Widget>[
         Text("Hello world"),
       ],
-
+      
       /////////////////////  bottomModalPageInputWidgets
       bottomModalPageInputWidgets: <Widget>[
         ///widgets for the modal page input
         //Exercise name input and Add exercise button
         Row(
           children: [
-            //workout name
             AmberTextInput(
               labelText: "Type workout Name here",
               onChanged: (stringValue) {},
               leftPaddingValue: 6,
               textInputWidth: 200,
             ),
-            //button to add a new exercise to the workout
             Container(
               child: RaisedButton(
                 onPressed: () {
@@ -52,14 +41,11 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   Navigator.push(
                     context,
                     //the page that will be directed to
-                    //need to provide an annonymus function that will return an instance of page(widget)
+                    
+                    //need to provide an annonymus function that will return an instance of widget
                     MaterialPageRoute(
                       builder: (context) {
-                        return new AddExerciseToWorkoutPage(
-                          onAddExerciseToPreviewFunction: (exerciseItemWidget) {
-                            AddExerciseToPreview(exerciseItemWidget);
-                          },
-                        );
+                        return new AddExerciseToWorkoutPage();
                       },
                     ),
                   );
@@ -87,12 +73,57 @@ class _WorkoutPageState extends State<WorkoutPage> {
         SizedBox(
           height: 10,
         ),
-        //boxed container (used for exercises preview in the future workout)
+        //boxed container
         Container(
           child: Card(
             //the content of the item widget
             child: Column(
-              children: this.exercisesToBeAdded,
+              //item inside the card (aligned by the help of column widget)
+              children: <Widget>[
+                //search bar
+                /*
+                AmberTextInput(
+                  labelText: "Search Exercise..........",
+                  onChanged: (stringValue) {},
+                  leftPaddingValue: 8,
+                  textInputWidth: 250,
+                  textInputHeight:50,
+                ),
+                */
+                //Search field
+                /*
+                Container(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.amber[800],
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.amber[800],
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.amber[800]),
+                      ),
+                      labelText: 'Search Exercise',
+                      isDense: true, // Added this
+                      contentPadding: EdgeInsets.all(8), // Added this
+                      //enabledBorder: OutlineInputBorder(),
+                    ),
+                  ),
+                  width: 350,
+                  padding: EdgeInsets.only(
+                    //left: 10,
+                    top: 20,
+                  ),
+                  alignment: Alignment.center,
+                ),
+                */
+              ],
+
               crossAxisAlignment: CrossAxisAlignment.center,
             ),
 
