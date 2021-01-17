@@ -1,7 +1,6 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
 
-///a set of exercise item widget and a button  that are wrapped with row and wrapped again with expanded
 class AvailableExerciseAndButton extends StatelessWidget {
   final double height;
   final double width;
@@ -20,14 +19,20 @@ class AvailableExerciseAndButton extends StatelessWidget {
   }) {}
   @override
   Widget build(BuildContext context) {
-    //WRAPPING with expanded to fix overflow
-    Row(
+    return Row(
       children: <Widget>[
         //exercise card
         Container(
           child: InkWell(
             child: exerciseItemWidget,
-            onTap: () {},
+            onTap: () {
+              print("Adding " +
+                  this.exerciseItemWidget.exerciseName +
+                  " To your workout");
+              onAddExerciseToPreviewFunction(this.exerciseItemWidget);
+              //go back to the latest route in the stack
+              Navigator.pop(context);
+            },
             splashColor: Colors.amber[200],
             //focusColor: ,
             ///overlayColor: ,
@@ -39,14 +44,7 @@ class AvailableExerciseAndButton extends StatelessWidget {
         ),
 
         RawMaterialButton(
-          onPressed: () {
-            print("Adding " +
-                this.exerciseItemWidget.exerciseName +
-                " To your workout");
-            onAddExerciseToPreviewFunction(this.exerciseItemWidget);
-            //go back to the latest route in the stack
-            Navigator.pop(context);
-          },
+          onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.amber[800],
           child: Icon(
