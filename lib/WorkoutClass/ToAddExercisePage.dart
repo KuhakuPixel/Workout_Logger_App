@@ -1,8 +1,6 @@
-import 'package:WorkoutLoggerApp/CustomWidget/WidgetResizer.dart';
-import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/AvailableExerciseCard.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/AvailableExerciseCardAndButton.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,6 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
   String searchedExerciseName = "";
   double spacingBetweenAvailableExerciseToAdd = 8;
 
-  
   //to do:Create a function to takes in the list of widget and remap it into another custom widget
   @override
   Widget build(BuildContext context) {
@@ -92,10 +89,10 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                       child: Column(
                         //display the children according to the search
                         children: WidgetConverterLibrary.BuildWidgetsWithSpace(
-                          //spacing 
+                          //spacing
                           spaceBetweenItem:
                               this.spacingBetweenAvailableExerciseToAdd,
-                              //the item that will be "Spaced"
+                          //the item that will be "Spaced"
                           itemList: StateManager.SearchExercises(
                             itemCollections: ExercisePage.exerciseList,
                             searchResult: this.searchedExerciseName,
@@ -111,7 +108,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                               );
                             },
                           ).toList(),
-                        ),//children
+                        ), //children
 
                         crossAxisAlignment: CrossAxisAlignment.center,
                       ),
