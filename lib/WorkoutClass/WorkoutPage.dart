@@ -18,6 +18,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     setState(() {
       exercisesToBeAdded.add(exerciseItem);
     });
+    
   }
 
   ///this is the value for all of the widgets in the modal bottom page
@@ -55,7 +56,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     //need to provide an annonymus function that will return an instance of page(widget)
                     MaterialPageRoute(
                       builder: (context) {
+                        //page widget
                         return new AddExerciseToWorkoutPage(
+                          //pass in an annonymus function that executes the  reference to the instance's property 
                           onAddExerciseToPreviewFunction: (exerciseItemWidget) {
                             AddExerciseToPreview(exerciseItemWidget);
                           },

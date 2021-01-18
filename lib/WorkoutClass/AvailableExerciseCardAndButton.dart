@@ -18,10 +18,11 @@ class AvailableExerciseAndButton extends StatelessWidget {
     @required this.exerciseCardLeftPaddingValue = 12,
     @required this.onAddExerciseToPreviewFunction,
   }) {}
+  //the widget instance deosnt build the widget when it is mapped into the list
   @override
   Widget build(BuildContext context) {
     //WRAPPING with expanded to fix overflow
-    Row(
+   return Row(
       children: <Widget>[
         //exercise card
         Container(
