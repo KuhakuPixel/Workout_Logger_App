@@ -105,11 +105,22 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                           ).map<AvailableExerciseAndButton>(
                             (_exerciseItemWidget) {
                               //this map function will map every item in the iterable to another widget
+
+                              //reinstantiate the exercise item widget so it will be useable for adding it to the preview
+                              ExerciseItemWidget exerciseItemWidgetAddable =
+                                  new ExerciseItemWidget(
+                                exerciseName: _exerciseItemWidget.exerciseName,
+                                exerciseType: _exerciseItemWidget.exerciseType,
+                                targetMuscle: _exerciseItemWidget.targetMuscle,
+                                listOfButton: <RawMaterialButton>[
+                                  
+                                ],
+                              );
                               //remaped widget
                               return AvailableExerciseAndButton(
-                                exerciseItemWidget: _exerciseItemWidget,
-                                height: 100,
-                                width: 300,
+                                exerciseItemWidget: exerciseItemWidgetAddable,
+                                exerciseItemheight: 100,
+                                exerciseItemwidth: 300,
                                 exerciseCardLeftPaddingValue: 12,
                                 onAddExerciseToPreviewFunction:
                                     (exerciseItemWidget_) {

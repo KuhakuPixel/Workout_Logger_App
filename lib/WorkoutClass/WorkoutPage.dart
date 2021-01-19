@@ -18,9 +18,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
     setState(() {
       exercisesToBeAdded.add(exerciseItem);
     });
-    
-  }
 
+  }
+  
   ///this is the value for all of the widgets in the modal bottom page
   double modalWidgetsLeftPaddingValue = 6;
   @override
@@ -35,7 +35,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
       /////////////////////  bottomModalPageInputWidgets
       bottomModalPageInputWidgets: <Widget>[
         ///widgets for the modal page input
-        //Exercise name input and Add exercise button
+        //Workout name input and Add exercise button
         Row(
           children: [
             //workout name

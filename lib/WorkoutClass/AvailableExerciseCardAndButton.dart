@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 ///a set of exercise item widget and a button  that are wrapped with row and wrapped again with expanded
 class AvailableExerciseAndButton extends StatelessWidget {
-  final double height;
-  final double width;
+  final double exerciseItemheight;
+  final double exerciseItemwidth;
   final ExerciseItemWidget exerciseItemWidget;
   final double exerciseCardLeftPaddingValue;
 
@@ -12,8 +12,8 @@ class AvailableExerciseAndButton extends StatelessWidget {
   final void Function(ExerciseItemWidget) onAddExerciseToPreviewFunction;
 
   AvailableExerciseAndButton({
-    @required this.height,
-    @required this.width,
+    @required this.exerciseItemheight,
+    @required this.exerciseItemwidth,
     @required this.exerciseItemWidget,
     @required this.exerciseCardLeftPaddingValue = 12,
     @required this.onAddExerciseToPreviewFunction,
@@ -34,8 +34,8 @@ class AvailableExerciseAndButton extends StatelessWidget {
             ///overlayColor: ,
             //borderRadius:BorderRadius.all(Radius.),
           ),
-          height: this.height,
-          width: this.width,
+          height: this.exerciseItemheight,
+          width: this.exerciseItemwidth,
           padding: EdgeInsets.only(left: this.exerciseCardLeftPaddingValue),
         ),
 
