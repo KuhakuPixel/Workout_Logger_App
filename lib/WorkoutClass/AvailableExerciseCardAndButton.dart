@@ -9,16 +9,21 @@ class AvailableExerciseAndButton extends StatelessWidget {
   final double exerciseCardLeftPaddingValue;
 
   ///this function will be called when the user selects an exercise to be added to the new workout (on button press)
-  final void Function(ExerciseItemWidget) onAddExerciseToPreviewFunction;
+  final void Function(ExerciseItemWidget) addExerciseToPreviewButtonEvent;
 
   AvailableExerciseAndButton({
     @required this.exerciseItemheight,
     @required this.exerciseItemwidth,
     @required this.exerciseItemWidget,
     @required this.exerciseCardLeftPaddingValue = 12,
-    @required this.onAddExerciseToPreviewFunction,
+    @required this.addExerciseToPreviewButtonEvent,
   }) {}
   //the widget instance deosnt build the widget when it is mapped into the list
+
+
+  //things to do:
+  //it should be better to separate this widget class from the original exercise item widget 
+  //or to create many overload for the exerciseitemwidget (unlikely)
   @override
   Widget build(BuildContext context) {
     //WRAPPING with expanded to fix overflow
@@ -44,7 +49,7 @@ class AvailableExerciseAndButton extends StatelessWidget {
             print("Adding " +
                 this.exerciseItemWidget.exerciseName +
                 " To your workout");
-            onAddExerciseToPreviewFunction(this.exerciseItemWidget);
+            addExerciseToPreviewButtonEvent(this.exerciseItemWidget);
             //go back to the latest route in the stack
             Navigator.pop(context);
           },

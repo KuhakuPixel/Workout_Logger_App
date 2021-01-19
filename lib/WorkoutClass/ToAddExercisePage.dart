@@ -86,75 +86,85 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                   ),
                   padding: EdgeInsets.only(left: 5),
                 ),
-
                 //boxed container containing all of the created exercise
-                Container(
-                  child: Card(
-                    //the content of the available exercise (wrapped onto column to make it scrollable)
-                    child: SingleChildScrollView(
-                      child: Column(
-                        //display the children according to the search
-                        children: WidgetConverterLibrary.BuildWidgetsWithSpace(
-                          //spacing
-                          spaceBetweenItem:
-                              this.spacingBetweenAvailableExerciseToAdd,
-                          //the item that will be "Spaced"
-                          itemList: StateManager.SearchExercises(
-                            itemCollections: ExercisePage.exerciseList,
-                            searchResult: this.searchedExerciseName,
-                          ).map<AvailableExerciseAndButton>(
-                            (_exerciseItemWidget) {
-                              //this map function will map every item in the iterable to another widget
+                StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setModalState) {
+                    return Container(
+                      child: Card(
+                        //the content of the available exercise (wrapped onto column to make it scrollable)
+                        child: SingleChildScrollView(
+                          child: Column(
+                            //display the children according to the search
+                            children:
+                                WidgetConverterLibrary.BuildWidgetsWithSpace(
+                              //spacing
+                              spaceBetweenItem:
+                                  this.spacingBetweenAvailableExerciseToAdd,
+                              //the item that will be "Spaced"
+                              itemList: StateManager.SearchExercises(
+                                itemCollections: ExercisePage.exerciseList,
+                                searchResult: this.searchedExerciseName,
+                              ).map<AvailableExerciseAndButton>(
+                                (_exerciseItemWidget) {
+                                  //this map function will map every item in the iterable to another widget
 
-                              //reinstantiate the exercise item widget so it will be useable for adding it to the preview
-                              ExerciseItemWidget exerciseItemWidgetAddable =
-                                  new ExerciseItemWidget(
-                                exerciseName: _exerciseItemWidget.exerciseName,
-                                exerciseType: _exerciseItemWidget.exerciseType,
-                                targetMuscle: _exerciseItemWidget.targetMuscle,
-                                listOfButton: <RawMaterialButton>[
-                                  
-                                ],
-                              );
-                              //remaped widget
-                              return AvailableExerciseAndButton(
-                                exerciseItemWidget: exerciseItemWidgetAddable,
-                                exerciseItemheight: 100,
-                                exerciseItemwidth: 300,
-                                exerciseCardLeftPaddingValue: 12,
-                                onAddExerciseToPreviewFunction:
-                                    (exerciseItemWidget_) {
-                                  //pass the function again that are received by the constructor
-                                  widget.onAddExerciseToPreviewFunction(
-                                      exerciseItemWidget_);
+                                  //reinstantiate the exercise item widget so it will be useable for adding it to the preview
+                                  ExerciseItemWidget exerciseItemWidgetAddable =
+                                      new ExerciseItemWidget(
+                                    exerciseName:
+                                        _exerciseItemWidget.exerciseName,
+                                    exerciseType:
+                                        _exerciseItemWidget.exerciseType,
+                                    targetMuscle:
+                                        _exerciseItemWidget.targetMuscle,
+                                    listOfButton: <RawMaterialButton>[],
+                                  );
+                                  //remaped widget
+                                  return AvailableExerciseAndButton(
+                                    exerciseItemWidget:
+                                        exerciseItemWidgetAddable,
+                                    exerciseItemheight: 100,
+                                    exerciseItemwidth: 300,
+                                    exerciseCardLeftPaddingValue: 12,
+                                    //pass the function again that are received by the constructor
+                                    addExerciseToPreviewButtonEvent:
+                                        (exerciseItemWidget_) {
+                                          //make sure to set the modalstate and notify the framework to rebuild the modal bototm page
+                                      setModalState(() {
+                                        widget.onAddExerciseToPreviewFunction(
+                                            exerciseItemWidget_);
+                                      });
+                                    },
+                                    //  onAddExerciseToPreviewFunction:,
+                                  );
                                 },
-                                //  onAddExerciseToPreviewFunction:,
-                              );
-                            },
-                          ).toList(),
-                        ), //children
+                              ).toList(),
+                            ), //children
 
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                          ),
+                          //availale exercises padding
+                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                        ),
+
+                        //border property
+                        shape: BeveledRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.amber[800],
+                            width: 2,
+                          ),
+                        ),
+
+                        color: ApplicationColorsPallete
+                            .ColorsPallete_["BlackGreyish"],
                       ),
-                      //availale exercises padding
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                    ),
-
-                    //border property
-                    shape: BeveledRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.amber[800],
-                        width: 2,
-                      ),
-                    ),
-
-                    color:
-                        ApplicationColorsPallete.ColorsPallete_["BlackGreyish"],
-                  ),
-                  width: double.infinity,
-                  height: 500,
-                  //padding:EdgeInsets.only(left:10,right:10),
+                      width: double.infinity,
+                      height: 500,
+                      //padding:EdgeInsets.only(left:10,right:10),
+                    );
+                  },
                 ),
+                //boxed container containing all of the created exercise
 
                 /*
                 Container(
