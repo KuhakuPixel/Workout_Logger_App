@@ -6,7 +6,7 @@ import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../AppManager.dart';
-import '../ContentPages/page.dart';
+import '../PageBaseClass/page.dart';
 
 class ExercisePage extends StatefulWidget {
   static int someDummyVariable;

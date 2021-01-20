@@ -16,9 +16,13 @@ class ApplicationPage extends StatelessWidget {
   List<Widget> contentsList;
 
   ///list of the widget that will be put for the page input
-  List<Widget> pageInputToAddNewItemWidgets;
+  List<Widget> modalBottomPageWidgetsImplementation;
 
-  ///
+  ///this class will be used as navigatable page for adding new item
+  Widget inputPage;
+
+  ///Fill modalBottomPageWidgetsImplementation if pageInputType=PageInputType.modalBottomPage
+  ///Fill inputPage if  pageInputType=PageInputType.newNormalPage
   ApplicationPage({
     @required this.pageTitle,
 
@@ -27,7 +31,9 @@ class ApplicationPage extends StatelessWidget {
 
     ///the item of the main content of the page
     @required List<Widget> itemList,
-    @required this.pageInputToAddNewItemWidgets,
+
+    ///this property will be used for the modal bottom page
+    this.modalBottomPageWidgetsImplementation,
     @required this.pageInputType,
   }) {
     this.contentsList = WidgetConverterLibrary.BuildWidgetsWithSpace(
@@ -59,7 +65,7 @@ class ApplicationPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //the widgets input  content
-                children: this.pageInputToAddNewItemWidgets,
+                children: this.modalBottomPageWidgetsImplementation,
               ),
             );
           });
@@ -73,16 +79,20 @@ class ApplicationPage extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) {
             //navigated page widget
+            //error:This should return the Page Class that this (base class) receive through the constructor
+            //return new ;
+            /*
             return new Scaffold(
               appBar: AppBar(),
               body: SingleChildScrollView(
                 child: Column(
-                  children: this.pageInputToAddNewItemWidgets,
+                  children: this.modalBottomPageWidgetsImplementation,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                 ),
               ),
             );
+            */
           },
         ),
       );
@@ -114,8 +124,8 @@ class ApplicationPage extends StatelessWidget {
         child: Icon(Icons.add),
         //open the modal bottom sheet when the buttonn is pressed
         onPressed: () {
-          ShowInputPageToAddNewItem(
-              context, this.pageInputToAddNewItemWidgets, this.pageInputType);
+          ShowInputPageToAddNewItem(context,
+              this.modalBottomPageWidgetsImplementation, this.pageInputType);
         },
         backgroundColor: Colors.amber[800],
         focusColor: Colors.amber[300],
