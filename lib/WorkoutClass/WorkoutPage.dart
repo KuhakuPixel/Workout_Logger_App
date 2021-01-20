@@ -27,13 +27,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
   Widget build(BuildContext context) {
     return ApplicationPage(
       pageTitle: "WorkoutPage",
+      pageInputType:PageInputType.newNormalPage,
       spaceBetweenItem: 5,
       itemList: <Widget>[
         Text("Hello world"),
       ],
 
       /////////////////////  bottomModalPageInputWidgets
-      bottomModalPageInputWidgets: <Widget>[
+      pageInputToAddNewItemWidgets: <Widget>[
         ///widgets for the modal page input
         //Workout name input and Add exercise button
         Row(
