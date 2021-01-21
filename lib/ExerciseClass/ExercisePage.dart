@@ -94,7 +94,7 @@ class _ExercisePageState extends State<ExercisePage> {
       spaceBetweenItem: 10,
       itemList: AppManager.DisplayItemsAccordingToState(
           ExercisePage.exerciseList, "Tap the bottom to add new Exercise"),
-      pageInputToAddNewItemWidgets: <Widget>[
+      modalBottomPageWidgetsImplementation: <Widget>[
         ///widget for the modal page input
         //Exercise name input
         ///widget for the modal page input

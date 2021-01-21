@@ -17,7 +17,9 @@ class _ItemInputPageWidgetState extends State<ItemInputPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Test"),
+        title: Text(
+          widget.inputPageTitle,
+        ),
       ),
       body: Container(
         child: SingleChildScrollView(

@@ -31,10 +31,11 @@ class ApplicationPage extends StatelessWidget {
 
     ///the item of the main content of the page
     @required List<Widget> itemList,
+    @required this.pageInputType,
 
     ///this property will be used for the modal bottom page
     this.modalBottomPageWidgetsImplementation,
-    @required this.pageInputType,
+    this.inputPage,
   }) {
     this.contentsList = WidgetConverterLibrary.BuildWidgetsWithSpace(
       itemList: itemList,
@@ -47,6 +48,14 @@ class ApplicationPage extends StatelessWidget {
       List<Widget> pageInputToAddNewItemWidgets, PageInputType pageInputType) {
     //show new page
     if (this.pageInputType == PageInputType.modalBottomPage) {
+      if (this.modalBottomPageWidgetsImplementation == null) {
+        debugPrintStack(
+          label:
+              'modalBottomPageWidgetsImplementation is null,please fill it in the constructor',
+          maxFrames: 2,
+        );
+        return;
+      }
       showModalBottomSheet<void>(
         context: context,
         isScrollControlled: true,
@@ -72,6 +81,14 @@ class ApplicationPage extends StatelessWidget {
         },
       );
     } else if (this.pageInputType == PageInputType.newNormalPage) {
+      if (this.inputPage == null) {
+         debugPrintStack(
+          label:
+              'inputPage is null,please fill it in the constructor',
+          maxFrames: 2,
+        );
+        return;
+      }
       //navigate to new page
       Navigator.push(
         context, //the page that will be directed to
@@ -79,20 +96,8 @@ class ApplicationPage extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) {
             //navigated page widget
-            //error:This should return the Page Class that this (base class) receive through the constructor
-            //return new ;
-            /*
-            return new Scaffold(
-              appBar: AppBar(),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: this.modalBottomPageWidgetsImplementation,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                ),
-              ),
-            );
-            */
+
+            return this.inputPage;
           },
         ),
       );

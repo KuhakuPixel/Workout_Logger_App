@@ -1,19 +1,20 @@
-
 import 'package:WorkoutLoggerApp/PageBaseClass/ItemInputPage.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/AvailableExerciseCardAndButton.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
 
+///Page to add a new exercise to the workout(with search feature)
 class AddExerciseToWorkoutPage extends StatefulWidget {
-  final void Function(ExerciseItemWidget) onAddExerciseToPreviewFunction;
+  ///this function will be called when the user press the add button of any exercises shown
+  final void Function(ExerciseCardWithVolumeWidget)
+      onAddExerciseToWorkoutButton;
 
-  AddExerciseToWorkoutPage({
-    @required this.onAddExerciseToPreviewFunction,
-  });
+  AddExerciseToWorkoutPage({@required this.onAddExerciseToWorkoutButton});
   @override
   _AddExerciseToWorkoutPageState createState() =>
       _AddExerciseToWorkoutPageState();
@@ -115,12 +116,9 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                         exerciseItemwidth: 300,
                         exerciseCardLeftPaddingValue: 12,
                         //pass the function again that are received by the constructor
-                        addExerciseToPreviewButtonEvent: (exerciseItemWidget_) {
-                          //make sure to set the modalstate and notify the framework to rebuild the modal bototm page
-                          setState(() {
-                            widget.onAddExerciseToPreviewFunction(
-                                exerciseItemWidget_);
-                          });
+                        addExerciseToWorkoutButtonEvent: (exerciseItemWidget_) {
+                          widget.onAddExerciseToWorkoutButton(
+                              exerciseItemWidget_);
                         },
                         //  onAddExerciseToPreviewFunction:,
                       );
@@ -149,7 +147,6 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
           //padding:EdgeInsets.only(left:10,right:10),
         ),
       ],
-    
     );
   }
 }
