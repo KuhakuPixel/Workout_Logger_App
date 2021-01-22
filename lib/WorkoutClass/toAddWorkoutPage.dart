@@ -6,6 +6,7 @@ import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
+///page for adding new workout
 class ToAddWorkoutInputPage extends StatefulWidget {
   @override
   _ToAddWorkoutInputPageState createState() => _ToAddWorkoutInputPageState();

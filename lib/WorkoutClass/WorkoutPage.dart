@@ -13,13 +13,7 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  List<ExerciseItemWidget> exercisesToBeAdded = <ExerciseItemWidget>[];
-
-  void AddExerciseToPreview(ExerciseItemWidget exerciseItem) {
-    setState(() {
-      exercisesToBeAdded.add(exerciseItem);
-    });
-  }
+ 
 
   ///this is the value for all of the widgets in the modal bottom page
   double modalWidgetsLeftPaddingValue = 6;
