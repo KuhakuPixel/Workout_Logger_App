@@ -10,7 +10,7 @@ class AvailableExerciseAndButton extends StatelessWidget {
   final double exerciseCardLeftPaddingValue;
 
   ///this function will be called when the user selects an exercise to be added to the new workout (on button press)
-  final void Function(ExerciseCardWithVolumeWidget)
+  final void Function(ExerciseItemWidget)
       addExerciseToWorkoutButtonEvent;
 
   AvailableExerciseAndButton({
@@ -51,8 +51,8 @@ class AvailableExerciseAndButton extends StatelessWidget {
                 this.exerciseItemWidget.exerciseName +
                 " To your workout");
             addExerciseToWorkoutButtonEvent(
-              new ExerciseCardWithVolumeWidget(
-                exerciseItem: this.exerciseItemWidget,
+              new ExerciseItemWidget(
+              //  exerciseItem: this.exerciseItemWidget,
               ),
             );
             //go back to the latest route in the stack

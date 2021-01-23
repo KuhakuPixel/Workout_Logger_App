@@ -1,9 +1,13 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
 /// widget for containing an exercise item
 class ExerciseItemWidget extends StatelessWidget {
+  ///this list will be assigned to the row in the card
+  List<Widget> exerciseItemWidget = <Widget>[];
+
   ///exercise item required property
   final String exerciseName;
 
@@ -11,7 +15,7 @@ class ExerciseItemWidget extends StatelessWidget {
 
   ///Only assign the value that are available inside muscleList
   final String targetMuscle;
-  final List<RawMaterialButton> listOfButton;
+  List<RawMaterialButton> listOfButton;
   //card spacing margin in the container
   final double cardLeftPaddingValue = 10;
   final double cardRightPaddingValue = 0;
@@ -25,22 +29,13 @@ class ExerciseItemWidget extends StatelessWidget {
   Color cardBackgroundColor =
       ApplicationColorsPallete.ColorsPallete_["BlackGreyish"];
   //constructor
-  ExerciseItemWidget({
-    @required this.exerciseName,
-    @required this.exerciseType,
+  ExerciseItemWidget(
+      {@required this.exerciseName,
+      @required this.exerciseType,
 
-    ///Only assign the value that are available inside muscleList
-    @required this.targetMuscle,
-    this.listOfButton=const <RawMaterialButton>[],
-  }) {}
-
-  ///display the exercise item info accordingly,
-  ///will be used as the children of a row
-  List<Widget> CreateWidgetInExerciseItemWidget(
-    List<RawMaterialButton> listOfButton,
-  ) {
-    List<Widget> exerciseItemWidgets = <Widget>[
-      //the column of exercise name,type and muscle target
+      ///Only assign the value that are available inside muscleList
+      @required this.targetMuscle}) {
+    this.exerciseItemWidget = <Widget>[
       Column(
         children: <Widget>[
           //exercise name title
@@ -84,12 +79,107 @@ class ExerciseItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
       ),
     ];
+  }
 
-    //add all of the remaining button
-    for (int i = 0; i < listOfButton.length; i++) {
-      exerciseItemWidgets.add(listOfButton[i]);
-    }
-    return exerciseItemWidgets;
+  ///this function will be called when the user selects an exercise to be added to the new workout (on button press)
+  void Function(ExerciseCardWithVolumeWidget) addExerciseToWorkoutButtonEvent;
+
+  ExerciseItemWidget.ExerciseCardWithAddButton(
+      {this.exerciseName, this.exerciseType, this.targetMuscle}) {
+    this.exerciseItemWidget = <Widget>[
+      ///all of the infos
+      Column(
+        children: <Widget>[
+          //exercise name title
+          Text(
+            exerciseName,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 21,
+              letterSpacing: 0.4,
+              wordSpacing: 2,
+              color: this.textColor,
+            ),
+          ),
+          SizedBox(height: 5),
+          //target muscle
+          Text(
+            " Target Muscles : " + targetMuscle,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              letterSpacing: 0.4,
+              wordSpacing: 2,
+              color: this.textColor,
+            ),
+          ),
+          SizedBox(height: 5),
+          //exercise Type
+          Text(
+            " Exercise Type   : " +
+                ExerciseConverterClass.ConvertExerciseTypeEnumToString(
+                    enumValue: this.exerciseType),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              letterSpacing: 0.4,
+              wordSpacing: 2,
+              color: this.textColor,
+            ),
+          ),
+        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      //button here 
+    ];
+  }
+
+  ExerciseItemWidget.ExerciseItemWithRepetitionCount(
+      {this.exerciseName, this.exerciseType, this.targetMuscle}) {
+    this.exerciseItemWidget = <Widget>[
+      Column(
+        children: <Widget>[
+          //exercise name title
+          Text(
+            exerciseName,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 21,
+              letterSpacing: 0.4,
+              wordSpacing: 2,
+              color: this.textColor,
+            ),
+          ),
+          SizedBox(height: 5),
+          //target muscle
+          Text(
+            " Target Muscles : " + targetMuscle,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              letterSpacing: 0.4,
+              wordSpacing: 2,
+              color: this.textColor,
+            ),
+          ),
+          SizedBox(height: 5),
+          //exercise Type
+          Text(
+            " Exercise Type   : " +
+                ExerciseConverterClass.ConvertExerciseTypeEnumToString(
+                    enumValue: this.exerciseType),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              letterSpacing: 0.4,
+              wordSpacing: 2,
+              color: this.textColor,
+            ),
+          ),
+        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+    ];
   }
 
   @override
@@ -100,7 +190,7 @@ class ExerciseItemWidget extends StatelessWidget {
           //the content of the item widget
           child: Container(
             child: Row(
-              children: CreateWidgetInExerciseItemWidget(this.listOfButton),
+              children: this.exerciseItemWidget,
             ),
             padding: EdgeInsets.only(
               left: this.cardLeftPaddingValue,

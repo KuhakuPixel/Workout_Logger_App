@@ -107,7 +107,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                         exerciseName: _exerciseItemWidget.exerciseName,
                         exerciseType: _exerciseItemWidget.exerciseType,
                         targetMuscle: _exerciseItemWidget.targetMuscle,
-                        listOfButton: <RawMaterialButton>[],
+                       
                       );
                       //remaped widget
                       return AvailableExerciseAndButton(

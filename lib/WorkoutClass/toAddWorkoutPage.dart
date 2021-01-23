@@ -1,5 +1,6 @@
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
+import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/PageBaseClass/ItemInputPage.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
@@ -14,10 +15,11 @@ class ToAddWorkoutInputPage extends StatefulWidget {
 
 class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
   //exercises that are added to the workout
-  List<ExerciseCardWithVolumeWidget> exercisesInWorkout =
-      <ExerciseCardWithVolumeWidget>[];
+  List<ExerciseItemWidget> exercisesInWorkout =
+      <ExerciseItemWidget>[];
 
-  void AddExerciseToWorkout(ExerciseCardWithVolumeWidget exerciseToBeAdded) {
+  ///add an item to the list of exercises in the workout
+  void AddExerciseToWorkout(ExerciseItemWidget exerciseToBeAdded) {
     setState(() {
       this.exercisesInWorkout.add(exerciseToBeAdded);
     });
