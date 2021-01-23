@@ -14,16 +14,9 @@ class ToAddWorkoutInputPage extends StatefulWidget {
 }
 
 class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
-  //exercises that are added to the workout
-  List<ExerciseItemWidget> exercisesInWorkout =
-      <ExerciseItemWidget>[];
-
-  ///add an item to the list of exercises in the workout
-  void AddExerciseToWorkout(ExerciseItemWidget exerciseToBeAdded) {
-    setState(() {
-      this.exercisesInWorkout.add(exerciseToBeAdded);
-    });
-  }
+  ///exercises that will be added to the workout
+  ///the object has to be instanted with ExerciseItemWithRepetitionCount() constructor
+  List<ExerciseItemWidget> exercisesInWorkout = <ExerciseItemWidget>[];
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +48,14 @@ class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
                         //page widget
                         return new AddExerciseToWorkoutPage(
                           onAddExerciseToWorkoutButton:
-                              (newExerciseItemWithVolume_) {
-                            this.AddExerciseToWorkout(
-                              newExerciseItemWithVolume_,
-                            );
+                              //pass an anonymus function that will add an item and notify the framework and will navigate back to this page once the item is added
+                              (exerciseItemWidgetToBeAdded) {
+                            setState(() {
+                              this
+                                  .exercisesInWorkout
+                                  .add(exerciseItemWidgetToBeAdded);
+                            });
+                            Navigator.pop(context);
                           },
                         );
                       },
@@ -88,13 +85,15 @@ class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
         SizedBox(
           height: 10,
         ),
-        //boxed container (used for exercises preview in the future workout)
+        //boxed container containing the exercises
         Container(
           child: Card(
             //the content of the item widget
-            child: Column(
-              children: this.exercisesInWorkout,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                children: this.exercisesInWorkout,
+                crossAxisAlignment: CrossAxisAlignment.center,
+              ),
             ),
 
             //border property

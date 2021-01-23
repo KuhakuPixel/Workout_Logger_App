@@ -11,8 +11,7 @@ import 'package:flutter/material.dart';
 ///Page to add a new exercise to the workout(with search feature)
 class AddExerciseToWorkoutPage extends StatefulWidget {
   ///this function will be called when the user press the add button of any exercises shown
-  final void Function(ExerciseCardWithVolumeWidget)
-      onAddExerciseToWorkoutButton;
+  final void Function(ExerciseItemWidget) onAddExerciseToWorkoutButton;
 
   AddExerciseToWorkoutPage({@required this.onAddExerciseToWorkoutButton});
   @override
@@ -93,34 +92,23 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                 children: WidgetConverterLibrary.BuildWidgetsWithSpace(
                   //spacing
                   spaceBetweenItem: this.spacingBetweenAvailableExerciseToAdd,
-                  //the item that will be "Spaced"
+                  //the item that will be "Spaced"//and will be mapped into another differrent widget
                   itemList: StateManager.SearchExercises(
                     itemCollections: ExercisePage.exerciseList,
                     searchResult: this.searchedExerciseName,
-                  ).map<AvailableExerciseAndButton>(
+                  ).map<ExerciseItemWidget>(
                     (_exerciseItemWidget) {
-                      //this map function will map every item in the iterable to another widget
+                      //this map function will map every item in the iterable to another widget(iterable)
 
                       //reinstantiate the exercise item widget so it will be useable for adding it to the preview
-                      ExerciseItemWidget exerciseItemWidgetAddable =
-                          new ExerciseItemWidget(
+
+                      //remaped widget
+                      return new ExerciseItemWidget.ExerciseCardWithAddButton(
                         exerciseName: _exerciseItemWidget.exerciseName,
                         exerciseType: _exerciseItemWidget.exerciseType,
                         targetMuscle: _exerciseItemWidget.targetMuscle,
-                       
-                      );
-                      //remaped widget
-                      return AvailableExerciseAndButton(
-                        exerciseItemWidget: exerciseItemWidgetAddable,
-                        exerciseItemheight: 100,
-                        exerciseItemwidth: 300,
-                        exerciseCardLeftPaddingValue: 12,
-                        //pass the function again that are received by the constructor
-                        addExerciseToWorkoutButtonEvent: (exerciseItemWidget_) {
-                          widget.onAddExerciseToWorkoutButton(
-                              exerciseItemWidget_);
-                        },
-                        //  onAddExerciseToPreviewFunction:,
+                        addExerciseToWorkoutButtonEvent:
+                            widget.onAddExerciseToWorkoutButton,
                       );
                     },
                   ).toList(),

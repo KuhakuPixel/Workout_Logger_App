@@ -21,16 +21,15 @@ class _ItemInputPageWidgetState extends State<ItemInputPageWidget> {
           widget.inputPageTitle,
         ),
       ),
+      //page 
       body: Container(
         child: SingleChildScrollView(
-          //widgets for this page(containing search field,boxed container and ect)
           child: Column(
             children: widget.inputWidgetListImplementation,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
           ),
         ),
-        alignment: Alignment.topLeft,
       ),
     );
   }

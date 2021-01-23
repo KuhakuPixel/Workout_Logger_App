@@ -13,8 +13,6 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
- 
-
   ///this is the value for all of the widgets in the modal bottom page
   double modalWidgetsLeftPaddingValue = 6;
   @override
@@ -22,11 +20,11 @@ class _WorkoutPageState extends State<WorkoutPage> {
     return ApplicationPage(
       pageTitle: "WorkoutPage",
       pageInputType: PageInputType.newNormalPage,
+      inputPage: ToAddWorkoutInputPage(),
       spaceBetweenItem: 5,
       itemList: <Widget>[
         Text("Hello world"),
       ],
-      inputPage: ToAddWorkoutInputPage(),
     );
   }
 }
