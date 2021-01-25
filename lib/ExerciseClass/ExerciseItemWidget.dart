@@ -236,86 +236,91 @@ class ExerciseItemWidget extends StatelessWidget {
       child: Card(
           //the content of the item widget
           child: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //exercise item info and button
-                  Row(
-                    children: <Widget>[
-                      //exercise item info
-                      Column(
-                        children: <Widget>[
-                          //exercise name title
-                          Text(
-                            exerciseName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21,
-                              letterSpacing: 0.4,
-                              wordSpacing: 2,
-                              color: this.textColor,
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //exercise item info and button
+                    Row(
+                      children: <Widget>[
+                        //exercise item info
+                        Column(
+                          children: <Widget>[
+                            //exercise name title
+                            Text(
+                              exerciseName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 21,
+                                letterSpacing: 0.4,
+                                wordSpacing: 2,
+                                color: this.textColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 5),
-                          //target muscle
-                          Text(
-                            " Target Muscles : " + targetMuscle,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              letterSpacing: 0.4,
-                              wordSpacing: 2,
-                              color: this.textColor,
+                            SizedBox(height: 5),
+                            //target muscle
+                            Text(
+                              " Target Muscles : " + targetMuscle,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                letterSpacing: 0.4,
+                                wordSpacing: 2,
+                                color: this.textColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 5),
-                          //exercise Type
-                          Text(
-                            " Exercise Type   : " +
-                                ExerciseConverterClass
-                                    .ConvertExerciseTypeEnumToString(
-                                        enumValue: this.exerciseType),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              letterSpacing: 0.4,
-                              wordSpacing: 2,
-                              color: this.textColor,
+                            SizedBox(height: 5),
+                            //exercise Type
+                            Text(
+                              " Exercise Type   : " +
+                                  ExerciseConverterClass
+                                      .ConvertExerciseTypeEnumToString(
+                                          enumValue: this.exerciseType),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                letterSpacing: 0.4,
+                                wordSpacing: 2,
+                                color: this.textColor,
+                              ),
                             ),
-                          ),
-                        ],
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      ),
-                      //delete the exercise button with icon too
-                      Container(
-                        child: RawMaterialButton(
-                          onPressed: () {
-                            //to do remove object from the list
-                          },
-                          elevation: 2.0,
-                          fillColor: Colors.amber[800],
-                          child: Icon(
-                            Icons.delete,
-                            size: 30.0,
-                          ),
-                          //padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
                         ),
-                        height: 40,
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ExerciseVolumeWidget(
-                    textColor: this.textColor,
-                    exerciseType: this.exerciseType,
-                    buttonHeight: 40,
-                  ),
-                ],
+                        //delete the exercise button with icon too
+                        Container(
+                          child: RawMaterialButton(
+                            onPressed: () {
+                              //to do remove object from the list
+                            },
+                            elevation: 2.0,
+                            fillColor: Colors.amber[800],
+                            child: Icon(
+                              Icons.delete,
+                              size: 30.0,
+                            ),
+                            //padding: EdgeInsets.all(15.0),
+                            shape: CircleBorder(),
+                          ),
+                          height: 40,
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ExerciseVolumeWidget(
+                      textColor: this.textColor,
+                      exerciseType: this.exerciseType,
+                      buttonHeight: 40,
+                    ),
+                  ],
+                ),
               ),
+              controller: new ScrollController(),
+             isAlwaysShown:true,
+
             ),
             padding: EdgeInsets.only(
               left: this.cardLeftPaddingValue,
