@@ -2,8 +2,8 @@ import 'package:WorkoutLoggerApp/PageBaseClass/ItemInputPage.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/AvailableExerciseCardAndButton.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
+
+
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
