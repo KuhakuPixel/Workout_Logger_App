@@ -14,10 +14,10 @@ class ToAddWorkoutInputPage extends StatefulWidget {
 }
 
 class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
-  ///exercises that will be added to the workout
-  ///the object has to be instanted with ExerciseItemWithRepetitionCount() constructor
-  List<ExerciseItemWidget> exercisesInWorkout = <ExerciseItemWidget>[];
-
+  List<ExerciseItemWidgetVolume> exercisesInWorkout = <ExerciseItemWidgetVolume>[];
+  //Size Property//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  double exerciseItemVolumeHeight = 200;
+  double exerciseItemVolumeWidth = 300;
   @override
   Widget build(BuildContext context) {
     return ItemInputPageWidget(
@@ -51,9 +51,7 @@ class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
                               //pass an anonymus function that will add an item and notify the framework and will navigate back to this page once the item is added
                               (exerciseItemWidgetToBeAdded) {
                             setState(() {
-                              this
-                                  .exercisesInWorkout
-                                  .add(exerciseItemWidgetToBeAdded);
+                              this.exercisesInWorkout.add(exerciseItemWidgetToBeAdded);
                             });
                             Navigator.pop(context);
                           },
@@ -88,11 +86,24 @@ class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
         //boxed container containing the exercises
         Container(
           child: Card(
-            //the content of the item widget
-            child: SingleChildScrollView(
-              child: Column(
-                children: this.exercisesInWorkout,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            //the content of the item widget(scrollable)
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                //column of added exercise
+                child: Container(
+                  child: Column(
+                    //map every children to a container(only for resizing purpose)
+                    children: this.exercisesInWorkout.map<Container>((exerciseItemWidgetVolume) {
+                      return Container(
+                        child: exerciseItemWidgetVolume,
+                        width: this.exerciseItemVolumeWidth,
+                        height: this.exerciseItemVolumeHeight,
+                      );
+                    }).toList(),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  ),
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                ),
               ),
             ),
 
