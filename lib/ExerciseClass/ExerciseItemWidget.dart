@@ -1,5 +1,6 @@
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
+import 'package:WorkoutLoggerApp/WidgetKey.dart';
 
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
@@ -124,16 +125,14 @@ class ExerciseItemWidget extends StatelessWidget {
     );
   }
 
-  ///a callback function will be called when the user selects an exercise to be added to the new workout (on button press)
-  ///todo:assign this function to be called on button press
-  void Function(ExerciseItemWidgetVolume) addExerciseToWorkoutButtonEvent;
+ 
 
-  ///used for adding an exercise to the list
+  ///an exercise item which will have a button to add itself to a list
   ExerciseItemWidget.ExerciseCardWithAddButton({
     @required this.exerciseName,
     @required this.exerciseType,
     @required this.targetMuscle,
-    @required this.addExerciseToWorkoutButtonEvent,
+    
   }) {
     this.exerciseItemWidget = Container(
       child: Card(
@@ -193,7 +192,9 @@ class ExerciseItemWidget extends StatelessWidget {
                       exerciseType: this.exerciseType,
                       targetMuscle: this.targetMuscle,
                     );
-                    this.addExerciseToWorkoutButtonEvent(exerciseVolumeCard);
+                    //this.addExerciseToWorkoutButtonEvent(exerciseVolumeCard);
+                    //add an exercise to the page 
+                    WidgetKey.toAddWorkoutInputPageStateKey.currentState.AddOneExerciseToWorkout(exerciseVolumeCard);
                   },
                   elevation: 2.0,
                   fillColor: Colors.amber[800],
@@ -419,7 +420,14 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                 //notify the framework to update the state
                                 setState(() {
                                   //remove the last element(the last index)
-                                  this.exerciseSetsWidgets.removeAt(this.exerciseSetsWidgets.length - 1);
+                                  if (this.exerciseSetsWidgets.length != 0) {
+                                    this.exerciseSetsWidgets.removeAt(this.exerciseSetsWidgets.length - 1);
+                                  } else {
+                                    debugPrintStack(
+                                      label: "exerciseSetsWidgets length is 0 cannot remove anymore item",
+                                      maxFrames: 2,
+                                    );
+                                  }
                                 });
                               },
                               child: Text(

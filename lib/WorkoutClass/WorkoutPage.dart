@@ -2,6 +2,8 @@ import 'package:WorkoutLoggerApp/PageBaseClass/page.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
+import 'package:WorkoutLoggerApp/WidgetKey.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/toAddWorkoutPage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
@@ -13,14 +15,12 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  ///this is the value for all of the widgets in the modal bottom page
-  double modalWidgetsLeftPaddingValue = 6;
   @override
   Widget build(BuildContext context) {
     return ApplicationPage(
       pageTitle: "WorkoutPage",
       pageInputType: PageInputType.newNormalPage,
-      inputPage: ToAddWorkoutInputPage(),
+      inputPage: ToAddWorkoutInputPage(key: WidgetKey.toAddWorkoutInputPageStateKey),
       spaceBetweenItem: 5,
       itemList: <Widget>[
         Text("Hello world"),
@@ -28,3 +28,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
     );
   }
 }
+
+///to do:
+///Create a class (deriving from widget) to store the state of the newly added workout
+///in that class create a property of [ExerciseCardWithVolumeWidget] that will store the data of a newly created workout which will be editable later
+///

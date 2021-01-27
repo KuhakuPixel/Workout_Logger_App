@@ -9,15 +9,25 @@ import 'package:flutter/material.dart';
 
 ///page for adding new workout
 class ToAddWorkoutInputPage extends StatefulWidget {
+  ToAddWorkoutInputPage({@required Key key}) : super(key: key);
   @override
-  _ToAddWorkoutInputPageState createState() => _ToAddWorkoutInputPageState();
+  ToAddWorkoutInputPageState createState() => ToAddWorkoutInputPageState();
 }
 
-class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
+class ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
   List<ExerciseItemWidgetVolume> exercisesInWorkout = <ExerciseItemWidgetVolume>[];
+  void AddOneExerciseToWorkout(ExerciseItemWidgetVolume exerciseItemWidgetVolume) {
+    //add the item and notify the framework to update the state
+    setState(() {
+      exercisesInWorkout.add(exerciseItemWidgetVolume);
+    });
+    //pop off 1 route from the current
+    Navigator.pop(context);
+  }
+
   //Size Property//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   double exerciseItemVolumeHeight = 200;
-  double exerciseItemVolumeWidth = 300;
+  double exerciseItemVolumeWidth = 350;
   @override
   Widget build(BuildContext context) {
     return ItemInputPageWidget(
@@ -46,16 +56,7 @@ class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
                     MaterialPageRoute(
                       builder: (context) {
                         //page widget
-                        return new AddExerciseToWorkoutPage(
-                          onAddExerciseToWorkoutButton:
-                              //pass an anonymus function that will add an item and notify the framework and will navigate back to this page once the item is added
-                              (exerciseItemWidgetToBeAdded) {
-                            setState(() {
-                              this.exercisesInWorkout.add(exerciseItemWidgetToBeAdded);
-                            });
-                            Navigator.pop(context);
-                          },
-                        );
+                        return new AddExerciseToWorkoutPage();
                       },
                     ),
                   );
@@ -105,6 +106,9 @@ class _ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                 ),
               ),
+              controller: new ScrollController(),
+              isAlwaysShown: true,
+              thickness: 10,
             ),
 
             //border property

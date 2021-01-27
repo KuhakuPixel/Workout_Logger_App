@@ -10,10 +10,9 @@ import 'package:flutter/material.dart';
 
 ///Page to add a new exercise to the workout(with search feature)
 class AddExerciseToWorkoutPage extends StatefulWidget {
-  ///this function will be called when the user press the add button of any exercises shown
-  final void Function(ExerciseItemWidgetVolume) onAddExerciseToWorkoutButton;
+  
 
-  AddExerciseToWorkoutPage({@required this.onAddExerciseToWorkoutButton});
+  AddExerciseToWorkoutPage();
   @override
   _AddExerciseToWorkoutPageState createState() =>
       _AddExerciseToWorkoutPageState();
@@ -107,8 +106,7 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                         exerciseName: _exerciseItemWidget.exerciseName,
                         exerciseType: _exerciseItemWidget.exerciseType,
                         targetMuscle: _exerciseItemWidget.targetMuscle,
-                        addExerciseToWorkoutButtonEvent:
-                            widget.onAddExerciseToWorkoutButton,
+                       
                       );
                     },
                   ).toList(),
