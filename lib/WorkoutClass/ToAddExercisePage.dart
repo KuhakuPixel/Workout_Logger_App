@@ -3,26 +3,22 @@ import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/StateManager.dart';
 
-
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
 
 ///Page to add a new exercise to the workout(with search feature)
 class AddExerciseToWorkoutPage extends StatefulWidget {
-  
-
   AddExerciseToWorkoutPage();
   @override
-  _AddExerciseToWorkoutPageState createState() =>
-      _AddExerciseToWorkoutPageState();
+  _AddExerciseToWorkoutPageState createState() => _AddExerciseToWorkoutPageState();
 }
 
 //state
 class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
   String searchedExerciseName = "";
   double spacingBetweenAvailableExerciseToAdd = 8;
-
+  double exerciseCardHeight = 100;
   //to do:Create a function to takes in the list of widget and remap it into another custom widget
   @override
   Widget build(BuildContext context) {
@@ -106,7 +102,6 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                         exerciseName: _exerciseItemWidget.exerciseName,
                         exerciseType: _exerciseItemWidget.exerciseType,
                         targetMuscle: _exerciseItemWidget.targetMuscle,
-                       
                       );
                     },
                   ).toList(),

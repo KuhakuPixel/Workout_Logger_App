@@ -2,14 +2,17 @@ import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButt
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/PageBaseClass/ItemInputPage.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
+
 import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutItemWidget.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
+//lets edit this class to be able to receive a function that will add a new item
 ///page for adding new workout
 class ToAddWorkoutInputPage extends StatefulWidget {
-  ToAddWorkoutInputPage({@required Key key}) : super(key: key);
+  void Function(WorkoutItemWidget) addWorkoutToList;
+  ToAddWorkoutInputPage({@required Key key,@required this.addWorkoutToList}) : super(key: key);
   @override
   ToAddWorkoutInputPageState createState() => ToAddWorkoutInputPageState();
 }
