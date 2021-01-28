@@ -29,7 +29,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
     return ApplicationPage(
       pageTitle: "WorkoutPage",
       pageInputType: PageInputType.newNormalPage,
-      inputPage: ToAddWorkoutInputPage(key: WidgetKey.toAddWorkoutInputPageStateKey,addWorkoutToList:AddNewWorkoutToList,),
+      inputPage: WorkoutInputPage(
+        key: WidgetKey.toAddWorkoutInputPageStateKey,
+        addWorkoutToListFunction: AddNewWorkoutToList,
+      ),
       spaceBetweenItem: 10,
       itemList: listOfWorkoutWidget,
     );

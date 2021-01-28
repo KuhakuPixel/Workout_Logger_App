@@ -13,7 +13,7 @@ class WorkoutItemWidgetProperty {
 
 class WorkoutItemWidget extends StatelessWidget {
   final String workoutName;
-  final ToAddWorkoutInputPage workoutInfoPage;
+  final WorkoutInputPage workoutInfoPage;
   //size property
   final double workoutCardHeight = 100;
   //card spacing margin in the container
@@ -76,6 +76,7 @@ class WorkoutItemWidget extends StatelessWidget {
                   shape: CircleBorder(),
                 )
               ],
+            mainAxisAlignment:MainAxisAlignment.spaceBetween
             ),
             padding: EdgeInsets.only(
               left: this.cardLeftPaddingValue,

@@ -1,3 +1,4 @@
+import 'package:WorkoutLoggerApp/AppManager.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
@@ -8,16 +9,33 @@ import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutItemWidget.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
-//lets edit this class to be able to receive a function that will add a new item
-///page for adding new workout
-class ToAddWorkoutInputPage extends StatefulWidget {
-  void Function(WorkoutItemWidget) addWorkoutToList;
-  ToAddWorkoutInputPage({@required Key key,@required this.addWorkoutToList}) : super(key: key);
-  @override
-  ToAddWorkoutInputPageState createState() => ToAddWorkoutInputPageState();
+enum WorkoutPageType {
+  pageToAddNewWorkout,
+  workoutPageInfo,
 }
 
-class ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
+//lets edit this class to be able to receive a function that will add a new item
+///page for adding new workout
+class WorkoutInputPage extends StatefulWidget {
+  void Function(WorkoutItemWidget) addWorkoutToListFunction;
+
+  ///help to determine wheater this workout is firstly created or  modified?
+  WorkoutPageType workoutPageType;
+  //https://stackoverflow.com/questions/21033398/how-do-i-call-on-the-super-class-constructor-and-other-statements-in-dart
+  WorkoutInputPage({@required Key key, @required this.addWorkoutToListFunction}) : super(key: key) {
+    this.workoutPageType = WorkoutPageType.pageToAddNewWorkout;
+  }
+
+  WorkoutInputPage.ModifiableProperties({@required Key key}) : super(key: key) {
+    this.workoutPageType = WorkoutPageType.workoutPageInfo;
+  }
+  @override
+  WorkoutInputPageState createState() => WorkoutInputPageState();
+}
+
+class WorkoutInputPageState extends State<WorkoutInputPage> {
+  String workoutName = "";
+
   List<ExerciseItemWidgetVolume> exercisesInWorkout = <ExerciseItemWidgetVolume>[];
   void AddOneExerciseToWorkout(ExerciseItemWidgetVolume exerciseItemWidgetVolume) {
     //add the item and notify the framework to update the state
@@ -43,7 +61,9 @@ class ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
             //workout name
             AmberTextInput(
               labelText: "Type workout Name here",
-              onChanged: (stringValue) {},
+              onChanged: (stringValue) {
+                this.workoutName = stringValue;
+              },
               leftPaddingValue: 6,
               textInputWidth: 200,
             ),
@@ -137,9 +157,55 @@ class ToAddWorkoutInputPageState extends State<ToAddWorkoutInputPage> {
             //go back to the last page in the route stack
             Navigator.pop(context);
           },
-          onPressedConfirmButton: () {},
+          onPressedConfirmButton: () {
+            switch (widget.workoutPageType) {
+              //add new workout to the list
+              case WorkoutPageType.pageToAddNewWorkout:
+                //checking the exercisenameInput
+                //return true if the argument element is equal to one of the contained elements
+                bool exerciseNameIsValid = !(["", null, false, 0].contains(this.workoutName));
+                if (exerciseNameIsValid) {
+                  //make sure to notify the framework to rebuild the widget with a new state
+                  setState(() {
+                    //the object that should be passed in must be constructed via  WorkoutInputPage.ModifiableProperties
+                    WorkoutItemWidget newWorkout = new WorkoutItemWidget(
+                      workoutName: this.workoutName,
+                      //widget refers to "WorkoutInputPage"
+                      workoutInfoPage: widget,
+                    );
+                    //add the workout to the list
+                    widget.addWorkoutToListFunction(newWorkout);
+                  });
+
+                  //go back to the last route
+                  Navigator.pop(context);
+                  //Show notification message:"will not work if the current route is not the main route"
+                  AppManager.ShowSnackBar(context, "Workout Added");
+                } else {
+                  
+                  //go back to the last route
+                  Navigator.pop(context);
+                  AppManager.ShowSnackBar(context, "Please fill the Workout Name name Bitch-NicholasPixel");
+                }
+                break;
+              case WorkoutPageType.workoutPageInfo:
+                // Modify the workout
+                break;
+            }
+          },
         )
       ],
     );
+  }
+}
+
+class ExampleClass {
+  //default constructor
+  ExampleClass() {
+    //do stuff
+  }
+  //named constructor
+  ExampleClass.namedConstructor() {
+    //do stuff
   }
 }
