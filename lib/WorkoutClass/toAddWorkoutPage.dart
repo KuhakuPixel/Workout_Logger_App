@@ -17,6 +17,9 @@ enum WorkoutPageType {
 //lets edit this class to be able to receive a function that will add a new item
 ///page for adding new workout
 class WorkoutInputPage extends StatefulWidget {
+  String workoutName = "";
+
+  List<ExerciseItemWidgetVolume> exercisesInWorkout = <ExerciseItemWidgetVolume>[];
   void Function(WorkoutItemWidget) addWorkoutToListFunction;
 
   ///help to determine wheater this workout is firstly created or  modified?
@@ -25,7 +28,12 @@ class WorkoutInputPage extends StatefulWidget {
   WorkoutInputPage({@required Key key, @required this.addWorkoutToListFunction}) : super(key: key) {
     this.workoutPageType = WorkoutPageType.pageToAddNewWorkout;
   }
-
+  WorkoutInputPage._Clone(WorkoutInputPage workoutInputPage) {
+    //reassign all of the vlaue
+    this.workoutName = workoutInputPage.workoutName;
+    this.workoutPageType = workoutInputPage.workoutPageType;
+    this.exercisesInWorkout = workoutInputPage.exercisesInWorkout;
+  }
   WorkoutInputPage.ModifiableProperties({@required Key key}) : super(key: key) {
     this.workoutPageType = WorkoutPageType.workoutPageInfo;
   }
@@ -34,13 +42,10 @@ class WorkoutInputPage extends StatefulWidget {
 }
 
 class WorkoutInputPageState extends State<WorkoutInputPage> {
-  String workoutName = "";
-
-  List<ExerciseItemWidgetVolume> exercisesInWorkout = <ExerciseItemWidgetVolume>[];
   void AddOneExerciseToWorkout(ExerciseItemWidgetVolume exerciseItemWidgetVolume) {
     //add the item and notify the framework to update the state
     setState(() {
-      exercisesInWorkout.add(exerciseItemWidgetVolume);
+      widget.exercisesInWorkout.add(exerciseItemWidgetVolume);
     });
     //pop off 1 route from the current
     Navigator.pop(context);
@@ -62,10 +67,11 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
             AmberTextInput(
               labelText: "Type workout Name here",
               onChanged: (stringValue) {
-                this.workoutName = stringValue;
+                widget.workoutName = stringValue;
               },
               leftPaddingValue: 6,
               textInputWidth: 200,
+              fieldValue:widget.workoutName,
             ),
             //button to add a new exercise to the workout
             Container(
@@ -117,7 +123,7 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
                 child: Container(
                   child: Column(
                     //map every children to a container(only for resizing purpose)
-                    children: this.exercisesInWorkout.map<Container>((exerciseItemWidgetVolume) {
+                    children: widget.exercisesInWorkout.map<Container>((exerciseItemWidgetVolume) {
                       return Container(
                         child: exerciseItemWidgetVolume,
                         width: this.exerciseItemVolumeWidth,
@@ -163,13 +169,13 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
               case WorkoutPageType.pageToAddNewWorkout:
                 //checking the exercisenameInput
                 //return true if the argument element is equal to one of the contained elements
-                bool exerciseNameIsValid = !(["", null, false, 0].contains(this.workoutName));
+                bool exerciseNameIsValid = !(["", null, false, 0].contains(widget.workoutName));
                 if (exerciseNameIsValid) {
                   //make sure to notify the framework to rebuild the widget with a new state
                   setState(() {
                     //the object that should be passed in must be constructed via  WorkoutInputPage.ModifiableProperties
                     WorkoutItemWidget newWorkout = new WorkoutItemWidget(
-                      workoutName: this.workoutName,
+                      workoutName: widget.workoutName,
                       //widget refers to "WorkoutInputPage"
                       workoutInfoPage: widget,
                     );
@@ -182,7 +188,6 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
                   //Show notification message:"will not work if the current route is not the main route"
                   AppManager.ShowSnackBar(context, "Workout Added");
                 } else {
-                  
                   //go back to the last route
                   Navigator.pop(context);
                   AppManager.ShowSnackBar(context, "Please fill the Workout Name name Bitch-NicholasPixel");

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AmberTextInput extends StatelessWidget {
   final String labelText;
+  final String fieldValue;
 
   /// {@macro flutter.widgets.editableText.onChanged}
   ///
@@ -19,6 +20,7 @@ class AmberTextInput extends StatelessWidget {
     @required this.labelText,
     @required this.onChanged,
     @required this.leftPaddingValue,
+    this.fieldValue = "",
     this.textInputWidth = 250,
     this.textInputHeight,
   });
@@ -43,7 +45,7 @@ class AmberTextInput extends StatelessWidget {
         onChanged: (stringValue) {
           onChanged(stringValue);
         },
-        controller: TextEditingController(text: "Initial Text here")
+        controller: TextEditingController(text: this.fieldValue),
       ),
       width: this.textInputWidth,
       height: textInputHeight,

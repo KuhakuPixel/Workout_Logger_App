@@ -53,6 +53,7 @@ class WorkoutItemWidget extends StatelessWidget {
                 ),
                //edit button
                 RawMaterialButton(
+                  //when pressed go to a new page to edit this workout property
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -65,6 +66,7 @@ class WorkoutItemWidget extends StatelessWidget {
                         },
                       ),
                     );
+                    
                   },
                   elevation: 2.0,
                   fillColor: Colors.amber[800],
