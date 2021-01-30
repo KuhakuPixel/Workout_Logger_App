@@ -43,7 +43,7 @@ class AmberTextInput extends StatelessWidget {
         onChanged: (stringValue) {
           onChanged(stringValue);
         },
-        
+        controller: TextEditingController(text: "Initial Text here")
       ),
       width: this.textInputWidth,
       height: textInputHeight,

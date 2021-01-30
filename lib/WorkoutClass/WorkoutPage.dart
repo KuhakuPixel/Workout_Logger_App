@@ -11,21 +11,26 @@ import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.da
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {
+  //the list should be declared here because this actual class is the one used for the tab not the _WorkoutPageState 
+  //if the list is declared in _WorkoutPageState it will be always a new instance hence the list item is reseted (executed from the createState virtual functin)
+  static List<WorkoutItemWidget> listOfWorkoutWidget = <WorkoutItemWidget>[
+    //WorkoutItemWidget(workoutName: "Idk", workoutInfoPage: null),
+  ];
   @override
   _WorkoutPageState createState() => _WorkoutPageState();
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  List<WorkoutItemWidget> listOfWorkoutWidget = <WorkoutItemWidget>[];
   void AddNewWorkoutToList(WorkoutItemWidget newWorkout) {
     //make sure the state is updated when adding a new item
     setState(() {
-      this.listOfWorkoutWidget.add(newWorkout);
+      WorkoutPage.listOfWorkoutWidget.add(newWorkout);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return ApplicationPage(
       pageTitle: "WorkoutPage",
       pageInputType: PageInputType.newNormalPage,
@@ -34,7 +39,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
         addWorkoutToListFunction: AddNewWorkoutToList,
       ),
       spaceBetweenItem: 10,
-      itemList: listOfWorkoutWidget,
+      itemList: WorkoutPage.listOfWorkoutWidget,
     );
   }
 }

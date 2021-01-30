@@ -61,13 +61,11 @@ class ExerciseConverterClass {
 
   static ExerciseType ConvertStringToExerciseType(String stringValue) {
     //loop until it found the matching stringValue and ExerciseType
-    int i = 0;
+
     for (var exerciseTypeValue in ExerciseType.values) {
-      if (ConvertExerciseTypeEnumToString(enumValue: exerciseTypeValue) ==
-          stringValue) {
+      if (ConvertExerciseTypeEnumToString(enumValue: exerciseTypeValue) == stringValue) {
         return exerciseTypeValue;
       }
-      i++;
     }
 
     //found nothing

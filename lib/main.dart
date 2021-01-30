@@ -1,4 +1,5 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
+import 'package:WorkoutLoggerApp/PageBaseClass/page.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutPage.dart';
 
 import 'package:flutter/material.dart';
@@ -8,7 +9,16 @@ void main() => runApp(MyApp());
 ///Class that controls the main application
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
-
+  //page
+  static ApplicationPage schedulePage = new ApplicationPage(
+    itemList: <Widget>[],
+    pageInputType: PageInputType.modalBottomPage,
+    pageTitle: "SchedulePage",
+    spaceBetweenItem: 5,
+    modalBottomPageWidgetsImplementation: <Widget>[],
+  );
+  static WorkoutPage workoutPage = new WorkoutPage();
+  static ExercisePage exercisePage = new ExercisePage();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,18 +57,13 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
   //page content
   //this will be used as a page for the main content of the app
   static List<Widget> appPages = <Widget>[
-    WorkoutPage(),
-    WorkoutPage(),
-    ExercisePage(),
+    //MyApp.schedulePage,
+    MyApp.workoutPage,
+    MyApp.exercisePage,
   ];
 
-  ///Called with an index as its argument according to which tab is pressed
-  ///by calling setState to rebuild the Widget
-  void _onTabPressed(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
-  }
+  
+
 //main virtual function
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
       appBar: AppBar(
         title: Text('On Development by NicholasPixel'),
       ),
-      //the body will control the main page content
+      //the body will control the main page content appPages[_selectedPageIndex]
       body: appPages[_selectedPageIndex],
 
       //the bottom navigation bar//containing it with card to allow for more decoration
@@ -74,13 +79,14 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
         child: BottomNavigationBar(
           //tab bar's icons and buttons
           items: <BottomNavigationBarItem>[
+            /*
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Schedules',
-            ),
+            )*/
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-              label: 'Routines',
+              label: 'Workouts',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
@@ -92,7 +98,12 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
           selectedItemColor: Colors.amber[800],
           //keeps track of the page index contents
           //by assigning a value according to the index
-          onTap: _onTabPressed,
+          onTap: (index) {
+            setState(() {
+              _selectedPageIndex = index;
+            });
+            
+          },
         ),
         elevation: 1000000000000000000000,
         color: Colors.black87,
