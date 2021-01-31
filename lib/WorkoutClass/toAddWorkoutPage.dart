@@ -28,15 +28,22 @@ class WorkoutInputPage extends StatefulWidget {
   WorkoutInputPage({@required Key key, @required this.addWorkoutToListFunction}) : super(key: key) {
     this.workoutPageType = WorkoutPageType.pageToAddNewWorkout;
   }
-  WorkoutInputPage._Clone(WorkoutInputPage workoutInputPage) {
+
+  ///only use this to edit the workoutPage(not first time instantiating);
+  ///will also instantiate with cloned properties of the argument
+  WorkoutInputPage.Modifiable(WorkoutInputPage workoutInputPageToBeCloned) {
     //reassign all of the vlaue
-    this.workoutName = workoutInputPage.workoutName;
-    this.workoutPageType = workoutInputPage.workoutPageType;
-    this.exercisesInWorkout = workoutInputPage.exercisesInWorkout;
-  }
-  WorkoutInputPage.ModifiableProperties({@required Key key}) : super(key: key) {
+    this.workoutName = workoutInputPageToBeCloned.workoutName;
     this.workoutPageType = WorkoutPageType.workoutPageInfo;
+
+    //clone every exercises in the workout
+    for (int i = 0; i < workoutInputPageToBeCloned.exercisesInWorkout.length; i++) {
+      this.exercisesInWorkout.add(
+            new ExerciseItemWidgetVolume.Clone(workoutInputPageToBeCloned.exercisesInWorkout[i]),
+          );
+    }
   }
+
   @override
   WorkoutInputPageState createState() => WorkoutInputPageState();
 }
@@ -71,7 +78,7 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
               },
               leftPaddingValue: 6,
               textInputWidth: 200,
-              fieldValue:widget.workoutName,
+              fieldValue: widget.workoutName,
             ),
             //button to add a new exercise to the workout
             Container(
@@ -176,8 +183,9 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
                     //the object that should be passed in must be constructed via  WorkoutInputPage.ModifiableProperties
                     WorkoutItemWidget newWorkout = new WorkoutItemWidget(
                       workoutName: widget.workoutName,
+                      //clone and assign the state of the current input page
                       //widget refers to "WorkoutInputPage"
-                      workoutInfoPage: widget,
+                      workoutInfoPage: new WorkoutInputPage.Modifiable(widget),
                     );
                     //add the workout to the list
                     widget.addWorkoutToListFunction(newWorkout);
@@ -201,16 +209,5 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
         )
       ],
     );
-  }
-}
-
-class ExampleClass {
-  //default constructor
-  ExampleClass() {
-    //do stuff
-  }
-  //named constructor
-  ExampleClass.namedConstructor() {
-    //do stuff
   }
 }

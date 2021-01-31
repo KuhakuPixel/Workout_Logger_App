@@ -125,14 +125,11 @@ class ExerciseItemWidget extends StatelessWidget {
     );
   }
 
- 
-
   ///an exercise item which will have a button to add itself to a list
   ExerciseItemWidget.ExerciseCardWithAddButton({
     @required this.exerciseName,
     @required this.exerciseType,
     @required this.targetMuscle,
-    
   }) {
     this.exerciseItemWidget = Container(
       child: Card(
@@ -193,7 +190,7 @@ class ExerciseItemWidget extends StatelessWidget {
                       targetMuscle: this.targetMuscle,
                     );
                     //this.addExerciseToWorkoutButtonEvent(exerciseVolumeCard);
-                    //add an exercise to the page 
+                    //add an exercise to the page
                     WidgetKey.toAddWorkoutInputPageStateKey.currentState.AddOneExerciseToWorkout(exerciseVolumeCard);
                   },
                   elevation: 2.0,
@@ -258,6 +255,8 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
   ///Only assign the value that are available inside muscleList
   String targetMuscle;
 
+  /// i
+  List<ExerciseSetInstanceWidget> exerciseSetsWidgets = <ExerciseSetInstanceWidget>[];
   @override
   _ExerciseItemWidgetVolumeState createState() => _ExerciseItemWidgetVolumeState();
   ExerciseItemWidgetVolume({
@@ -265,6 +264,26 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
     @required this.exerciseType,
     @required this.targetMuscle,
   }) {}
+
+  ExerciseItemWidgetVolume.Clone(ExerciseItemWidgetVolume objectToBeCloned) {
+    this.exerciseName = objectToBeCloned.exerciseName;
+    this.exerciseType = objectToBeCloned.exerciseType;
+    this.targetMuscle = objectToBeCloned.targetMuscle;
+
+    //cloning list
+    for (int i = 0; i < objectToBeCloned.exerciseSetsWidgets.length; i++) {
+      //to do:add a switch case to handle multiple case(exerciseType)
+      //clone and add to list
+      this.exerciseSetsWidgets.add(
+            new ExerciseSetInstanceWidget(
+              exerciseSetIndex: objectToBeCloned.exerciseSetsWidgets[i].exerciseSetIndex,
+              exerciseType: objectToBeCloned.exerciseSetsWidgets[i].exerciseType,
+              numberOfRepetition: objectToBeCloned.exerciseSetsWidgets[i].numberOfRepetition,
+              weightValue: objectToBeCloned.exerciseSetsWidgets[i].weightValue,
+            ),
+          );
+    }
+  }
 }
 
 class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
@@ -281,8 +300,6 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
 
   //,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-  /// i
-  List<ExerciseSetInstanceWidget> exerciseSetsWidgets = <ExerciseSetInstanceWidget>[];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -373,7 +390,7 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                     ),
 
                     //spread the list//although there is another way to this (creating a function that will spread the item)
-                    ...this.exerciseSetsWidgets,
+                    ...widget.exerciseSetsWidgets,
 
                     //container for 2 button (to add set or remove set)
                     Container(
@@ -386,12 +403,12 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                 //add new set and increase the size of the exercisecard with volume
                                 //and update the ui to a new state
                                 setState(() {
-                                  this.exerciseSetsWidgets.add(
-                                        new ExerciseSetInstanceWidget(
-                                          exerciseType: widget.exerciseType,
-                                          indexOfSet: this.exerciseSetsWidgets.length,
-                                        ),
-                                      );
+                                  widget.exerciseSetsWidgets.add(
+                                    new ExerciseSetInstanceWidget(
+                                      exerciseType: widget.exerciseType,
+                                      exerciseSetIndex: widget.exerciseSetsWidgets.length,
+                                    ),
+                                  );
                                 });
                               },
                               child: Text(
@@ -420,8 +437,8 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                 //notify the framework to update the state
                                 setState(() {
                                   //remove the last element(the last index)
-                                  if (this.exerciseSetsWidgets.length != 0) {
-                                    this.exerciseSetsWidgets.removeAt(this.exerciseSetsWidgets.length - 1);
+                                  if (widget.exerciseSetsWidgets.length > 0) {
+                                    widget.exerciseSetsWidgets.removeAt(widget.exerciseSetsWidgets.length - 1);
                                   } else {
                                     debugPrintStack(
                                       label: "exerciseSetsWidgets length is 0 cannot remove anymore item",
@@ -494,21 +511,25 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class ExerciseSetInstanceWidget extends StatelessWidget {
-  ExerciseType exerciseType;
+  ///is the exercise measured in timed? body weight? or normal weight?
+  final ExerciseType exerciseType;
 
-  int indexOfSet = 0;
+  ///the index of a set of an exercise
+  final int exerciseSetIndex;
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  int numberOfRepetition;
+  double weightValue;
 
-  ///indexxOfSet:set of [indexOfSet] in a exercise
+  ///indexxOfSet : set of [exerciseSetIndex] in a exercise;
+  ///fill the respective field in accordance to the exercise type
   ExerciseSetInstanceWidget({
-    @required ExerciseType exerciseType,
-    @required int indexOfSet,
-  }) {
-    //initialize instance value
-
-    this.exerciseType = exerciseType;
-    this.indexOfSet = indexOfSet;
-  }
-
+    @required this.exerciseType,
+    @required this.exerciseSetIndex = 0,
+    this.weightValue = 0,
+    this.numberOfRepetition = 0,
+  }) {}
+//todo:assign the inputted value to the respecting field because it is initialize the field initial value when cloning the object
+//possible bug:the objectToBeCloned 's setinstance has a rep value of 0
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -516,18 +537,26 @@ class ExerciseSetInstanceWidget extends StatelessWidget {
         //add more instances
         Row(
           children: <Widget>[
-            Text(this.indexOfSet.toString()),
+            Text(this.exerciseSetIndex.toString()),
             AmberTextInput(
               labelText: "Reps",
-              onChanged: (stringValue) {},
+              onChanged: (inputValue) {
+                //assign the inputted value to the object's property 
+                this.numberOfRepetition = int.parse(inputValue);
+              },
               leftPaddingValue: 0,
               textInputWidth: 50,
+              fieldValue: this.numberOfRepetition.toString(),
             ),
             AmberTextInput(
               labelText: "Weight",
-              onChanged: (stringValue) {},
+              onChanged: (inputValue) {
+                //assign the inputted value to the object's property 
+                this.weightValue = double.parse(inputValue);
+              },
               leftPaddingValue: 0,
               textInputWidth: 50,
+              fieldValue: this.weightValue.toString(),
             ),
             SizedBox(
               width: 5,

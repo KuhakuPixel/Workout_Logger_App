@@ -53,6 +53,7 @@ class AmberTextInput extends StatelessWidget {
       padding: EdgeInsets.only(
         left: this.leftPaddingValue,
       ),
+      
     );
   }
 }
