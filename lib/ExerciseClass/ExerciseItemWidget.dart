@@ -255,7 +255,7 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
   ///Only assign the value that are available inside muscleList
   String targetMuscle;
 
-  /// i
+  ///the exercises set that are added to a workout by the user
   List<ExerciseSetInstanceWidget> exerciseSetsWidgets = <ExerciseSetInstanceWidget>[];
   @override
   _ExerciseItemWidgetVolumeState createState() => _ExerciseItemWidgetVolumeState();
@@ -509,7 +509,7 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+///A custom widget which will automatically save the inputted/initial value(will assign the field value to the property of the object)
 class ExerciseSetInstanceWidget extends StatelessWidget {
   ///is the exercise measured in timed? body weight? or normal weight?
   final ExerciseType exerciseType;
@@ -532,43 +532,121 @@ class ExerciseSetInstanceWidget extends StatelessWidget {
 //possible bug:the objectToBeCloned 's setinstance has a rep value of 0
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        //add more instances
-        Row(
-          children: <Widget>[
-            Text(this.exerciseSetIndex.toString()),
-            AmberTextInput(
-              labelText: "Reps",
-              onChanged: (inputValue) {
-                //assign the inputted value to the object's property 
-                this.numberOfRepetition = int.parse(inputValue);
-              },
-              leftPaddingValue: 0,
-              textInputWidth: 50,
-              fieldValue: this.numberOfRepetition.toString(),
+    switch (this.exerciseType) {
+      case ExerciseType.weighted:
+        return Column(
+          children: [
+            //add more instances
+            Row(
+              children: <Widget>[
+                Text(this.exerciseSetIndex.toString()),
+                AmberTextInput(
+                  labelText: "Reps",
+                  onChanged: (inputValue) {
+                    //assign the inputted value to the object's property
+                    this.numberOfRepetition = int.parse(inputValue);
+                  },
+                  leftPaddingValue: 0,
+                  textInputWidth: 50,
+                  fieldValue: this.numberOfRepetition.toString(),
+                ),
+                AmberTextInput(
+                  labelText: "Weight",
+                  onChanged: (inputValue) {
+                    //assign the inputted value to the object's property
+                    this.weightValue = double.parse(inputValue);
+                  },
+                  leftPaddingValue: 0,
+                  textInputWidth: 50,
+                  fieldValue: this.weightValue.toString(),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             ),
-            AmberTextInput(
-              labelText: "Weight",
-              onChanged: (inputValue) {
-                //assign the inputted value to the object's property 
-                this.weightValue = double.parse(inputValue);
-              },
-              leftPaddingValue: 0,
-              textInputWidth: 50,
-              fieldValue: this.weightValue.toString(),
-            ),
+
             SizedBox(
-              width: 5,
+              height: 10,
             ),
           ],
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        ),
+        );
+        break;
+      case ExerciseType.bodyweight:
+        return Column(
+          children: [
+            //add more instances
+            Row(
+              children: <Widget>[
+                Text(this.exerciseSetIndex.toString()),
+                AmberTextInput(
+                  labelText: "Reps(Kg/lbs)",
+                  onChanged: (inputValue) {
+                    //assign the inputted value to the object's property
+                    this.numberOfRepetition = int.parse(inputValue);
+                  },
+                  leftPaddingValue: 0,
+                  textInputWidth: 50,
+                  fieldValue: this.numberOfRepetition.toString(),
+                ),
+                AmberTextInput(
+                  labelText: "Body Weight(Kg/lbs)",
+                  onChanged: (inputValue) {
+                    //assign the inputted value to the object's property
+                    this.weightValue = double.parse(inputValue);
+                  },
+                  leftPaddingValue: 0,
+                  textInputWidth: 50,
+                  fieldValue: this.weightValue.toString(),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
 
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    );
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        );
+        // TODO: Handle this case.
+        break;
+      case ExerciseType.timed:
+        return Column(
+          children: [
+            //add more instances
+            Row(
+              children: <Widget>[
+                Text(this.exerciseSetIndex.toString()),
+              
+                AmberTextInput(
+                  labelText: "time (s)",
+                  onChanged: (inputValue) {
+                    //assign the inputted value to the object's property
+                    this.weightValue = double.parse(inputValue);
+                  },
+                  leftPaddingValue: 0,
+                  textInputWidth: 50,
+                  fieldValue: this.weightValue.toString(),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        );
+        break;
+    }
+
+    
   }
 }

@@ -32,8 +32,9 @@ class WorkoutInputPage extends StatefulWidget {
   ///only use this to edit the workoutPage(not first time instantiating);
   ///will also instantiate with cloned properties of the argument
   WorkoutInputPage.Modifiable(WorkoutInputPage workoutInputPageToBeCloned) {
-    //reassign all of the vlaue
+    //reassign value
     this.workoutName = workoutInputPageToBeCloned.workoutName;
+    //modify property
     this.workoutPageType = WorkoutPageType.workoutPageInfo;
 
     //clone every exercises in the workout
@@ -166,6 +167,8 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
           height: 10,
         ),
         CloseModalBottomPageAndConfirmButtonWidget(
+          //determine the icon of the right button according to widget.workoutPageType
+          rightButtonIcon: widget.workoutPageType == WorkoutPageType.workoutPageInfo ? Icons.check : Icons.add,
           onPressedCloseButton: () {
             //go back to the last page in the route stack
             Navigator.pop(context);
@@ -202,7 +205,9 @@ class WorkoutInputPageState extends State<WorkoutInputPage> {
                 }
                 break;
               case WorkoutPageType.workoutPageInfo:
-                // Modify the workout
+
+                //go back to the previous route in the stack
+                Navigator.pop(context);
                 break;
             }
           },
