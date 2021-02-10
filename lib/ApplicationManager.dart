@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppManager {
   static void ShowSnackBar(BuildContext context, String message) {
@@ -34,5 +36,19 @@ class AppManager {
     } else {
       return items;
     }
+  }
+  
+}
+class Prefences {
+  static Future<void> setPrefences(String stringKey, String value) async {
+    // obtain shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(stringKey, value);
+  }
+
+  static Future<String> getPrefencesValue(String stringKey) async {
+    // obtain shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(stringKey);
   }
 }

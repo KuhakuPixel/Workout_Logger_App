@@ -1,4 +1,4 @@
-import 'package:WorkoutLoggerApp/AppManager.dart';
+import 'package:WorkoutLoggerApp/ApplicationManager.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';

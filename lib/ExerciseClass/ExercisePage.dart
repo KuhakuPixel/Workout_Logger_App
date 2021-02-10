@@ -5,11 +5,11 @@ import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
 
-import '../AppManager.dart';
+import '../ApplicationManager.dart';
 import '../PageBaseClass/page.dart';
 
 class ExercisePage extends StatefulWidget {
-  static int someDummyVariable;
+ 
   ///User added exercise will be stored here
  static List<ExerciseItemWidget> exerciseList = [
     
