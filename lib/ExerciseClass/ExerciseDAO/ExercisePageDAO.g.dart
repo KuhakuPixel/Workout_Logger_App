@@ -8,7 +8,7 @@ part of 'ExercisePageDAO.dart';
 
 //turn the map to object by using the fromJson function from the instance
 ExercisePageDAO _$ExercisePageDAOFromJson(Map<String, dynamic> json) {
-  List<Map<String, dynamic>> exerciseListMap = json['exerciseList'] as List<Map<String, dynamic>>;
+  List<dynamic> exerciseListMap = json['exerciseList'];
 
   //to be filled
   List<ExerciseItemWidget> exerciseItemWidgets = [];
@@ -32,7 +32,7 @@ ExercisePageDAO _$ExercisePageDAOFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ExercisePageDAOToJson(ExercisePageDAO instance) {
   //return json
   return <String, dynamic>{
-    //map every exerciseList to a Map<String,dynamic>
+    //map every item in exerciseList to a Map<String,dynamic>
     'exerciseList': instance.exerciseItemDaoList.map<Map<String, dynamic>>((exerciseItemDAO) {
       return exerciseItemDAO.toJson();
     }).toList(),

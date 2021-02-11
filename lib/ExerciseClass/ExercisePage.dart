@@ -81,7 +81,10 @@ class ExercisePage extends StatefulWidget {
           );
         },
       ).toList();
+
+      
     }
+
   }
 
   @override
