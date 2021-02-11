@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import "dart:convert";
 
 class AppManager {
   static void ShowSnackBar(BuildContext context, String message) {
@@ -18,8 +19,7 @@ class AppManager {
   }
 
   ///display item if the item is empty then add a message
-  static List<Widget> DisplayItemsAccordingToState(
-      List<Widget> items, String emptyItemMessage) {
+  static List<Widget> DisplayItemsAccordingToState(List<Widget> items, String emptyItemMessage) {
     if (items.length == 0) {
       return <Widget>[
         Container(
@@ -30,25 +30,34 @@ class AppManager {
             ),
           ),
           alignment: Alignment.center,
-         // height:double.infinity,
+          // height:double.infinity,
         ),
       ];
     } else {
       return items;
     }
   }
-  
 }
+
 class Prefences {
-  static Future<void> setPrefences(String stringKey, String value) async {
+  ///save a json [Map<String,dynamic>)]
+  static Future<void> saveJSON(String stringKey, Map<String, dynamic> json) async {
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(stringKey, value);
+    //save the json by first turning it into a string with jsonEncode
+    prefs.setString(stringKey, jsonEncode(json));
   }
 
-  static Future<String> getPrefencesValue(String stringKey) async {
+  static Future<Map<String, dynamic>> getJSON(String stringKey) async {
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(stringKey);
+    //get the json string from SharedPreferences
+    String jsonString = prefs.getString(stringKey) ?? "";
+    if(jsonString==""){
+      debugPrintStack(label: "Null jsonValue",maxFrames: 2);
+      return null;
+    }
+    //convert jsonString to map<String,dynamic> aka the json datatypes
+    return jsonDecode(jsonString);
   }
 }

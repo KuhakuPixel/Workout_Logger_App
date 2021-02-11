@@ -4,7 +4,7 @@ import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/PageBaseClass/ItemInputPage.dart';
 
-import 'package:WorkoutLoggerApp/WorkoutClass/ToAddExercisePage.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/AddExerciseToWorkoutPage.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutItemWidget.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';

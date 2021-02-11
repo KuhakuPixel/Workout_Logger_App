@@ -1,6 +1,7 @@
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/DetailsAndDropDown.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
+import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExercisePageDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,10 @@ import '../ApplicationManager.dart';
 import '../PageBaseClass/page.dart';
 
 class ExercisePage extends StatefulWidget {
- 
+  final String exercisePagePreferenceStringKey = "exercisePagePreferenceStringKey";
+
   ///User added exercise will be stored here
- static List<ExerciseItemWidget> exerciseList = [
-    
+  static List<ExerciseItemWidget> exerciseList = [
     new ExerciseItemWidget(
       exerciseName: "Barbell curl",
       exerciseType: ExerciseType.weighted,
@@ -23,7 +24,7 @@ class ExercisePage extends StatefulWidget {
       exerciseType: ExerciseType.bodyweight,
       targetMuscle: muscleList[13],
     ),
-     new ExerciseItemWidget(
+    new ExerciseItemWidget(
       exerciseName: "Pull up",
       exerciseType: ExerciseType.weighted,
       targetMuscle: muscleList[5],
@@ -33,7 +34,7 @@ class ExercisePage extends StatefulWidget {
       exerciseType: ExerciseType.bodyweight,
       targetMuscle: muscleList[5],
     ),
-     new ExerciseItemWidget(
+    new ExerciseItemWidget(
       exerciseName: "Barbell Row",
       exerciseType: ExerciseType.weighted,
       targetMuscle: muscleList[5],
@@ -43,7 +44,7 @@ class ExercisePage extends StatefulWidget {
       exerciseType: ExerciseType.weighted,
       targetMuscle: muscleList[0],
     ),
-     new ExerciseItemWidget(
+    new ExerciseItemWidget(
       exerciseName: "lat pull down",
       exerciseType: ExerciseType.weighted,
       targetMuscle: muscleList[5],
@@ -54,6 +55,35 @@ class ExercisePage extends StatefulWidget {
       targetMuscle: muscleList[13],
     ),
   ];
+
+  ///save the state of applicationPage
+  Future<void> saveExercisePage() async {
+    //first instatiate the DAO or the interface
+    ExercisePageDAO exercisePageDAO = new ExercisePageDAO(exerciseList);
+    await Prefences.saveJSON(this.exercisePagePreferenceStringKey, exercisePageDAO.toJson());
+  }
+
+  Future<void> loadExercisePage() async {
+    Map<String, dynamic> json = await Prefences.getJSON(this.exercisePagePreferenceStringKey);
+    if (json == null) {
+      return;
+    } else {
+      //instantiate the DAO from a json
+      ExercisePageDAO exercisePageDAO = new ExercisePageDAO.fromJson(json);
+      //load in the data////////////////
+      //map each DAO to exerciseItemWidget
+      exerciseList = exercisePageDAO.exerciseItemDaoList.map<ExerciseItemWidget>(
+        (exerciseItemWidgetDAO) {
+          return new ExerciseItemWidget(
+            exerciseName: exerciseItemWidgetDAO.exerciseName,
+            exerciseType: exerciseItemWidgetDAO.exerciseType,
+            targetMuscle: exerciseItemWidgetDAO.targetMuscle,
+          );
+        },
+      ).toList();
+    }
+  }
+
   @override
   _ExercisePageState createState() => _ExercisePageState();
 }
@@ -64,15 +94,17 @@ class _ExercisePageState extends State<ExercisePage> {
   double modalWidgetsLeftPaddingValue = 6;
 
   String newExerciseName;
-  String newExerciseType =
-      ExerciseConverterClass.ConvertExerciseTypeEnumToString(
-          enumValue: ExerciseType.bodyweight);
+  String newExerciseType = ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: ExerciseType.bodyweight);
   String newTargetMuscle = muscleList[0];
 
-  
+  @override
+  void initState() {
+    //load the exercisepage state
+    widget.loadExercisePage();
+    super.initState();
+  }
 
-  void AddExerciseToList(
-      String exerciseName, ExerciseType exerciseType, String targetMuscle) {
+  void AddExerciseToList(String exerciseName, ExerciseType exerciseType, String targetMuscle) {
     ExerciseItemWidget newExerciseItem = new ExerciseItemWidget(
       exerciseName: exerciseName,
       exerciseType: exerciseType,
@@ -82,6 +114,8 @@ class _ExercisePageState extends State<ExercisePage> {
     setState(() {
       ExercisePage.exerciseList.add(newExerciseItem);
     });
+    //save the state
+    widget.saveExercisePage();
   }
 
   @override
@@ -90,10 +124,9 @@ class _ExercisePageState extends State<ExercisePage> {
     //exercise page will use most of the feature from application page
     return ApplicationPage(
       pageTitle: "Exercise Page",
-      pageInputType:PageInputType.modalBottomPage,
+      pageInputType: PageInputType.modalBottomPage,
       spaceBetweenItem: 10,
-      itemList: AppManager.DisplayItemsAccordingToState(
-          ExercisePage.exerciseList, "Tap the bottom to add new Exercise"),
+      itemList: AppManager.DisplayItemsAccordingToState(ExercisePage.exerciseList, "Tap the bottom to add new Exercise"),
       modalBottomPageWidgetsImplementation: <Widget>[
         ///widget for the modal page input
         //Exercise name input
@@ -105,10 +138,10 @@ class _ExercisePageState extends State<ExercisePage> {
             //track the value of the dropdown
             this.newExerciseName = stringValue;
           },
-          leftPaddingValue:  modalWidgetsLeftPaddingValue,
+          leftPaddingValue: modalWidgetsLeftPaddingValue,
           textInputWidth: 250,
         ),
-       
+
         SizedBox(
           height: 10,
         ),
@@ -124,8 +157,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 detailStringValue: "Exercise Type",
                 spaceBetween: 150,
                 //map the exerciseTypeList into DropdownMenuItem<String> type
-                dropDownItemList: ExerciseConverterClass.exerciseTypeList
-                    .map<DropdownMenuItem<String>>((String value) {
+                dropDownItemList: ExerciseConverterClass.exerciseTypeList.map<DropdownMenuItem<String>>((String value) {
                   //specify the widget that is returned
                   return DropdownMenuItem<String>(
                     value: value,
@@ -158,8 +190,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 detailStringValue: "Target Muscle",
                 spaceBetween: 150,
                 //map the exerciseTypeList into DropdownMenuItem<String> type
-                dropDownItemList:
-                    muscleList.map<DropdownMenuItem<String>>((String value) {
+                dropDownItemList: muscleList.map<DropdownMenuItem<String>>((String value) {
                   //specify the widget that is returned
                   return DropdownMenuItem<String>(
                     value: value,
@@ -193,15 +224,13 @@ class _ExercisePageState extends State<ExercisePage> {
           onPressedConfirmButton: () {
             //checking the exercisenameInput
             //return true if the argument element is equal to one of the contained elements
-            bool exerciseNameIsValid =
-                !(["", null, false, 0].contains(this.newExerciseName));
+            bool exerciseNameIsValid = !(["", null, false, 0].contains(this.newExerciseName));
             if (exerciseNameIsValid) {
               //make sure to notify the framework to rebuild the widget with a new state
               setState(() {
                 AddExerciseToList(
                   this.newExerciseName,
-                  ExerciseConverterClass.ConvertStringToExerciseType(
-                      this.newExerciseType),
+                  ExerciseConverterClass.ConvertStringToExerciseType(this.newExerciseType),
                   this.newTargetMuscle,
                 );
               });
@@ -211,8 +240,7 @@ class _ExercisePageState extends State<ExercisePage> {
               //go back to the last route
               Navigator.pop(context);
             } else {
-              AppManager.ShowSnackBar(
-                  context, "Please fill the exercise name Bitch-NicholasPixel");
+              AppManager.ShowSnackBar(context, "Please fill the exercise name Bitch-NicholasPixel");
               //go back to the last route
               Navigator.pop(context);
             }
