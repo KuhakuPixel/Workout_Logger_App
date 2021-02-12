@@ -8,13 +8,15 @@ part of 'ExercisePageDAO.dart';
 
 //turn the map to object by using the fromJson function from the instance
 ExercisePageDAO _$ExercisePageDAOFromJson(Map<String, dynamic> json) {
+  //the exerciselist(in json format)
   List<dynamic> exerciseListMap = json['exerciseList'];
 
   //to be filled
   List<ExerciseItemWidget> exerciseItemWidgets = [];
   for (int i = 0; i < exerciseListMap.length; i++) {
-    //construct each ExerciseItemWidgetDAO by using the json (oftype map) and then use that DAO to create ExerciseItemWidge
+    //retreive the data back in a temporary class by constructing it via fromJson 
     ExerciseItemWidgetDAO exerciseItemWidgetDAO = new ExerciseItemWidgetDAO.fromJson(exerciseListMap[i]);
+    //add newly created widget
     exerciseItemWidgets.add(
       new ExerciseItemWidget(
         exerciseName: exerciseItemWidgetDAO.exerciseName,
