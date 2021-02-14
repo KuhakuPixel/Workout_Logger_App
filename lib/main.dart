@@ -9,7 +9,7 @@ void main() => runApp(MyApp());
 ///Class that controls the main application
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
-  //page
+  //pagek
   static ApplicationPage schedulePage = new ApplicationPage(
     itemList: <Widget>[],
     pageInputType: PageInputType.modalBottomPage,

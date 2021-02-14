@@ -6,37 +6,18 @@ part of 'ExercisePageDAO.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-//turn the map to object by using the fromJson function from the instance
 ExercisePageDAO _$ExercisePageDAOFromJson(Map<String, dynamic> json) {
-  //the exerciselist(in json format)
-  List<dynamic> exerciseListMap = json['exerciseList'];
-
-  //to be filled
-  List<ExerciseItemWidget> exerciseItemWidgets = [];
-  for (int i = 0; i < exerciseListMap.length; i++) {
-    //retreive the data back in a temporary class by constructing it via fromJson 
-    ExerciseItemWidgetDAO exerciseItemWidgetDAO = new ExerciseItemWidgetDAO.fromJson(exerciseListMap[i]);
-    //add newly created widget
-    exerciseItemWidgets.add(
-      new ExerciseItemWidget(
-        exerciseName: exerciseItemWidgetDAO.exerciseName,
-        exerciseType: exerciseItemWidgetDAO.exerciseType,
-        targetMuscle: exerciseItemWidgetDAO.targetMuscle,
-      ),
-    );
-  }
-  //construct back the DAO
-
-  return ExercisePageDAO(exerciseItemWidgets);
+  return ExercisePageDAO(
+    (json['exerciseItemDaoList'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ExerciseItemWidgetDAO.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 }
 
-//should turn to list of map first (list of object's json) for its member(by using the toJson function from the instance)
-Map<String, dynamic> _$ExercisePageDAOToJson(ExercisePageDAO instance) {
-  //return json
-  return <String, dynamic>{
-    //map every item in exerciseList to a Map<String,dynamic>
-    'exerciseList': instance.exerciseItemDaoList.map<Map<String, dynamic>>((exerciseItemDAO) {
-      return exerciseItemDAO.toJson();
-    }).toList(),
-  };
-}
+Map<String, dynamic> _$ExercisePageDAOToJson(ExercisePageDAO instance) =>
+    <String, dynamic>{
+      'exerciseItemDaoList':
+          instance.exerciseItemDaoList?.map((e) => e?.toJson())?.toList(),
+    };

@@ -1,6 +1,7 @@
 import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButton.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/DetailsAndDropDown.dart';
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
+import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseItemWidgetDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExercisePageDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
@@ -58,13 +59,25 @@ class ExercisePage extends StatefulWidget {
 
   ///save the state of applicationPage
   Future<void> saveExercisePage() async {
-    //first instatiate the DAO or the interface
-    ExercisePageDAO exercisePageDAO = new ExercisePageDAO(exerciseList);
+    //first instatiate the DAO or the interface and pass in the dao list (by using map first)
+    //map takes in annonymus function which will map every exerciseitemwidget to dao
+    ExercisePageDAO exercisePageDAO = new ExercisePageDAO(
+      exerciseList.map<ExerciseItemWidgetDAO>(
+        (exerciseItemWidget) {
+          return ExerciseItemWidgetDAO(
+            exerciseItemWidget.exerciseName,
+            exerciseItemWidget.exerciseType,
+            exerciseItemWidget.targetMuscle,
+          );
+        },
+      ),
+    );
     await Prefences.saveJSON(this.exercisePagePreferenceStringKey, exercisePageDAO.toJson());
   }
 
   Future<void> loadExercisePage() async {
     Map<String, dynamic> json = await Prefences.getJSON(this.exercisePagePreferenceStringKey);
+    //do some checking if the json is null then dont rewrite the workout
     if (json == null) {
       return;
     } else {
@@ -81,10 +94,7 @@ class ExercisePage extends StatefulWidget {
           );
         },
       ).toList();
-
-      
     }
-
   }
 
   @override

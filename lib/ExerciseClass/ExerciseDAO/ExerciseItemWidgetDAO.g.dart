@@ -6,7 +6,8 @@ part of 'ExerciseItemWidgetDAO.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExerciseItemWidgetDAO _$ExerciseItemWidgetDAOFromJson(Map<String, dynamic> json) {
+ExerciseItemWidgetDAO _$ExerciseItemWidgetDAOFromJson(
+    Map<String, dynamic> json) {
   return ExerciseItemWidgetDAO(
     json['exerciseName'] as String,
     _$enumDecodeNullable(_$ExerciseTypeEnumMap, json['exerciseType']),
@@ -14,7 +15,9 @@ ExerciseItemWidgetDAO _$ExerciseItemWidgetDAOFromJson(Map<String, dynamic> json)
   );
 }
 
-Map<String, dynamic> _$ExerciseItemWidgetDAOToJson(ExerciseItemWidgetDAO instance) => <String, dynamic>{
+Map<String, dynamic> _$ExerciseItemWidgetDAOToJson(
+        ExerciseItemWidgetDAO instance) =>
+    <String, dynamic>{
       'exerciseName': instance.exerciseName,
       'exerciseType': _$ExerciseTypeEnumMap[instance.exerciseType],
       'targetMuscle': instance.targetMuscle,
@@ -30,7 +33,9 @@ T _$enumDecode<T>(
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '
