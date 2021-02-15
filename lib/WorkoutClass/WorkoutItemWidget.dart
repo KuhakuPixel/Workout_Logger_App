@@ -13,6 +13,7 @@ class WorkoutItemWidgetProperty {
 
 class WorkoutItemWidget extends StatelessWidget {
   final String workoutName;
+  ///this will be a page that the user can navigatte to to edit the workout
   final WorkoutInputPage workoutInfoPage;
   //size property
   final double workoutCardHeight = 100;

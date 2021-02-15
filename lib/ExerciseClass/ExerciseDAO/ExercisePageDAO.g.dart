@@ -20,4 +20,5 @@ Map<String, dynamic> _$ExercisePageDAOToJson(ExercisePageDAO instance) =>
     <String, dynamic>{
       'exerciseItemDaoList':
           instance.exerciseItemDaoList?.map((e) => e?.toJson())?.toList(),
+          
     };

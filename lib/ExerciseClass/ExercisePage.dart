@@ -70,31 +70,15 @@ class ExercisePage extends StatefulWidget {
             exerciseItemWidget.targetMuscle,
           );
         },
-      ),
+      ).toList(),
     );
     await Prefences.saveJSON(this.exercisePagePreferenceStringKey, exercisePageDAO.toJson());
   }
 
-  Future<void> loadExercisePage() async {
+  Future<ExercisePageDAO> loadExercisePage() async {
     Map<String, dynamic> json = await Prefences.getJSON(this.exercisePagePreferenceStringKey);
     //do some checking if the json is null then dont rewrite the workout
-    if (json == null) {
-      return;
-    } else {
-      //instantiate the DAO from a json
-      ExercisePageDAO exercisePageDAO = new ExercisePageDAO.fromJson(json);
-      //load in the data////////////////
-      //map each DAO to exerciseItemWidget
-      exerciseList = exercisePageDAO.exerciseItemDaoList.map<ExerciseItemWidget>(
-        (exerciseItemWidgetDAO) {
-          return new ExerciseItemWidget(
-            exerciseName: exerciseItemWidgetDAO.exerciseName,
-            exerciseType: exerciseItemWidgetDAO.exerciseType,
-            targetMuscle: exerciseItemWidgetDAO.targetMuscle,
-          );
-        },
-      ).toList();
-    }
+    return new ExercisePageDAO.fromJson(json);
   }
 
   @override
@@ -112,12 +96,35 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   void initState() {
-    //load the exercisepage state
-    widget.loadExercisePage();
+    
+
     super.initState();
+    //load the exercisepage state
+
+   loadAndSetState();
   }
 
-  void AddExerciseToList(String exerciseName, ExerciseType exerciseType, String targetMuscle) {
+  void loadAndSetState() async {
+    //get the data of this page
+    ExercisePageDAO exercisePageDAO = await widget.loadExercisePage();
+    setState(() {
+      //assign back the data while rebuilding the widget to update its state
+      //load in the data////////////////
+      //map each DAO to exerciseItemWidget
+      ExercisePage.exerciseList = exercisePageDAO.exerciseItemDaoList.map<ExerciseItemWidget>(
+        (exerciseItemWidgetDAO) {
+          return new ExerciseItemWidget(
+            exerciseName: exerciseItemWidgetDAO.exerciseName,
+            exerciseType: exerciseItemWidgetDAO.exerciseType,
+            targetMuscle: exerciseItemWidgetDAO.targetMuscle,
+          );
+        },
+      ).toList();
+    });
+
+  }
+
+  Future<void> AddExerciseToList(String exerciseName, ExerciseType exerciseType, String targetMuscle) async {
     ExerciseItemWidget newExerciseItem = new ExerciseItemWidget(
       exerciseName: exerciseName,
       exerciseType: exerciseType,
@@ -128,7 +135,7 @@ class _ExercisePageState extends State<ExercisePage> {
       ExercisePage.exerciseList.add(newExerciseItem);
     });
     //save the state
-    widget.saveExercisePage();
+    await widget.saveExercisePage();
   }
 
   @override
