@@ -96,12 +96,10 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   void initState() {
-    
-
     super.initState();
     //load the exercisepage state
 
-   loadAndSetState();
+    loadAndSetState();
   }
 
   void loadAndSetState() async {
@@ -121,7 +119,6 @@ class _ExercisePageState extends State<ExercisePage> {
         },
       ).toList();
     });
-
   }
 
   Future<void> AddExerciseToList(String exerciseName, ExerciseType exerciseType, String targetMuscle) async {

@@ -24,7 +24,6 @@ class ExerciseItemWidgetProperty {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 /// widget for containing an exercise item
 
 class ExerciseItemWidget extends StatelessWidget {
@@ -248,7 +247,7 @@ class ExerciseItemWidget extends StatelessWidget {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///this class is used as a widget to determine a volume or a set
+///this class is used as a widget to determine a volume or a set(contains the exercises )
 class ExerciseItemWidgetVolume extends StatefulWidget {
   ///exercise item required property
   String exerciseName;
@@ -259,7 +258,7 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
   String targetMuscle;
 
   ///the exercises set that are added to a workout by the user
-  List<ExerciseSetInstanceWidget> exerciseSetsWidgets = <ExerciseSetInstanceWidget>[];
+  List<ExerciseSetInstance> exerciseSetsWidgets = <ExerciseSetInstance>[];
   @override
   _ExerciseItemWidgetVolumeState createState() => _ExerciseItemWidgetVolumeState();
   ExerciseItemWidgetVolume({
@@ -278,7 +277,7 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
       //to do:add a switch case to handle multiple case(exerciseType)
       //clone and add to list
       this.exerciseSetsWidgets.add(
-            new ExerciseSetInstanceWidget(
+            new ExerciseSetInstance(
               exerciseSetIndex: objectToBeCloned.exerciseSetsWidgets[i].exerciseSetIndex,
               exerciseType: objectToBeCloned.exerciseSetsWidgets[i].exerciseType,
               numberOfRepetition: objectToBeCloned.exerciseSetsWidgets[i].numberOfRepetition,
@@ -407,7 +406,7 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                 //and update the ui to a new state
                                 setState(() {
                                   widget.exerciseSetsWidgets.add(
-                                    new ExerciseSetInstanceWidget(
+                                    new ExerciseSetInstance(
                                       exerciseType: widget.exerciseType,
                                       exerciseSetIndex: widget.exerciseSetsWidgets.length,
                                     ),
@@ -513,7 +512,7 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///A custom widget which will automatically save the inputted/initial value(will assign the field value to the property of the object)
-class ExerciseSetInstanceWidget extends StatelessWidget {
+class ExerciseSetInstance extends StatelessWidget {
   ///is the exercise measured in timed? body weight? or normal weight?
   final ExerciseType exerciseType;
 
@@ -525,7 +524,7 @@ class ExerciseSetInstanceWidget extends StatelessWidget {
 
   ///indexxOfSet : set of [exerciseSetIndex] in a exercise;
   ///fill the respective field in accordance to the exercise type
-  ExerciseSetInstanceWidget({
+  ExerciseSetInstance({
     @required this.exerciseType,
     @required this.exerciseSetIndex = 0,
     this.weightValue = 0,
@@ -624,7 +623,6 @@ class ExerciseSetInstanceWidget extends StatelessWidget {
             Row(
               children: <Widget>[
                 Text(this.exerciseSetIndex.toString()),
-              
                 AmberTextInput(
                   labelText: "time (s)",
                   onChanged: (inputValue) {
@@ -649,7 +647,5 @@ class ExerciseSetInstanceWidget extends StatelessWidget {
         );
         break;
     }
-
-    
   }
 }
