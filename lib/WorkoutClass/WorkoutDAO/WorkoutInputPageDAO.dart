@@ -2,7 +2,7 @@ import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseItemVolumeDAO
 import "package:WorkoutLoggerApp/WorkoutClass/toAddWorkoutPage.dart";
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
-part "ExercisePageDAO.g.dart";
+part 'WorkoutInputPageDAO.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class WorkoutInputPageDAO {
