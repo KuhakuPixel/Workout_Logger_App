@@ -5,6 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'ExerciseItemVolumeDAO.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+///the DAO for the ExerciseItemWidgetVolume
 class ExerciseItemWidgetVolumeDAO {
   ///exercise item required property
   String exerciseName;

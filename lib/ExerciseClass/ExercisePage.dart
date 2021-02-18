@@ -77,7 +77,7 @@ class ExercisePage extends StatefulWidget {
 
   Future<ExercisePageDAO> loadExercisePage() async {
     Map<String, dynamic> json = await Prefences.getJSON(this.exercisePagePreferenceStringKey);
-    //do some checking if the json is null then dont rewrite the workout
+    
     return new ExercisePageDAO.fromJson(json);
   }
 
