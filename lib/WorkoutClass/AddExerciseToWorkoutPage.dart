@@ -8,6 +8,7 @@ import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
 
 ///Page to add a new exercise to the workout(with search feature)
+///This page will also be used to store the information about the workout
 class AddExerciseToWorkoutPage extends StatefulWidget {
   AddExerciseToWorkoutPage();
   @override

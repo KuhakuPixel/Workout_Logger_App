@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'WorkoutInputPageDAO.dart';
+part of 'WorkoutWidgetInformationPageDAO.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-WorkoutInputPageDAO _$WorkoutInputPageDAOFromJson(Map<String, dynamic> json) {
-  return WorkoutInputPageDAO(
+WorkoutWidgetInformationPageDAO _$WorkoutInputPageDAOFromJson(Map<String, dynamic> json) {
+  return WorkoutWidgetInformationPageDAO(
     workoutName: json['workoutName'] as String,
     exercisesInWorkout: (json['exercisesInWorkout'] as List)
         ?.map((e) => e == null
@@ -20,7 +20,7 @@ WorkoutInputPageDAO _$WorkoutInputPageDAOFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$WorkoutInputPageDAOToJson(
-        WorkoutInputPageDAO instance) =>
+        WorkoutWidgetInformationPageDAO instance) =>
     <String, dynamic>{
       'workoutName': instance.workoutName,
       'exercisesInWorkout':

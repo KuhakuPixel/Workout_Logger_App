@@ -11,7 +11,7 @@ WorkoutItemWidgetDAO _$WorkoutItemWidgetDAOFromJson(Map<String, dynamic> json) {
     workoutName: json['workoutName'] as String,
     workoutInfoPage: json['workoutInfoPage'] == null
         ? null
-        : WorkoutInputPageDAO.fromJson(
+        : WorkoutWidgetInformationPageDAO.fromJson(
             json['workoutInfoPage'] as Map<String, dynamic>),
   );
 }

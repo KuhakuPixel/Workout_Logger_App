@@ -9,11 +9,11 @@ import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/WidgetKey.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/AddExerciseToWorkoutPage.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutInputPageDAO.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutWidgetInformationPageDAO.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutItemWidgetDAO.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutPageDAO.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutItemWidget.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/toAddWorkoutPage.dart';
+import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutWidgetInformationPage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 
@@ -27,40 +27,27 @@ class WorkoutPage extends StatefulWidget {
   @override
   _WorkoutPageState createState() => _WorkoutPageState();
   Future<void> saveWorkoutPageState() async {
-    //todo:save all the list using the prefence class
+    //init the DAO of this class to be saved
     WorkoutPageDAO workoutPageDAO = new WorkoutPageDAO(
       //map every WorkoutItemWidget to WorkoutItemWidgetDAO
-      listOfWorkoutWidget: WorkoutPage.listOfWorkoutWidget.map<WorkoutItemWidgetDAO>(
+      listOfWorkoutWidget:
+          WorkoutPage.listOfWorkoutWidget.map<WorkoutItemWidgetDAO>(
         //return the Dao of each workoutItemWidget
         (workoutItemWidget) {
-          return new WorkoutItemWidgetDAO(
-            workoutName: workoutItemWidget.workoutName,
-            workoutInfoPage: new WorkoutInputPageDAO(
-              workoutName: workoutItemWidget.workoutName,
-              //map every ExerciseItemWidgetVolume to ExerciseItemWidgetVolume DAO
-              exercisesInWorkout: workoutItemWidget.workoutInfoPage.exercisesInWorkout.map<ExerciseItemWidgetVolumeDAO>(
-                (exerciseItemWidgetVolume) {
-                  return new ExerciseItemWidgetVolumeDAO(
-                    exerciseName: exerciseItemWidgetVolume.exerciseName,
-                    exerciseType: exerciseItemWidgetVolume.exerciseType,
-                    targetMuscle: exerciseItemWidgetVolume.targetMuscle,
-                  );
-                },
-              ).toList(),
-              workoutPageType: workoutItemWidget.workoutInfoPage.workoutPageType,
-            ),
-          );
+          return workoutItemWidget.toDAO();
         },
       ).toList(),
     );
     //save the json[map<string,dynamic>]
-    await Prefences.saveJSON(this.workoutPagePreferencekey, workoutPageDAO.toJson());
+    await Prefences.saveJSON(
+        this.workoutPagePreferencekey, workoutPageDAO.toJson());
   }
 
   ///return the DAO to be used to init the state
-  Future<WorkoutPageDAO> loadWorkoutPageState() async {
+  Future<WorkoutPageDAO> loadWorkoutPageDAO() async {
     //get the json to init the DAO
-    Map<String, dynamic> json = await Prefences.getJSON(this.workoutPagePreferencekey);
+    Map<String, dynamic> json =
+        await Prefences.getJSON(this.workoutPagePreferencekey);
     return new WorkoutPageDAO.fromJson(json);
   }
 }
@@ -73,17 +60,18 @@ class _WorkoutPageState extends State<WorkoutPage> {
   ///load previous data and update the widget
   Future<void> loadAndSetState() async {
     //load in the DAO
-    WorkoutPageDAO workoutPageDAO = await widget.loadWorkoutPageState();
+    WorkoutPageDAO workoutPageDAO = await widget.loadWorkoutPageDAO();
     //load in the workout list
     //map every workoutItemWidgetDAO to workoutItemWidget
-    WorkoutPage.listOfWorkoutWidget = workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
+    setState(() {
+       WorkoutPage.listOfWorkoutWidget =
+        workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
       (workoutItemWidgetDAO) {
-        return new WorkoutItemWidget(
-          workoutName: workoutItemWidgetDAO.workoutName,
-       //   workoutInfoPage:new WorkoutInputPage(addWorkoutToListFunction: ,),
-        );
+        return WorkoutItemWidget.fromDAO(workoutItemWidgetDAO);
       },
     );
+    });
+   
   }
 
   void addNewWorkoutToList(WorkoutItemWidget newWorkout) {
@@ -100,7 +88,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     return ApplicationPage(
       pageTitle: "WorkoutPage",
       pageInputType: PageInputType.newNormalPage,
-      inputPage: WorkoutInputPage(
+      inputPage: WorkoutWidgetInformationPage(
         key: WidgetKey.toAddWorkoutInputPageStateKey,
         addWorkoutToListFunction: addNewWorkoutToList,
       ),
@@ -109,6 +97,5 @@ class _WorkoutPageState extends State<WorkoutPage> {
     );
   }
 }
-
 
 //todo:write fromDAO constructor to hide some abstraction for fuck sake
