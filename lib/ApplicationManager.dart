@@ -38,7 +38,7 @@ class AppManager {
     }
   }
 }
-
+///class to save and get saved json [Map<String,dynamic>]
 class Prefences {
   ///save a json [Map<String,dynamic>)]
   static Future<void> saveJSON(String stringKey, Map<String, dynamic> json) async {

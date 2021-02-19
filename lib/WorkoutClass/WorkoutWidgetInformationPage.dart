@@ -16,7 +16,7 @@ enum WorkoutPageType {
   workoutPageInfo,
 }
 
-///used for adding a new workout or edit an existing workout
+///used for adding a new workout or editing an existing workout
 class WorkoutWidgetInformationPage extends StatefulWidget {
   String workoutName = "";
 

@@ -48,30 +48,39 @@ class WorkoutPage extends StatefulWidget {
     //get the json to init the DAO
     Map<String, dynamic> json =
         await Prefences.getJSON(this.workoutPagePreferencekey);
+
     return new WorkoutPageDAO.fromJson(json);
   }
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
   void initState() {
+    loadAndSetState();
     super.initState();
   }
 
   ///load previous data and update the widget
   Future<void> loadAndSetState() async {
-    //load in the DAO
-    WorkoutPageDAO workoutPageDAO = await widget.loadWorkoutPageDAO();
-    //load in the workout list
-    //map every workoutItemWidgetDAO to workoutItemWidget
-    setState(() {
-       WorkoutPage.listOfWorkoutWidget =
-        workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
-      (workoutItemWidgetDAO) {
-        return WorkoutItemWidget.fromDAO(workoutItemWidgetDAO);
-      },
-    );
-    });
-   
+    //try to load state if the user has saved previously
+    try {
+      //load in the DAO
+      WorkoutPageDAO workoutPageDAO = await widget.loadWorkoutPageDAO();
+      //load in the workout list
+      //map every workoutItemWidgetDAO to workoutItemWidget
+      setState(
+        () {
+          WorkoutPage.listOfWorkoutWidget =
+              workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
+            (workoutItemWidgetDAO) {
+              return WorkoutItemWidget.fromDAO(workoutItemWidgetDAO);
+            },
+          ).toList();
+        },
+      );
+
+    } catch (e) {
+      debugPrintStack(label: "no data has been saved", maxFrames: 2);
+    }
   }
 
   void addNewWorkoutToList(WorkoutItemWidget newWorkout) {

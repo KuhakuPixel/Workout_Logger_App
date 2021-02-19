@@ -11,7 +11,8 @@ import '../ApplicationManager.dart';
 import '../PageBaseClass/page.dart';
 
 class ExercisePage extends StatefulWidget {
-  final String exercisePagePreferenceStringKey = "exercisePagePreferenceStringKey";
+  final String exercisePagePreferenceStringKey =
+      "exercisePagePreferenceStringKey";
 
   ///User added exercise will be stored here
   static List<ExerciseItemWidget> exerciseList = [
@@ -72,12 +73,15 @@ class ExercisePage extends StatefulWidget {
         },
       ).toList(),
     );
-    await Prefences.saveJSON(this.exercisePagePreferenceStringKey, exercisePageDAO.toJson());
+
+    await Prefences.saveJSON(
+        this.exercisePagePreferenceStringKey, exercisePageDAO.toJson());
   }
 
   Future<ExercisePageDAO> loadExercisePage() async {
-    Map<String, dynamic> json = await Prefences.getJSON(this.exercisePagePreferenceStringKey);
-    
+    Map<String, dynamic> json =
+        await Prefences.getJSON(this.exercisePagePreferenceStringKey);
+
     return new ExercisePageDAO.fromJson(json);
   }
 
@@ -91,37 +95,46 @@ class _ExercisePageState extends State<ExercisePage> {
   double modalWidgetsLeftPaddingValue = 6;
 
   String newExerciseName;
-  String newExerciseType = ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: ExerciseType.bodyweight);
+  String newExerciseType =
+      ExerciseConverterClass.ConvertExerciseTypeEnumToString(
+          enumValue: ExerciseType.bodyweight);
   String newTargetMuscle = muscleList[0];
 
   @override
   void initState() {
     super.initState();
     //load the exercisepage state
-
+//TODO: write a condition to check if there is data saved by the user already,if not then dont load
     loadAndSetState();
   }
 
   void loadAndSetState() async {
-    //get the data of this page
-    ExercisePageDAO exercisePageDAO = await widget.loadExercisePage();
-    setState(() {
-      //assign back the data while rebuilding the widget to update its state
-      //load in the data////////////////
-      //map each DAO to exerciseItemWidget
-      ExercisePage.exerciseList = exercisePageDAO.exerciseItemDaoList.map<ExerciseItemWidget>(
-        (exerciseItemWidgetDAO) {
-          return new ExerciseItemWidget(
-            exerciseName: exerciseItemWidgetDAO.exerciseName,
-            exerciseType: exerciseItemWidgetDAO.exerciseType,
-            targetMuscle: exerciseItemWidgetDAO.targetMuscle,
-          );
-        },
-      ).toList();
-    });
+    //try to load state if the user has saved previously
+    try {
+      //get the data of this page
+      ExercisePageDAO exercisePageDAO = await widget.loadExercisePage();
+      setState(() {
+        //assign back the data while rebuilding the widget to update its state
+        //load in the data////////////////
+        //map each DAO to exerciseItemWidget
+        ExercisePage.exerciseList =
+            exercisePageDAO.exerciseItemDaoList.map<ExerciseItemWidget>(
+          (exerciseItemWidgetDAO) {
+            return new ExerciseItemWidget(
+              exerciseName: exerciseItemWidgetDAO.exerciseName,
+              exerciseType: exerciseItemWidgetDAO.exerciseType,
+              targetMuscle: exerciseItemWidgetDAO.targetMuscle,
+            );
+          },
+        ).toList();
+      });
+    } catch (e) {
+      debugPrintStack(label: "no data has been saved", maxFrames: 2);
+    }
   }
 
-  Future<void> AddExerciseToList(String exerciseName, ExerciseType exerciseType, String targetMuscle) async {
+  Future<void> AddExerciseToList(String exerciseName, ExerciseType exerciseType,
+      String targetMuscle) async {
     ExerciseItemWidget newExerciseItem = new ExerciseItemWidget(
       exerciseName: exerciseName,
       exerciseType: exerciseType,
@@ -143,7 +156,8 @@ class _ExercisePageState extends State<ExercisePage> {
       pageTitle: "Exercise Page",
       pageInputType: PageInputType.modalBottomPage,
       spaceBetweenItem: 10,
-      itemList: AppManager.DisplayItemsAccordingToState(ExercisePage.exerciseList, "Tap the bottom to add new Exercise"),
+      itemList: AppManager.DisplayItemsAccordingToState(
+          ExercisePage.exerciseList, "Tap the bottom to add new Exercise"),
       modalBottomPageWidgetsImplementation: <Widget>[
         ///widget for the modal page input
         //Exercise name input
@@ -174,7 +188,8 @@ class _ExercisePageState extends State<ExercisePage> {
                 detailStringValue: "Exercise Type",
                 spaceBetween: 150,
                 //map the exerciseTypeList into DropdownMenuItem<String> type
-                dropDownItemList: ExerciseConverterClass.exerciseTypeList.map<DropdownMenuItem<String>>((String value) {
+                dropDownItemList: ExerciseConverterClass.exerciseTypeList
+                    .map<DropdownMenuItem<String>>((String value) {
                   //specify the widget that is returned
                   return DropdownMenuItem<String>(
                     value: value,
@@ -207,7 +222,8 @@ class _ExercisePageState extends State<ExercisePage> {
                 detailStringValue: "Target Muscle",
                 spaceBetween: 150,
                 //map the exerciseTypeList into DropdownMenuItem<String> type
-                dropDownItemList: muscleList.map<DropdownMenuItem<String>>((String value) {
+                dropDownItemList:
+                    muscleList.map<DropdownMenuItem<String>>((String value) {
                   //specify the widget that is returned
                   return DropdownMenuItem<String>(
                     value: value,
@@ -241,13 +257,15 @@ class _ExercisePageState extends State<ExercisePage> {
           onPressedConfirmButton: () {
             //checking the exercisenameInput
             //return true if the argument element is equal to one of the contained elements
-            bool exerciseNameIsValid = !(["", null, false, 0].contains(this.newExerciseName));
+            bool exerciseNameIsValid =
+                !(["", null, false, 0].contains(this.newExerciseName));
             if (exerciseNameIsValid) {
               //make sure to notify the framework to rebuild the widget with a new state
               setState(() {
                 AddExerciseToList(
                   this.newExerciseName,
-                  ExerciseConverterClass.ConvertStringToExerciseType(this.newExerciseType),
+                  ExerciseConverterClass.ConvertStringToExerciseType(
+                      this.newExerciseType),
                   this.newTargetMuscle,
                 );
               });
@@ -257,7 +275,8 @@ class _ExercisePageState extends State<ExercisePage> {
               //go back to the last route
               Navigator.pop(context);
             } else {
-              AppManager.ShowSnackBar(context, "Please fill the exercise name Bitch-NicholasPixel");
+              AppManager.ShowSnackBar(
+                  context, "Please fill the exercise name Bitch-NicholasPixel");
               //go back to the last route
               Navigator.pop(context);
             }

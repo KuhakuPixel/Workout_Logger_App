@@ -1,5 +1,6 @@
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseItemVolumeDAO.dart';
+import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseSetInstanceDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
 import 'package:WorkoutLoggerApp/WidgetKey.dart';
 
@@ -306,13 +307,26 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
     this.exerciseName = dao.exerciseName;
     this.exerciseType = dao.exerciseType;
     this.targetMuscle = dao.targetMuscle;
+    //map dao to load the data
+    this.exerciseSetsWidgets = dao.exerciseSetsWidgets.map<ExerciseSetInstance>(
+      (exerciseSetInstanceDAO) {
+        return ExerciseSetInstance.fromDAO(exerciseSetInstanceDAO);
+      },
+    ).toList();
   }
+
   ///convert to DAO(used for saving locally)
   ExerciseItemWidgetVolumeDAO toDAO() {
     return new ExerciseItemWidgetVolumeDAO(
       exerciseName: this.exerciseName,
       exerciseType: this.exerciseType,
       targetMuscle: this.targetMuscle,
+      //map to dao
+      exerciseSetsWidgets: this.exerciseSetsWidgets.map<ExerciseSetInstanceDAO>(
+        (exerciseSetInstance) {
+          return exerciseSetInstance.toDAO();
+        },
+      ).toList(),
     );
   }
 }
@@ -565,8 +579,25 @@ class ExerciseSetInstance extends StatelessWidget {
     this.weightValue = 0,
     this.numberOfRepetition = 0,
   }) {}
-//todo:assign the inputted value to the respecting field because it is initialize the field initial value when cloning the object
-//possible bug:the objectToBeCloned 's setinstance has a rep value of 0
+
+  ///instantiate ExerciseItemWidgetVolume from DAO
+  ExerciseSetInstance.fromDAO(ExerciseSetInstanceDAO dao)
+      : exerciseSetIndex = dao.exerciseSetIndex,
+        exerciseType = dao.exerciseType {
+    this.weightValue = dao.weightValue;
+    this.numberOfRepetition = dao.numberOfRepetition;
+  }
+
+  ///convert to DAO(used for saving locally)
+  ExerciseSetInstanceDAO toDAO() {
+    return new ExerciseSetInstanceDAO(
+      exerciseType: this.exerciseType,
+      exerciseSetIndex: this.exerciseSetIndex,
+      weightValue: this.weightValue,
+      numberOfRepetition: this.numberOfRepetition,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     switch (this.exerciseType) {

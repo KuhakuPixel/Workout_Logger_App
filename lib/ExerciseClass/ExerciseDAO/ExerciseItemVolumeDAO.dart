@@ -21,6 +21,7 @@ class ExerciseItemWidgetVolumeDAO {
     @required this.exerciseName,
    @required this.exerciseType,
    @required this.targetMuscle,
+   @required this.exerciseSetsWidgets,
   });
   factory ExerciseItemWidgetVolumeDAO.fromJson(Map<String, dynamic> json) => _$ExerciseItemWidgetVolumeDAOFromJson(json);
   Map<String, dynamic> toJson() => _$ExerciseItemWidgetVolumeDAOToJson(this);
