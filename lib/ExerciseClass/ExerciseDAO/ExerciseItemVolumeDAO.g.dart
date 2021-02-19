@@ -13,11 +13,12 @@ ExerciseItemWidgetVolumeDAO _$ExerciseItemWidgetVolumeDAOFromJson(
     exerciseType:
         _$enumDecodeNullable(_$ExerciseTypeEnumMap, json['exerciseType']),
     targetMuscle: json['targetMuscle'] as String,
-  )..exerciseSetsWidgets = (json['exerciseSetsWidgets'] as List)
-      ?.map((e) => e == null
-          ? null
-          : ExerciseSetInstanceDAO.fromJson(e as Map<String, dynamic>))
-      ?.toList();
+    exerciseSetsWidgets: (json['exerciseSetsWidgets'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ExerciseSetInstanceDAO.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 }
 
 Map<String, dynamic> _$ExerciseItemWidgetVolumeDAOToJson(
