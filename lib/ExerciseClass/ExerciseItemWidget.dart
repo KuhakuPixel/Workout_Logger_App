@@ -2,6 +2,7 @@ import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseItemVolumeDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseSetInstanceDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseGlobalClass.dart';
+import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/WidgetKey.dart';
 
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
@@ -14,8 +15,7 @@ class ExerciseItemWidgetProperty {
   static Color textColor = Colors.amber[800];
   //ApplicationColorsPallete.ColorsPallete_["Light Grey 2"]
   static Color cardBorderColor = Colors.amber[800];
-  static Color cardBackgroundColor =
-      ApplicationColorsPallete.ColorsPallete_["BlackGreyish"];
+  static Color cardBackgroundColor = ApplicationColorsPallete.ColorsPallete_["BlackGreyish"];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,8 @@ class ExerciseItemWidget extends StatelessWidget {
           //the content of the item widget
           child: Container(
             child: Row(
-              children: <Widget>[
+              children: [
+                //exercise widget properties like name its type and ect
                 Column(
                   children: <Widget>[
                     //exercise name title
@@ -92,10 +93,7 @@ class ExerciseItemWidget extends StatelessWidget {
                     SizedBox(height: 5),
                     //exercise Type
                     Text(
-                      " Exercise Type   : " +
-                          ExerciseConverterClass
-                              .ConvertExerciseTypeEnumToString(
-                                  enumValue: this.exerciseType),
+                      " Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: this.exerciseType),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -106,6 +104,25 @@ class ExerciseItemWidget extends StatelessWidget {
                     ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                //delete button
+                Container(
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      //remove this object from the list
+                      WidgetKey.exercisePageStateKey.currentState.removeExerciseFromList(this);
+                      
+                    },
+                    elevation: 2.0,
+                    fillColor: Colors.amber[800],
+                    child: Icon(
+                      Icons.delete,
+                      size: 30.0,
+                    ),
+                    //padding: EdgeInsets.all(15.0),
+                    shape: CircleBorder(),
+                  ),
+                  height: 40,
                 ),
               ],
             ),
@@ -175,10 +192,7 @@ class ExerciseItemWidget extends StatelessWidget {
                     SizedBox(height: 5),
                     //exercise Type
                     Text(
-                      " Exercise Type   : " +
-                          ExerciseConverterClass
-                              .ConvertExerciseTypeEnumToString(
-                                  enumValue: this.exerciseType),
+                      " Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: this.exerciseType),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -195,16 +209,14 @@ class ExerciseItemWidget extends StatelessWidget {
                   onPressed: () {
                     //instantiate ExerciseItemWidget.ExerciseItemWithRepetitionCount
                     //add the item to the list of exercises
-                    ExerciseItemWidgetVolume exerciseVolumeCard =
-                        new ExerciseItemWidgetVolume(
+                    ExerciseItemWidgetVolume exerciseVolumeCard = new ExerciseItemWidgetVolume(
                       exerciseName: this.exerciseName,
                       exerciseType: this.exerciseType,
                       targetMuscle: this.targetMuscle,
                     );
                     //this.addExerciseToWorkoutButtonEvent(exerciseVolumeCard);
                     //add an exercise to the page
-                    WidgetKey.toAddWorkoutInputPageStateKey.currentState
-                        .AddOneExerciseToWorkout(exerciseVolumeCard);
+                    WidgetKey.toAddWorkoutInputPageStateKey.currentState.AddOneExerciseToWorkout(exerciseVolumeCard);
                   },
                   elevation: 2.0,
                   fillColor: Colors.amber[800],
@@ -271,8 +283,7 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
   ///the exercises set that are added to a workout by the user
   List<ExerciseSetInstance> exerciseSetsWidgets = <ExerciseSetInstance>[];
   @override
-  _ExerciseItemWidgetVolumeState createState() =>
-      _ExerciseItemWidgetVolumeState();
+  _ExerciseItemWidgetVolumeState createState() => _ExerciseItemWidgetVolumeState();
   ExerciseItemWidgetVolume({
     @required this.exerciseName,
     @required this.exerciseType,
@@ -290,12 +301,9 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
       //clone and add to list
       this.exerciseSetsWidgets.add(
             new ExerciseSetInstance(
-              exerciseSetIndex:
-                  objectToBeCloned.exerciseSetsWidgets[i].exerciseSetIndex,
-              exerciseType:
-                  objectToBeCloned.exerciseSetsWidgets[i].exerciseType,
-              numberOfRepetition:
-                  objectToBeCloned.exerciseSetsWidgets[i].numberOfRepetition,
+              exerciseSetIndex: objectToBeCloned.exerciseSetsWidgets[i].exerciseSetIndex,
+              exerciseType: objectToBeCloned.exerciseSetsWidgets[i].exerciseType,
+              numberOfRepetition: objectToBeCloned.exerciseSetsWidgets[i].numberOfRepetition,
               weightValue: objectToBeCloned.exerciseSetsWidgets[i].weightValue,
             ),
           );
@@ -387,10 +395,7 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                             SizedBox(height: 5),
                             //exercise Type
                             Text(
-                              " Exercise Type   : " +
-                                  ExerciseConverterClass
-                                      .ConvertExerciseTypeEnumToString(
-                                          enumValue: widget.exerciseType),
+                              " Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: widget.exerciseType),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -454,8 +459,7 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                   widget.exerciseSetsWidgets.add(
                                     new ExerciseSetInstance(
                                       exerciseType: widget.exerciseType,
-                                      exerciseSetIndex:
-                                          widget.exerciseSetsWidgets.length,
+                                      exerciseSetIndex: widget.exerciseSetsWidgets.length,
                                     ),
                                   );
                                 });
@@ -487,12 +491,10 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                 setState(() {
                                   //remove the last element(the last index)
                                   if (widget.exerciseSetsWidgets.length > 0) {
-                                    widget.exerciseSetsWidgets.removeAt(
-                                        widget.exerciseSetsWidgets.length - 1);
+                                    widget.exerciseSetsWidgets.removeAt(widget.exerciseSetsWidgets.length - 1);
                                   } else {
                                     debugPrintStack(
-                                      label:
-                                          "exerciseSetsWidgets length is 0 cannot remove anymore item",
+                                      label: "exerciseSetsWidgets length is 0 cannot remove anymore item",
                                       maxFrames: 2,
                                     );
                                   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CloseModalBottomPageAndConfirmButtonWidget extends StatelessWidget {
+class CloseAndConfirmButtonWidget extends StatelessWidget {
   final Function onPressedCloseButton;
   final Function onPressedConfirmButton;
 
@@ -9,7 +9,7 @@ class CloseModalBottomPageAndConfirmButtonWidget extends StatelessWidget {
 
   ///the icon for the button
   final IconData rightButtonIcon;
-  CloseModalBottomPageAndConfirmButtonWidget({
+  CloseAndConfirmButtonWidget({
     @required this.onPressedCloseButton,
     @required this.onPressedConfirmButton,
     this.leftButtonIcon = Icons.close,

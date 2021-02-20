@@ -18,6 +18,8 @@ import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.da
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {
+  WorkoutPage({Key key}) : super(key: key);
+
   final String workoutPagePreferencekey = "workoutPagePreferencekey";
   //the list should be declared here because this actual class is the one used for the tab not the _WorkoutPageState
   //if the list is declared in _WorkoutPageState it will be always a new instance hence the list item is reseted (executed from the createState virtual functin)
@@ -25,13 +27,13 @@ class WorkoutPage extends StatefulWidget {
     //WorkoutItemWidget(workoutName: "Idk", workoutInfoPage: null),
   ];
   @override
-  _WorkoutPageState createState() => _WorkoutPageState();
+  WorkoutPageState createState() => WorkoutPageState();
+
   Future<void> saveWorkoutPageState() async {
     //init the DAO of this class to be saved
     WorkoutPageDAO workoutPageDAO = new WorkoutPageDAO(
       //map every WorkoutItemWidget to WorkoutItemWidgetDAO
-      listOfWorkoutWidget:
-          WorkoutPage.listOfWorkoutWidget.map<WorkoutItemWidgetDAO>(
+      listOfWorkoutWidget: WorkoutPage.listOfWorkoutWidget.map<WorkoutItemWidgetDAO>(
         //return the Dao of each workoutItemWidget
         (workoutItemWidget) {
           return workoutItemWidget.toDAO();
@@ -39,21 +41,19 @@ class WorkoutPage extends StatefulWidget {
       ).toList(),
     );
     //save the json[map<string,dynamic>]
-    await Prefences.saveJSON(
-        this.workoutPagePreferencekey, workoutPageDAO.toJson());
+    await Prefences.saveJSON(this.workoutPagePreferencekey, workoutPageDAO.toJson());
   }
 
   ///return the DAO to be used to init the state
   Future<WorkoutPageDAO> loadWorkoutPageDAO() async {
     //get the json to init the DAO
-    Map<String, dynamic> json =
-        await Prefences.getJSON(this.workoutPagePreferencekey);
+    Map<String, dynamic> json = await Prefences.getJSON(this.workoutPagePreferencekey);
 
     return new WorkoutPageDAO.fromJson(json);
   }
 }
 
-class _WorkoutPageState extends State<WorkoutPage> {
+class WorkoutPageState extends State<WorkoutPage> {
   void initState() {
     loadAndSetState();
     super.initState();
@@ -69,15 +69,13 @@ class _WorkoutPageState extends State<WorkoutPage> {
       //map every workoutItemWidgetDAO to workoutItemWidget
       setState(
         () {
-          WorkoutPage.listOfWorkoutWidget =
-              workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
+          WorkoutPage.listOfWorkoutWidget = workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
             (workoutItemWidgetDAO) {
               return WorkoutItemWidget.fromDAO(workoutItemWidgetDAO);
             },
           ).toList();
         },
       );
-
     } catch (e) {
       debugPrintStack(label: "no data has been saved", maxFrames: 2);
     }

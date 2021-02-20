@@ -1,5 +1,6 @@
 import 'package:WorkoutLoggerApp/ExerciseClass/ExercisePage.dart';
 import 'package:WorkoutLoggerApp/PageBaseClass/page.dart';
+import 'package:WorkoutLoggerApp/WidgetKey.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutPage.dart';
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ void main() => runApp(MyApp());
 ///Class that controls the main application
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
-  //pagek
+  //page class+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   static ApplicationPage schedulePage = new ApplicationPage(
     itemList: <Widget>[],
     pageInputType: PageInputType.modalBottomPage,
@@ -17,8 +18,12 @@ class MyApp extends StatelessWidget {
     spaceBetweenItem: 5,
     modalBottomPageWidgetsImplementation: <Widget>[],
   );
-  static WorkoutPage workoutPage = new WorkoutPage();
-  static ExercisePage exercisePage = new ExercisePage();
+  static WorkoutPage workoutPage = new WorkoutPage(key: WidgetKey.workoutPageStateKey);
+  //the passed value will have acsess to this class
+  static ExercisePage exercisePage = new ExercisePage(
+    key: WidgetKey.exercisePageStateKey,
+  );
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -62,8 +67,6 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
     MyApp.exercisePage,
   ];
 
-  
-
 //main virtual function
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,6 @@ class _AppStatefulWidgetState extends State<AppStatefulWidget> {
             setState(() {
               _selectedPageIndex = index;
             });
-            
           },
         ),
         elevation: 1000000000000000000000,
