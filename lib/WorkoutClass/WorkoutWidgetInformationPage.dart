@@ -207,8 +207,9 @@ class WorkoutWidgetInformationPageState
         SizedBox(
           height: 10,
         ),
-        CloseModalBottomPageAndConfirmButtonWidget(
+        CloseAndConfirmButtonWidget(
           //determine the icon of the right button according to widget.workoutPageType
+        
           rightButtonIcon:
               widget.workoutPageType == WorkoutPageType.workoutPageInfo
                   ? Icons.check
@@ -252,7 +253,8 @@ class WorkoutWidgetInformationPageState
                 }
                 break;
               case WorkoutPageType.workoutPageInfo:
-
+                //edit the pageinfo 
+                
                 //go back to the previous route in the stack
                 Navigator.pop(context);
                 break;
