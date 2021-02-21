@@ -33,7 +33,8 @@ class WorkoutPage extends StatefulWidget {
     //init the DAO of this class to be saved
     WorkoutPageDAO workoutPageDAO = new WorkoutPageDAO(
       //map every WorkoutItemWidget to WorkoutItemWidgetDAO
-      listOfWorkoutWidget: WorkoutPage.listOfWorkoutWidget.map<WorkoutItemWidgetDAO>(
+      listOfWorkoutWidget:
+          WorkoutPage.listOfWorkoutWidget.map<WorkoutItemWidgetDAO>(
         //return the Dao of each workoutItemWidget
         (workoutItemWidget) {
           return workoutItemWidget.toDAO();
@@ -41,13 +42,15 @@ class WorkoutPage extends StatefulWidget {
       ).toList(),
     );
     //save the json[map<string,dynamic>]
-    await Prefences.saveJSON(this.workoutPagePreferencekey, workoutPageDAO.toJson());
+    await Prefences.saveJSON(
+        this.workoutPagePreferencekey, workoutPageDAO.toJson());
   }
 
   ///return the DAO to be used to init the state
   Future<WorkoutPageDAO> loadWorkoutPageDAO() async {
     //get the json to init the DAO
-    Map<String, dynamic> json = await Prefences.getJSON(this.workoutPagePreferencekey);
+    Map<String, dynamic> json =
+        await Prefences.getJSON(this.workoutPagePreferencekey);
 
     return new WorkoutPageDAO.fromJson(json);
   }
@@ -57,6 +60,10 @@ class WorkoutPageState extends State<WorkoutPage> {
   void initState() {
     loadAndSetState();
     super.initState();
+  }
+
+  Future<void> SaveWorkoutPageState() async {
+    await widget.saveWorkoutPageState();
   }
 
   ///load previous data and update the widget
@@ -69,7 +76,8 @@ class WorkoutPageState extends State<WorkoutPage> {
       //map every workoutItemWidgetDAO to workoutItemWidget
       setState(
         () {
-          WorkoutPage.listOfWorkoutWidget = workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
+          WorkoutPage.listOfWorkoutWidget =
+              workoutPageDAO.listOfWorkoutWidget.map<WorkoutItemWidget>(
             (workoutItemWidgetDAO) {
               return WorkoutItemWidget.fromDAO(workoutItemWidgetDAO);
             },

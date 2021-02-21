@@ -4,6 +4,7 @@ import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseDAO/ExerciseItemVolumeDAO.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/PageBaseClass/ItemInputPage.dart';
+import 'package:WorkoutLoggerApp/WidgetKey.dart';
 
 import 'package:WorkoutLoggerApp/WorkoutClass/AddExerciseToWorkoutPage.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutWidgetInformationPageDAO.dart';
@@ -20,20 +21,24 @@ enum WorkoutPageType {
 class WorkoutWidgetInformationPage extends StatefulWidget {
   String workoutName = "";
 
-  List<ExerciseItemWidgetVolume> exercisesInWorkout = <ExerciseItemWidgetVolume>[];
+  List<ExerciseItemWidgetVolume> exercisesInWorkout =
+      <ExerciseItemWidgetVolume>[];
   void Function(WorkoutItemWidget) addWorkoutToListFunction;
 
   ///help to determine wheater this workout is firstly created or  modified?
   WorkoutPageType workoutPageType;
   //https://stackoverflow.com/questions/21033398/how-do-i-call-on-the-super-class-constructor-and-other-statements-in-dart
-  WorkoutWidgetInformationPage({@required Key key, @required this.addWorkoutToListFunction}) : super(key: key) {
+  WorkoutWidgetInformationPage(
+      {@required Key key, @required this.addWorkoutToListFunction})
+      : super(key: key) {
     this.workoutPageType = WorkoutPageType.pageToAddNewWorkout;
   }
 
   ///instantiate  from DAO
   WorkoutWidgetInformationPage.fromDAO(WorkoutWidgetInformationPageDAO dao) {
     //get list by mapping from dao
-    this.exercisesInWorkout = dao.exercisesInWorkout.map<ExerciseItemWidgetVolume>(
+    this.exercisesInWorkout =
+        dao.exercisesInWorkout.map<ExerciseItemWidgetVolume>(
       (exerciseItemWidgetDAO) {
         //instantiate from dao
         return new ExerciseItemWidgetVolume.fromDAO(exerciseItemWidgetDAO);
@@ -48,7 +53,8 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
     return new WorkoutWidgetInformationPageDAO(
       workoutName: this.workoutName,
       //map to dao
-      exercisesInWorkout: this.exercisesInWorkout.map<ExerciseItemWidgetVolumeDAO>(
+      exercisesInWorkout:
+          this.exercisesInWorkout.map<ExerciseItemWidgetVolumeDAO>(
         (exerciseItemWidgetVolume) {
           return exerciseItemWidgetVolume.toDAO();
         },
@@ -59,26 +65,33 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
 
   ///only use this to edit the workoutPage(not first time instantiating);
   ///will also instantiate with cloned properties of the argument
-  WorkoutWidgetInformationPage.Modifiable(WorkoutWidgetInformationPage workoutInputPageToBeCloned) {
+  WorkoutWidgetInformationPage.Modifiable(
+      WorkoutWidgetInformationPage workoutInputPageToBeCloned) {
     //reassign value
     this.workoutName = workoutInputPageToBeCloned.workoutName;
     //modify property
     this.workoutPageType = WorkoutPageType.workoutPageInfo;
 
     //clone every exercises in the workout
-    for (int i = 0; i < workoutInputPageToBeCloned.exercisesInWorkout.length; i++) {
+    for (int i = 0;
+        i < workoutInputPageToBeCloned.exercisesInWorkout.length;
+        i++) {
       this.exercisesInWorkout.add(
-            new ExerciseItemWidgetVolume.Clone(workoutInputPageToBeCloned.exercisesInWorkout[i]),
+            new ExerciseItemWidgetVolume.Clone(
+                workoutInputPageToBeCloned.exercisesInWorkout[i]),
           );
     }
   }
 
   @override
-  WorkoutWidgetInformationPageState createState() => WorkoutWidgetInformationPageState();
+  WorkoutWidgetInformationPageState createState() =>
+      WorkoutWidgetInformationPageState();
 }
 
-class WorkoutWidgetInformationPageState extends State<WorkoutWidgetInformationPage> {
-  void AddOneExerciseToWorkout(ExerciseItemWidgetVolume exerciseItemWidgetVolume) {
+class WorkoutWidgetInformationPageState
+    extends State<WorkoutWidgetInformationPage> {
+  void AddOneExerciseToWorkout(
+      ExerciseItemWidgetVolume exerciseItemWidgetVolume) {
     //add the item and notify the framework to update the state
     setState(() {
       widget.exercisesInWorkout.add(exerciseItemWidgetVolume);
@@ -159,7 +172,8 @@ class WorkoutWidgetInformationPageState extends State<WorkoutWidgetInformationPa
                 child: Container(
                   child: Column(
                     //map every children to a container(only for resizing purpose)
-                    children: widget.exercisesInWorkout.map<Container>((exerciseItemWidgetVolume) {
+                    children: widget.exercisesInWorkout
+                        .map<Container>((exerciseItemWidgetVolume) {
                       return Container(
                         child: exerciseItemWidgetVolume,
                         width: this.exerciseItemVolumeWidth,
@@ -197,18 +211,22 @@ class WorkoutWidgetInformationPageState extends State<WorkoutWidgetInformationPa
         CloseAndConfirmButtonWidget(
           //determine the icon of the right button according to widget.workoutPageType
 
-          rightButtonIcon: widget.workoutPageType == WorkoutPageType.workoutPageInfo ? Icons.check : Icons.add,
+          rightButtonIcon:
+              widget.workoutPageType == WorkoutPageType.workoutPageInfo
+                  ? Icons.check
+                  : Icons.add,
           onPressedCloseButton: () {
             //go back to the last page in the route stack
             Navigator.pop(context);
           },
-          onPressedConfirmButton: () {
+          onPressedConfirmButton: () async {
             switch (widget.workoutPageType) {
               //add new workout to the list
               case WorkoutPageType.pageToAddNewWorkout:
                 //checking the exercisenameInput
                 //return true if the argument element is equal to one of the contained elements
-                bool exerciseNameIsValid = !(["", null, false, 0].contains(widget.workoutName));
+                bool exerciseNameIsValid =
+                    !(["", null, false, 0].contains(widget.workoutName));
                 if (exerciseNameIsValid) {
                   //make sure to notify the framework to rebuild the widget with a new state
                   setState(() {
@@ -217,7 +235,8 @@ class WorkoutWidgetInformationPageState extends State<WorkoutWidgetInformationPa
                       workoutName: widget.workoutName,
                       //clone and assign the state of the current input page
                       //widget refers to "WorkoutInputPage"
-                      workoutInfoPage: new WorkoutWidgetInformationPage.Modifiable(widget),
+                      workoutInfoPage:
+                          new WorkoutWidgetInformationPage.Modifiable(widget),
                     );
                     //add the workout to the list
                     widget.addWorkoutToListFunction(newWorkout);
@@ -225,17 +244,19 @@ class WorkoutWidgetInformationPageState extends State<WorkoutWidgetInformationPa
 
                   //go back to the last route
                   Navigator.pop(context);
-                  
+
                   AppManager.ShowSnackBar(context, "Workout Added");
                 } else {
                   //go back to the last route
                   Navigator.pop(context);
-                  AppManager.ShowSnackBar(context, "Please fill the Workout Name name Bitch-NicholasPixel");
+                  AppManager.ShowSnackBar(context,
+                      "Please fill the Workout Name name Bitch-NicholasPixel");
                 }
                 break;
               case WorkoutPageType.workoutPageInfo:
-                //edit the pageinfo
-
+                //edit the pageinfo and save
+                await WidgetKey.workoutPageStateKey.currentState.SaveWorkoutPageState();
+                    
                 //go back to the previous route in the stack
                 Navigator.pop(context);
                 break;
