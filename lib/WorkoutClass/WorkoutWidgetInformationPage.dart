@@ -21,8 +21,9 @@ enum WorkoutPageType {
 class WorkoutWidgetInformationPage extends StatefulWidget {
   String workoutName = "";
 
-  List<ExerciseItemWidgetVolume> exercisesInWorkout =
+  List<ExerciseItemWidgetVolume> _exercisesInWorkout =
       <ExerciseItemWidgetVolume>[];
+
   void Function(WorkoutItemWidget) addWorkoutToListFunction;
 
   ///help to determine wheater this workout is firstly created or  modified?
@@ -37,11 +38,12 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
   ///instantiate  from DAO
   WorkoutWidgetInformationPage.fromDAO(WorkoutWidgetInformationPageDAO dao) {
     //get list by mapping from dao
-    this.exercisesInWorkout =
+    this._exercisesInWorkout =
         dao.exercisesInWorkout.map<ExerciseItemWidgetVolume>(
-      (exerciseItemWidgetDAO) {
+      (exerciseItemWidgetVolumeDAO) {
         //instantiate from dao
-        return new ExerciseItemWidgetVolume.fromDAO(exerciseItemWidgetDAO);
+        return new ExerciseItemWidgetVolume.fromDAO(
+            exerciseItemWidgetVolumeDAO, this);
       },
     ).toList();
     this.workoutName = dao.workoutName;
@@ -54,7 +56,7 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
       workoutName: this.workoutName,
       //map to dao
       exercisesInWorkout:
-          this.exercisesInWorkout.map<ExerciseItemWidgetVolumeDAO>(
+          this._exercisesInWorkout.map<ExerciseItemWidgetVolumeDAO>(
         (exerciseItemWidgetVolume) {
           return exerciseItemWidgetVolume.toDAO();
         },
@@ -74,11 +76,11 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
 
     //clone every exercises in the workout
     for (int i = 0;
-        i < workoutInputPageToBeCloned.exercisesInWorkout.length;
+        i < workoutInputPageToBeCloned._exercisesInWorkout.length;
         i++) {
-      this.exercisesInWorkout.add(
+      this._exercisesInWorkout.add(
             new ExerciseItemWidgetVolume.Clone(
-                workoutInputPageToBeCloned.exercisesInWorkout[i]),
+                workoutInputPageToBeCloned._exercisesInWorkout[i]),
           );
     }
   }
@@ -90,14 +92,23 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
 
 class WorkoutWidgetInformationPageState
     extends State<WorkoutWidgetInformationPage> {
-  void AddOneExerciseToWorkout(
+  void addOneExerciseToWorkout(
       ExerciseItemWidgetVolume exerciseItemWidgetVolume) {
     //add the item and notify the framework to update the state
     setState(() {
-      widget.exercisesInWorkout.add(exerciseItemWidgetVolume);
+      widget._exercisesInWorkout.add(exerciseItemWidgetVolume);
     });
-    //pop off 1 route from the current
+    //pop off 1 route from the current(to go back to the workout information page)
     Navigator.pop(context);
+  }
+
+  void removeExercisesFromWorkout(
+      ExerciseItemWidgetVolume exerciseToBeRemoved) {
+        
+    setState(() {
+      widget._exercisesInWorkout.remove(exerciseToBeRemoved);
+
+    });
   }
 
   //Size Property//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +145,11 @@ class WorkoutWidgetInformationPageState
                     MaterialPageRoute(
                       builder: (context) {
                         //page widget
-                        return new AddExerciseToWorkoutPage();
+
+                        return new AddExerciseToWorkoutPage(
+                          //pass in the workoutinformationPage reference
+                          workoutInformationPage: widget,
+                        );
                       },
                     ),
                   );
@@ -172,7 +187,7 @@ class WorkoutWidgetInformationPageState
                 child: Container(
                   child: Column(
                     //map every children to a container(only for resizing purpose)
-                    children: widget.exercisesInWorkout
+                    children: widget._exercisesInWorkout
                         .map<Container>((exerciseItemWidgetVolume) {
                       return Container(
                         child: exerciseItemWidgetVolume,
@@ -220,6 +235,7 @@ class WorkoutWidgetInformationPageState
             Navigator.pop(context);
           },
           onPressedConfirmButton: () async {
+            //determine if this page is firstly created or if it wants to be edited
             switch (widget.workoutPageType) {
               //add new workout to the list
               case WorkoutPageType.pageToAddNewWorkout:
@@ -254,9 +270,10 @@ class WorkoutWidgetInformationPageState
                 }
                 break;
               case WorkoutPageType.workoutPageInfo:
-                //edit the pageinfo and save
-                await WidgetKey.workoutPageStateKey.currentState.SaveWorkoutPageState();
-                    
+                //edit the pageinfo and save in case if there are any changes
+                await WidgetKey.workoutPageStateKey.currentState
+                    .saveWorkoutPageState();
+
                 //go back to the previous route in the stack
                 Navigator.pop(context);
                 break;

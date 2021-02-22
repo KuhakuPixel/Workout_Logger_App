@@ -6,13 +6,17 @@ import 'package:WorkoutLoggerApp/StateManager.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/WidgetConverter.dart';
 import 'package:flutter/material.dart';
+import "package:WorkoutLoggerApp/WorkoutClass/WorkoutWidgetInformationPage.dart";
 
 ///Page to add a new exercise to the workout(with search feature)
 ///This page will also be used to store the information about the workout
 class AddExerciseToWorkoutPage extends StatefulWidget {
-  AddExerciseToWorkoutPage();
+  ///The workout information page reference that the "exercise" will belong to
+  WorkoutWidgetInformationPage workoutInformationPage;
+  AddExerciseToWorkoutPage({@required this.workoutInformationPage});
   @override
-  _AddExerciseToWorkoutPageState createState() => _AddExerciseToWorkoutPageState();
+  _AddExerciseToWorkoutPageState createState() =>
+      _AddExerciseToWorkoutPageState();
 }
 
 //state
@@ -103,6 +107,8 @@ class _AddExerciseToWorkoutPageState extends State<AddExerciseToWorkoutPage> {
                         exerciseName: _exerciseItemWidget.exerciseName,
                         exerciseType: _exerciseItemWidget.exerciseType,
                         targetMuscle: _exerciseItemWidget.targetMuscle,
+                        //pass in the reference(necessary to know which workout that this exercise will belong to)
+                        workoutInformationPage: widget.workoutInformationPage,
                       );
                     },
                   ).toList(),

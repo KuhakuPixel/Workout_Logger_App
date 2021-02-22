@@ -2,6 +2,7 @@ import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutItemWidgetDAO.da
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutWidgetInformationPage.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
+import "package:WorkoutLoggerApp/WidgetKey.dart";
 
 ///Control the colors of the ExerciseItemWidget
 class WorkoutItemWidgetProperty {
@@ -53,50 +54,76 @@ class WorkoutItemWidget extends StatelessWidget {
       child: Card(
           //the content of the item widget
           child: Container(
-            child: Row(children: <Widget>[
-              //workout name
-              Column(
-                children: <Widget>[
-                  //exercise name title
-                  Text(
-                    this.workoutName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 21,
-                      letterSpacing: 0.4,
-                      wordSpacing: 2,
-                      color: WorkoutItemWidgetProperty.textColor,
+            child: Row(
+              children: <Widget>[
+                //workout name
+                Column(
+                  children: <Widget>[
+                    //exercise name title
+                    Text(
+                      this.workoutName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 21,
+                        letterSpacing: 0.4,
+                        wordSpacing: 2,
+                        color: WorkoutItemWidgetProperty.textColor,
+                      ),
                     ),
-                  ),
-                ],
-                crossAxisAlignment: CrossAxisAlignment.start,
-              ),
-              //edit button
-              RawMaterialButton(
-                //when pressed go to a new page to edit this workout property
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    //the page that will be directed to
-                    //need to provide an annonymus function that will return an instance of page(widget)
-                    MaterialPageRoute(
-                      builder: (context) {
-                        //return the page widget to be built.....
-                        return this.workoutInfoPage;
-                      },
-                    ),
-                  );
-                },
-                elevation: 2.0,
-                fillColor: Colors.amber[800],
-                child: Icon(
-                  Icons.create_rounded,
-                  size: 20.0,
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
-                //padding: EdgeInsets.all(15.0),
-                shape: CircleBorder(),
-              )
-            ], mainAxisAlignment: MainAxisAlignment.spaceBetween),
+
+                //edit button and delete button
+                Row(
+                  children: [
+                    //edit button
+                    RawMaterialButton(
+                      //when pressed go to a new page to edit this workout property
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          //the page that will be directed to
+                          //need to provide an annonymus function that will return an instance of page(widget)
+                          MaterialPageRoute(
+                            builder: (context) {
+                              //return the page widget to be built.....
+                              return this.workoutInfoPage;
+                            },
+                          ),
+                        );
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.amber[800],
+                      child: Icon(
+                        Icons.create_rounded,
+                        size: 20.0,
+                      ),
+                      //padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                    //delete button
+                    RawMaterialButton(
+                      //when pressed ,delete the workout item from the list
+                      onPressed: () {
+                        //remove workout from the workout page 
+                        WidgetKey.workoutPageStateKey.currentState
+                            .removeWorkoutFromList(this);
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.amber[800],
+                      child: Icon(
+                        Icons.delete,
+                        size: 20.0,
+                      ),
+                      //padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                  ],
+                )
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
             padding: EdgeInsets.only(
               left: this.cardLeftPaddingValue,
               right: this.cardRightPaddingValue,

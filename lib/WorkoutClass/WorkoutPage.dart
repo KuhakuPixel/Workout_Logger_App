@@ -7,7 +7,7 @@ import 'package:WorkoutLoggerApp/CustomWidget/CloseModalBottomPageAndConfirmButt
 import 'package:WorkoutLoggerApp/CustomWidget/TextInput.dart';
 import 'package:WorkoutLoggerApp/ExerciseClass/ExerciseItemWidget.dart';
 import 'package:WorkoutLoggerApp/WidgetKey.dart';
-import 'package:WorkoutLoggerApp/WorkoutClass/ExerciseCardWithVolumeWidget.dart';
+
 import 'package:WorkoutLoggerApp/WorkoutClass/AddExerciseToWorkoutPage.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutWidgetInformationPageDAO.dart';
 import 'package:WorkoutLoggerApp/WorkoutClass/WorkoutDAO/WorkoutItemWidgetDAO.dart';
@@ -62,7 +62,8 @@ class WorkoutPageState extends State<WorkoutPage> {
     super.initState();
   }
 
-  Future<void> SaveWorkoutPageState() async {
+  
+  Future<void> saveWorkoutPageState() async {
     await widget.saveWorkoutPageState();
   }
 
@@ -97,7 +98,14 @@ class WorkoutPageState extends State<WorkoutPage> {
     //save the added value
     widget.saveWorkoutPageState();
   }
-
+  void removeWorkoutFromList(WorkoutItemWidget workoutToBeRemoved){
+     //make sure the state is updated when adding a new item
+    setState(() {
+      WorkoutPage.listOfWorkoutWidget.remove(workoutToBeRemoved);
+    });
+    //save the removed value
+    widget.saveWorkoutPageState();
+  }
   @override
   Widget build(BuildContext context) {
     return ApplicationPage(

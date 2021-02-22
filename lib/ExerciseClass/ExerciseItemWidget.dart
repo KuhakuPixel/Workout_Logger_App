@@ -8,6 +8,7 @@ import 'package:WorkoutLoggerApp/WidgetKey.dart';
 import 'package:WorkoutLoggerApp/miscellaneousStuffs/ApplicationColorsPallete.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import "package:WorkoutLoggerApp/WorkoutClass/WorkoutWidgetInformationPage.dart";
 
 ///Control the colors of the ExerciseItemWidget
 class ExerciseItemWidgetProperty {
@@ -15,7 +16,8 @@ class ExerciseItemWidgetProperty {
   static Color textColor = Colors.amber[800];
   //ApplicationColorsPallete.ColorsPallete_["Light Grey 2"]
   static Color cardBorderColor = Colors.amber[800];
-  static Color cardBackgroundColor = ApplicationColorsPallete.ColorsPallete_["BlackGreyish"];
+  static Color cardBackgroundColor =
+      ApplicationColorsPallete.ColorsPallete_["BlackGreyish"];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,70 +64,70 @@ class ExerciseItemWidget extends StatelessWidget {
       child: Card(
           //the content of the item widget
           child: Container(
-            child: Row(
-              children: [
-                //exercise widget properties like name its type and ect
-                Column(
-                  children: <Widget>[
-                    //exercise name title
-                    Text(
-                      exerciseName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 21,
-                        letterSpacing: 0.4,
-                        wordSpacing: 2,
-                        color: ExerciseItemWidgetProperty.textColor,
-                      ),
+            child: Row(children: [
+              //exercise widget properties like name its type and ect
+              Column(
+                children: <Widget>[
+                  //exercise name title
+                  Text(
+                    exerciseName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 21,
+                      letterSpacing: 0.4,
+                      wordSpacing: 2,
+                      color: ExerciseItemWidgetProperty.textColor,
                     ),
-                    SizedBox(height: 5),
-                    //target muscle
-                    Text(
-                      " Target Muscles : " + targetMuscle,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        letterSpacing: 0.4,
-                        wordSpacing: 2,
-                        color: ExerciseItemWidgetProperty.textColor,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    //exercise Type
-                    Text(
-                      " Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: this.exerciseType),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        letterSpacing: 0.4,
-                        wordSpacing: 2,
-                        color: ExerciseItemWidgetProperty.textColor,
-                      ),
-                    ),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                ),
-                //delete button
-                Container(
-                  child: RawMaterialButton(
-                    onPressed: () {
-                      //remove this object from the list
-                      WidgetKey.exercisePageStateKey.currentState.removeExerciseFromList(this);
-                      
-                    },
-                    elevation: 2.0,
-                    fillColor: Colors.amber[800],
-                    child: Icon(
-                      Icons.delete,
-                      size: 30.0,
-                    ),
-                    //padding: EdgeInsets.all(15.0),
-                    shape: CircleBorder(),
                   ),
-                  height: 40,
+                  SizedBox(height: 5),
+                  //target muscle
+                  Text(
+                    " Target Muscles : " + targetMuscle,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      letterSpacing: 0.4,
+                      wordSpacing: 2,
+                      color: ExerciseItemWidgetProperty.textColor,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  //exercise Type
+                  Text(
+                    " Exercise Type   : " +
+                        ExerciseConverterClass.ConvertExerciseTypeEnumToString(
+                            enumValue: this.exerciseType),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      letterSpacing: 0.4,
+                      wordSpacing: 2,
+                      color: ExerciseItemWidgetProperty.textColor,
+                    ),
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              //delete button
+              Container(
+                child: RawMaterialButton(
+                  onPressed: () {
+                    //remove this object from the list
+                    WidgetKey.exercisePageStateKey.currentState
+                        .removeExerciseFromList(this);
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.amber[800],
+                  child: Icon(
+                    Icons.delete,
+                    size: 30.0,
+                  ),
+                  //padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
                 ),
-              ],
-            ),
+                height: 40,
+              ),
+            ], mainAxisAlignment: MainAxisAlignment.spaceBetween),
             padding: EdgeInsets.only(
               left: this.cardLeftPaddingValue,
               right: this.cardRightPaddingValue,
@@ -150,11 +152,14 @@ class ExerciseItemWidget extends StatelessWidget {
     );
   }
 
-  ///an exercise item which will have a button to add itself to a list
+  ///an exercise item which will have a button to add itself to a list ; workoutPage:the workout page that this exercise will belong to
   ExerciseItemWidget.ExerciseCardWithAddButton({
     @required this.exerciseName,
     @required this.exerciseType,
     @required this.targetMuscle,
+
+    ///the workout page that this exercise will belong to
+    @required WorkoutWidgetInformationPage workoutInformationPage,
   }) {
     this.exerciseItemWidget = Container(
       child: Card(
@@ -192,7 +197,10 @@ class ExerciseItemWidget extends StatelessWidget {
                     SizedBox(height: 5),
                     //exercise Type
                     Text(
-                      " Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: this.exerciseType),
+                      " Exercise Type   : " +
+                          ExerciseConverterClass
+                              .ConvertExerciseTypeEnumToString(
+                                  enumValue: this.exerciseType),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -209,14 +217,17 @@ class ExerciseItemWidget extends StatelessWidget {
                   onPressed: () {
                     //instantiate ExerciseItemWidget.ExerciseItemWithRepetitionCount
                     //add the item to the list of exercises
-                    ExerciseItemWidgetVolume exerciseVolumeCard = new ExerciseItemWidgetVolume(
+                    ExerciseItemWidgetVolume exerciseVolumeCard =
+                        new ExerciseItemWidgetVolume(
                       exerciseName: this.exerciseName,
                       exerciseType: this.exerciseType,
                       targetMuscle: this.targetMuscle,
+                      workoutInformationPage: workoutInformationPage,
                     );
                     //this.addExerciseToWorkoutButtonEvent(exerciseVolumeCard);
                     //add an exercise to the page
-                    WidgetKey.toAddWorkoutInputPageStateKey.currentState.AddOneExerciseToWorkout(exerciseVolumeCard);
+                    WidgetKey.toAddWorkoutInputPageStateKey.currentState
+                        .addOneExerciseToWorkout(exerciseVolumeCard);
                   },
                   elevation: 2.0,
                   fillColor: Colors.amber[800],
@@ -280,38 +291,48 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
   ///Only assign the value that are available inside muscleList
   String targetMuscle;
 
-  ///the exercises set that are added to a workout by the user
+  ///the set that are added to the exerciseby the user
   List<ExerciseSetInstance> exerciseSetsWidgets = <ExerciseSetInstance>[];
+
+  ///parent reference(which workout does this exercise belong to)
+  WorkoutWidgetInformationPage workoutInformationPage;
+
   @override
-  _ExerciseItemWidgetVolumeState createState() => _ExerciseItemWidgetVolumeState();
+  _ExerciseItemWidgetVolumeState createState() =>
+      _ExerciseItemWidgetVolumeState();
   ExerciseItemWidgetVolume({
     @required this.exerciseName,
     @required this.exerciseType,
     @required this.targetMuscle,
+    @required this.workoutInformationPage,
   }) {}
 
   ExerciseItemWidgetVolume.Clone(ExerciseItemWidgetVolume objectToBeCloned) {
     this.exerciseName = objectToBeCloned.exerciseName;
     this.exerciseType = objectToBeCloned.exerciseType;
     this.targetMuscle = objectToBeCloned.targetMuscle;
-
+    this.workoutInformationPage = objectToBeCloned.workoutInformationPage;
     //cloning list
     for (int i = 0; i < objectToBeCloned.exerciseSetsWidgets.length; i++) {
       //to do:add a switch case to handle multiple case(exerciseType)
       //clone and add to list
       this.exerciseSetsWidgets.add(
             new ExerciseSetInstance(
-              exerciseSetIndex: objectToBeCloned.exerciseSetsWidgets[i].exerciseSetIndex,
-              exerciseType: objectToBeCloned.exerciseSetsWidgets[i].exerciseType,
-              numberOfRepetition: objectToBeCloned.exerciseSetsWidgets[i].numberOfRepetition,
+              exerciseSetIndex:
+                  objectToBeCloned.exerciseSetsWidgets[i].exerciseSetIndex,
+              exerciseType:
+                  objectToBeCloned.exerciseSetsWidgets[i].exerciseType,
+              numberOfRepetition:
+                  objectToBeCloned.exerciseSetsWidgets[i].numberOfRepetition,
               weightValue: objectToBeCloned.exerciseSetsWidgets[i].weightValue,
             ),
           );
     }
   }
 
-  ///instantiate ExerciseItemWidgetVolume from DAO
-  ExerciseItemWidgetVolume.fromDAO(ExerciseItemWidgetVolumeDAO dao) {
+  ///instantiate ExerciseItemWidgetVolume from DAO ; workoutWidgetInformationPage is a reference to the workout that this ExerciseItemWidgetVolume belongs to
+  ExerciseItemWidgetVolume.fromDAO(ExerciseItemWidgetVolumeDAO dao,
+      WorkoutWidgetInformationPage workoutWidgetInformationPage) {
     this.exerciseName = dao.exerciseName;
     this.exerciseType = dao.exerciseType;
     this.targetMuscle = dao.targetMuscle;
@@ -321,6 +342,7 @@ class ExerciseItemWidgetVolume extends StatefulWidget {
         return ExerciseSetInstance.fromDAO(exerciseSetInstanceDAO);
       },
     ).toList();
+    this.workoutInformationPage = workoutWidgetInformationPage;
   }
 
   ///convert to DAO(used for saving locally)
@@ -395,7 +417,10 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                             SizedBox(height: 5),
                             //exercise Type
                             Text(
-                              " Exercise Type   : " + ExerciseConverterClass.ConvertExerciseTypeEnumToString(enumValue: widget.exerciseType),
+                              " Exercise Type   : " +
+                                  ExerciseConverterClass
+                                      .ConvertExerciseTypeEnumToString(
+                                          enumValue: widget.exerciseType),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -411,7 +436,11 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                         Container(
                           child: RawMaterialButton(
                             onPressed: () {
-                              //to do remove object from the list
+                              //remove exercise from the workout
+                              widget.workoutInformationPage
+                                  .createState()
+                                  .removeExercisesFromWorkout(widget);
+                                  
                             },
                             elevation: 2.0,
                             fillColor: Colors.amber[800],
@@ -459,7 +488,8 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                   widget.exerciseSetsWidgets.add(
                                     new ExerciseSetInstance(
                                       exerciseType: widget.exerciseType,
-                                      exerciseSetIndex: widget.exerciseSetsWidgets.length,
+                                      exerciseSetIndex:
+                                          widget.exerciseSetsWidgets.length,
                                     ),
                                   );
                                 });
@@ -491,10 +521,12 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                                 setState(() {
                                   //remove the last element(the last index)
                                   if (widget.exerciseSetsWidgets.length > 0) {
-                                    widget.exerciseSetsWidgets.removeAt(widget.exerciseSetsWidgets.length - 1);
+                                    widget.exerciseSetsWidgets.removeAt(
+                                        widget.exerciseSetsWidgets.length - 1);
                                   } else {
                                     debugPrintStack(
-                                      label: "exerciseSetsWidgets length is 0 cannot remove anymore item",
+                                      label:
+                                          "exerciseSetsWidgets length is 0 cannot remove anymore item",
                                       maxFrames: 2,
                                     );
                                   }
