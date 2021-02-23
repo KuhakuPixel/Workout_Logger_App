@@ -1,16 +1,12 @@
 # WorkoutLoggerApp
 
-A new Flutter project.
+## An application built with the flutter framework to track your workout made by KuhakuPixel
 
-## Getting Started
+### How to use:
+	- 1.Add the exercise that you want to do inside the exercise page and press the add button.
+	- 2.Add a workout in the workout page by pressing the add button and you can select what exercises to be included in the workout.
+	- 3.Modify the repetition count according to your needs.
 
-This project is a starting point for a Flutter application.
+##Apk download:https://drive.google.com/file/d/1FnU8Zj5jLEMYIMS_gAqG7cxQWxL5GtT6/view?usp=sharing
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
