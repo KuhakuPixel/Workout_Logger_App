@@ -224,9 +224,9 @@ class ExerciseItemWidget extends StatelessWidget {
                       targetMuscle: this.targetMuscle,
                       workoutInformationPage: workoutInformationPage,
                     );
-                    //this.addExerciseToWorkoutButtonEvent(exerciseVolumeCard);
-                    //add an exercise to the page
-                    WidgetKey.toAddWorkoutInputPageStateKey.currentState
+
+                    //add an exercise to the workout
+                    workoutInformationPage.state
                         .addOneExerciseToWorkout(exerciseVolumeCard);
                   },
                   elevation: 2.0,
@@ -437,10 +437,8 @@ class _ExerciseItemWidgetVolumeState extends State<ExerciseItemWidgetVolume> {
                           child: RawMaterialButton(
                             onPressed: () {
                               //remove exercise from the workout
-                              widget.workoutInformationPage
-                                  .createState()
+                              widget.workoutInformationPage.state
                                   .removeExercisesFromWorkout(widget);
-                                  
                             },
                             elevation: 2.0,
                             fillColor: Colors.amber[800],

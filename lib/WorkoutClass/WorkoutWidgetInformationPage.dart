@@ -20,7 +20,8 @@ enum WorkoutPageType {
 ///used for adding a new workout or editing an existing workout
 class WorkoutWidgetInformationPage extends StatefulWidget {
   String workoutName = "";
-
+  WorkoutWidgetInformationPageState state =
+      new WorkoutWidgetInformationPageState();
   List<ExerciseItemWidgetVolume> _exercisesInWorkout =
       <ExerciseItemWidgetVolume>[];
 
@@ -86,8 +87,7 @@ class WorkoutWidgetInformationPage extends StatefulWidget {
   }
 
   @override
-  WorkoutWidgetInformationPageState createState() =>
-      WorkoutWidgetInformationPageState();
+  WorkoutWidgetInformationPageState createState() => this.state;
 }
 
 class WorkoutWidgetInformationPageState
@@ -104,10 +104,8 @@ class WorkoutWidgetInformationPageState
 
   void removeExercisesFromWorkout(
       ExerciseItemWidgetVolume exerciseToBeRemoved) {
-        
     setState(() {
       widget._exercisesInWorkout.remove(exerciseToBeRemoved);
-
     });
   }
 
