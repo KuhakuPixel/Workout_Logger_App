@@ -1,0 +1,14 @@
+
+Key features:
+-Add any exercises that you are going to do without any limit
+-Add the exercises to the workout that you are about to do 
+- Record sets of weight , reps and time.
+
+
+This project is open source and it is built with the flutter framework
+You can find the source code here : 
+
+https://github.com/KuhakuPixel/Workout_Logger_App
+
+Info : All issues ,ideas and contribution can be posted on Github.
+
